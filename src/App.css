@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Croissant+One&family=Roboto+Condensed:ital@1&display=swap');
+
+.customfont{
+    font-family: 'Croissant One', cursive;
+    font-size: 50px;
+}
+
+.menufont{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.nav-link a:hover{
+    color: grey;
+    transition: 0.2s;
+}
+
+
+.nav-link a{
+    border-radius: 10px;
+    padding: 5px;
+}

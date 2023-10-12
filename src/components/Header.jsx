@@ -27,7 +27,7 @@ export function Header() {
         className="p-1 font-bold  text-sm menufont"
       >
         <a href="#" className="flex items-center">
-          News
+          Home
         </a>
       </Typography>
       <Typography
@@ -37,7 +37,7 @@ export function Header() {
         className="p-1 font-bold text-sm menufont"
       >
         <a href="#" className="flex items-center">
-          Commnunity
+          Workshop
         </a>
       </Typography>
       <Typography
@@ -47,7 +47,7 @@ export function Header() {
         className="p-1 font-bold text-sm menufont"
       >
         <a href="#" className="flex items-center">
-          About
+          Opportunity
         </a>
       </Typography>
       <Typography
@@ -57,7 +57,7 @@ export function Header() {
         className="p-1 text-sm font-bold menufont"
       >
         <a href="#" className="flex items-center">
-          Contact
+          Contact us
         </a>
       </Typography>
     </ul>
@@ -66,16 +66,19 @@ export function Header() {
   return (
     <Navbar className="mx-auto mt-4 shadow-none max-w-screen-4xl py-2 px-4 lg:px-8 lg:py-4">
       <div className="mx-auto flex items-center justify-between text-blue-gray-900">
-        <p className="mr-4 ml-10 cursor-pointer py-1.5 customfont hover:text-gray-600 text-2xl duration-200">
-          WeGrow
-        </p>
         <div className="hidden nav-link text-blue-gray-900 lg:block">{navList}</div>
-        <div className="mr-10 flex items-center">
+        <a className="pr-48 cursor-pointer py-1.5 customfont hover:text-gray-600 text-xl duration-200">
+          We<span className="text-2xl">Grow</span>
+        </a>
+        <div className="mr-10 flex items-center justify-between">
             {/* profile avatar */}
-          <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/>
+          {/* <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/> */}
           {/* login btn */}
-          <Button variant="gradient" size="sm" className="hidden lg:ml-5 lg:inline-block">
-            <span>Login</span>
+          <a href='#' className="hidden font-semibold lg:ml-5 lg:inline-block rounded-full">
+            Login
+          </a>
+          <Button variant="gradient" size="base" className="hidden lg:ml-5 lg:inline-block rounded-full">
+            <a href="#">Sign up</a>
           </Button>
         </div>
         <IconButton

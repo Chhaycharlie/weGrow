@@ -15,7 +15,7 @@ function App() {
             <Route index element={<Home />}></Route>
           </Route>
         </Routes> */}
-        
+        {/* <Home /> */}
         <Header />
         <Login />
         <Signup />

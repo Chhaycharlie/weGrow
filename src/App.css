@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Croissant+One&family=Open+Sans&family=Roboto+Condensed:ital@1&display=swap');
 
+
 .font-openSans{
     font-family: 'Open Sans', sans-serif;
 }
@@ -24,4 +25,9 @@
 .nav-link a{
     border-radius: 10px;
     padding: 5px;
+}
+
+.bg-img{
+    background-image: url('./assets/home/Hero.svg');
+    object-fit: cover;
 }

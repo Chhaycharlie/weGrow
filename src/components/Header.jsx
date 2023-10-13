@@ -64,7 +64,7 @@ export function Header() {
   );
  
   return (
-    <Navbar className="mx-auto mt-4 shadow-none max-w-screen-4xl py-2 px-4 lg:px-8 lg:py-4">
+    <Navbar className="mx-auto shadow-none max-w-screen-4xl py-2 px-4 lg:px-8 lg:py-4 rounded-none">
       <div className="mx-auto flex items-center justify-between text-blue-gray-900">
         <div className="hidden nav-link text-blue-gray-900 lg:block">{navList}</div>
         <a className="pr-48 cursor-pointer py-1.5 customfont hover:text-gray-600 text-xl duration-200">
@@ -74,10 +74,10 @@ export function Header() {
             {/* profile avatar */}
           {/* <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/> */}
           {/* login btn */}
-          <a href='#' className="hidden font-semibold lg:ml-5 lg:inline-block rounded-full">
+          <a href='#' className="hidden font-semibold lg:ml-5 lg:inline-block">
             Login
           </a>
-          <Button variant="gradient" size="base" className="hidden lg:ml-5 lg:inline-block rounded-full">
+          <Button size="lg" className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200">
             <a href="#">Sign up</a>
           </Button>
         </div>
@@ -120,7 +120,7 @@ export function Header() {
         </IconButton>
       </div>
       <MobileNav open={openNav}>
-        <div className="container mx-auto">
+        <div className="container">
           {navList}
           <Button variant="gradient" size="sm" fullWidth className="mb-2">
             <span>Login</span>

@@ -30,4 +30,5 @@
 .bg-img{
     background-image: url('./assets/home/Hero.svg');
     object-fit: cover;
+    background-size: cover;
 }

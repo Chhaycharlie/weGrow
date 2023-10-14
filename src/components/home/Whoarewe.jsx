@@ -8,7 +8,7 @@ import RecruitImg from '../../assets/home/recruit.svg'
 
 const Whoarewe = () => {
   return (
-    <section className='w-full h-auto flex justify-center'> 
+    <section className='w-full h-auto flex justify-center bg-white'> 
         <div className='w-3/4'>
             {/* Who are we */}
             <div class="mx-auto grid max-w-4xl grid-cols-12 gap-4 bg-zinc-50 p-1 mt-10 lg:mt-4 w-full h-auto">

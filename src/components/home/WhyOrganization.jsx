@@ -8,7 +8,7 @@ import AffordImg from '../../assets/home/affordability.svg'
 const WhyOrganization = () => {
   return (
     <section className='w-full h-auto bg-white'>
-        <div className='container mx-auto pt-20 pb-24'>
+        <div className='container mx-auto py-20'>
           <h1 className='flex w-[70%] mx-auto justify-center md:text-5xl text-4xl font-extrabold text-center'>Why organization choose weGrow to post volunteer opportunities</h1>
           <div className="grid grid-cols-3 lg:grid-cols-4 md:grid-template-columns-3 gap-4 md:place-items-center mt-10 pl-[26%] lg:pl-[10%] ">
               {/* left side  */}

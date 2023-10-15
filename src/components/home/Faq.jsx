@@ -27,17 +27,17 @@ const Faq = () => {
    
     return (
       <div className='w-full h-auto bg-white'>
-        <div className='container mx-auto'>
+        <div className='container mx-auto py-20'>
             {/* title */}
             <div className='text-center'>
-                <h1 className='text-4xl md:text-5xl font-extrabold'>Frequently Asked Questions</h1>
+                <h1 className='flex w-[70%] mx-auto justify-center md:text-5xl text-4xl font-extrabold text-center'>Frequently Asked Questions</h1>
                 <p className='text-xl font-thin w-[50%] mx-auto pt-10'>Here are some of our FAQs. If you have any other questions you’d like answered please fell free to email us.</p>
             </div>
             {/* Accordion */}
             <div className='w-1/2 mx-auto mt-10'>
                 <Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
                     <AccordionHeader onClick={() => handleOpen(1)}>What is weGrow? </AccordionHeader>
-                    <AccordionBody>
+                    <AccordionBody className='text-md'>
                         We&apos;re not always in the position that we want to be at. We&apos;re constantly
                         growing. We&apos;re constantly making mistakes. We&apos;re constantly trying to express
                         ourselves and actualize our dreams.
@@ -47,7 +47,7 @@ const Faq = () => {
                     <AccordionHeader onClick={() => handleOpen(2)}>
                         How to find a voluntary work?
                     </AccordionHeader>
-                    <AccordionBody>
+                    <AccordionBody className='text-md'>
                         We&apos;re not always in the position that we want to be at. We&apos;re constantly
                         growing. We&apos;re constantly making mistakes. We&apos;re constantly trying to express
                         ourselves and actualize our dreams.
@@ -57,7 +57,7 @@ const Faq = () => {
                     <AccordionHeader onClick={() => handleOpen(3)}>
                         Is it really reach out audience?
                     </AccordionHeader>
-                    <AccordionBody>
+                    <AccordionBody className='text-md'>
                         We&apos;re not always in the position that we want to be at. We&apos;re constantly
                         growing. We&apos;re constantly making mistakes. We&apos;re constantly trying to express
                         ourselves and actualize our dreams.
@@ -67,7 +67,7 @@ const Faq = () => {
                     <AccordionHeader onClick={() => handleOpen(4)}>
                         How to use it effectively?
                     </AccordionHeader>
-                    <AccordionBody>
+                    <AccordionBody className='text-md'>
                         We&apos;re not always in the position that we want to be at. We&apos;re constantly
                         growing. We&apos;re constantly making mistakes. We&apos;re constantly trying to express
                         ourselves and actualize our dreams.
@@ -77,14 +77,14 @@ const Faq = () => {
                     <AccordionHeader onClick={() => handleOpen(5)}>
                         How to post a  recruitment?
                     </AccordionHeader>
-                    <AccordionBody>
+                    <AccordionBody className='text-md'>
                         We&apos;re not always in the position that we want to be at. We&apos;re constantly
                         growing. We&apos;re constantly making mistakes. We&apos;re constantly trying to express
                         ourselves and actualize our dreams.
                     </AccordionBody>
                 </Accordion>
             </div>
-      </div>
+        </div>
       </div>
     );
 }

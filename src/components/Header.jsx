@@ -70,7 +70,7 @@ export function Header() {
         <a className="pr-48 cursor-pointer py-1.5 customfont hover:text-gray-600 text-xl duration-200">
           We<span className="text-2xl">Grow</span>
         </a>
-        <div className="mr-10 flex items-center justify-between">
+        <div className="flex items-center justify-between">
             {/* profile avatar */}
           {/* <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/> */}
           {/* login btn */}

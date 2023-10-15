@@ -7,6 +7,7 @@ import Who from '../components/home/Whoarewe'
 import Why from '../components/home/WhySection'
 import WhyOrg from '../components/home/WhyOrganization'
 import Faq from '../components/home/Faq'
+import Benefit from '../components/home/Benefits'
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
         <Who />
         <Why />
         <WhyOrg />
+        <Benefit />
         <Faq />
         <Footer />
     </>

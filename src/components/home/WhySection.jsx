@@ -8,8 +8,8 @@ import ReliaImg from '../../assets/home/reliability.svg'
 const why = () => {
   return (
     <section className='w-full h-auto bg-gray-50'>
-        <div className='container mx-auto mt-10 pt-10 pb-20'>
-          <h1 className='flex w-[70%] mx-auto justify-center text-5xl font-extrabold text-center'>Why people choose weGrow to find volunteer work</h1>
+        <div className='container mx-auto py-20'>
+          <h1 className='flex w-[70%] mx-auto justify-center md:text-5xl text-4xl font-extrabold text-center'>Why people choose weGrow to find volunteer work</h1>
             <div className="grid grid-cols-3 lg:grid-cols-4 md:grid-template-columns-3 place-items-center mt-20 pl-[26%] lg:pl-0 ">
               {/* left side  */}
               <div className="col-span-2">

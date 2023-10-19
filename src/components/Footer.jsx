@@ -1,17 +1,17 @@
 import React from 'react'
 import '../App.css'
 
-import XIcon from '../assets/icons/x.svg'
-import InstaIcon from '../assets/icons/instagram.svg'
 import FaceIcon from '../assets/icons/facebook.svg'
-import TeleIcon from '../assets/icons/telegram.svg'
+import InstaIcon from '../assets/icons/instagram.svg'
 import LinkedIcon from '../assets/icons/linkedin.svg'
+import TeleIcon from '../assets/icons/telegram.svg'
+import XIcon from '../assets/icons/x.svg'
 
 const Footer = () => {
   const currYear = new Date().getFullYear();
 
   return (
-    <footer className='flex flex-col items-center w-full bg-gradient-to-b from-gray-400  to-blue-300'>
+    <footer className='flex flex-col items-center w-full bg-gradient-to-b bg-gray-400'>
 
         {/* first line footer */}
         <div className='flex flex-row  flex-wrap justify-between w-full items-center pt-10'>

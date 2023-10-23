@@ -1,5 +1,6 @@
 // import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import Community from './pages/Community'
 import Home from './pages/Home'
 // import { Header } from './components/Header'
 // import Signup from './pages/Signup'
@@ -16,6 +17,7 @@ function App() {
           </Route>
         </Routes> */}
         <Home />
+        <Community/>
     </>
   )
 }

@@ -1,10 +1,14 @@
 import React from 'react'
-
+import Footer from '../components/Footer'
+import { Header } from '../components/Header'
+import Content from '../components/inspiration/content'
 const Community = () => {
   return (
-    <div>
-        <h1 className='text-center'>Community</h1>
-    </div>
+   <>
+   <Header/>
+   <Content/>
+   <Footer/>
+   </>
   )
 }
 

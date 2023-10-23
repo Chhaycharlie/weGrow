@@ -11,11 +11,7 @@ const Footer = () => {
   const currYear = new Date().getFullYear();
 
   return (
-<<<<<<< Updated upstream
     <footer className='flex flex-col items-center w-full bg-gradient-to-b bg-gray-400'>
-=======
-    <footer className='flex flex-col items-center w-full bg-gray-500'>
->>>>>>> Stashed changes
 
         {/* first line footer */}
         <div className='flex flex-row  flex-wrap justify-between w-full items-center pt-10'>

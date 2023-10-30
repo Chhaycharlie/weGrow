@@ -2,6 +2,7 @@
 import './App.css'
 import Community from './pages/Community'
 import Home from './pages/Home'
+import Recruitment from './pages/Recruitment'
 // import { Header } from './components/Header'
 // import Signup from './pages/Signup'
 // import Login from './pages/Login'
@@ -18,6 +19,7 @@ function App() {
         </Routes> */}
         <Home />
         <Community/>
+        <Recruitment/>
     </>
   )
 }

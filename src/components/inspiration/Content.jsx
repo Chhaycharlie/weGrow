@@ -29,7 +29,7 @@ function Content() {
     {
       _id:4,
       title:"Title of Event4",
-      OrgName:"Name-Organization3",
+      OrgName:"Name-Organization4",
       text:"Ut pretium ultricies dignissim. Sed sit amet mi eget urna placerat",
       image:"https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg"
 
@@ -37,18 +37,25 @@ function Content() {
     {
       _id:5,
       title:"Title of Event5",
-      OrgName:"Name-Organization3",
+      OrgName:"Name-Organization5",
       text:"Ut pretium ultricies dignissim. Sed sit amet mi eget urna placerat",
       image:"https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg"
 
     },
     {
       _id:6,
-      title:"Title of Event5",
-      OrgName:"Name-Organization3",
+      title:"Title of Event6",
+      OrgName:"Name-Organization6",
       text:"Ut pretium ultricies dignissim. Sed sit amet mi eget urna placerat",
       image:"https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg"
 
+    },
+    {
+      _id:7,
+      title:"Title of Event7",
+      OrgName:"Name-Organization7",
+      text:"Ut pretium ultricies dignissim. Sed sit amet mi eget urna placerat",
+      image:"https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg"
     }
 
   ]

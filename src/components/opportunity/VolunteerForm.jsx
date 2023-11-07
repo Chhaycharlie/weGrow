@@ -4,7 +4,7 @@ function VolunteerForm() {
   return (
     <>
     <div>
-    <h2 class="p-10 text-center text-3xl font-bold">Apply to become a potential volunteer!</h2>
+    <h2 class="pt-24 text-center text-3xl font-bold">Apply to become a potential volunteer!</h2>
     </div>
     <div className='p-10 m-10'>
     <form>

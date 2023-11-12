@@ -16,6 +16,21 @@ const data = [
       title: 'Title 3',
       description: 'Description 3',
     },
+    {
+      orgName: 'Org. Name 4',
+      title: 'Title 4',
+      description: 'Description 4',
+    },
+    {
+      orgName: 'Org. Name 5',
+      title: 'Title 5',
+      description: 'Description 5',
+    },
+    {
+      orgName: 'Org. Name 6',
+      title: 'Title 6',
+      description: 'Description 6',
+    },
   ];
   
 function Post() {
@@ -24,7 +39,7 @@ function Post() {
     <h1 className='font-bold text-3xl text-gray-900 p-6'>Recents Post</h1>
       <div>
         {data.map((item, index) => (
-          <div key={index} className='container flex flex-col md:flex-row justify-between mx-4 border-solid border-2 border-grey-600 rounded-lg shadow-2xl'>
+          <div key={index} className='container flex flex-row justify-between mb-3 border-2 border-grey-600 rounded-lg shadow-md'>
               <div className='flex justify-center items-center pt-5 md:items-start'>
                 <img class="w-24 h-24 my-10 mx-12 rounded-full" src="src/assets/icons/people.png" alt="Rounded avatar"/>
                 <div className='flex-col justify-start my-12'>

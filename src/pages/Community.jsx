@@ -7,7 +7,6 @@ import VolunteerForm from '../components/opportunity/VolunteerForm'
 const Community = () => {
   return (
    <>
-   {/* <Header/> */}
    <Top/>
    <Content/>
    <Below/>

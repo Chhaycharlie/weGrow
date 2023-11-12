@@ -1,6 +1,7 @@
 import React from 'react'
 import Footer from '../components/Footer'
-import Detail from '../components/post-recruitment/Detail'
+// import Detail from '../components/post-recruitment/Detail'
+import Below from '../components/inspiration/Below'
 import Post from '../components/post-recruitment/Recruitment/Post'
 import Search from '../components/post-recruitment/Recruitment/Search'
 import Title from '../components/post-recruitment/Recruitment/Title'
@@ -11,7 +12,8 @@ function Recruitment() {
    <Title/>
    <Search/>
    <Post/>
-   <Detail/>
+   {/* <Detail/> */}
+   <Below/>
    <Footer/>
    </>
   )

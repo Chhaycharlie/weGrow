@@ -7,6 +7,7 @@ import Recruitment from './pages/Recruitment'
 import Signup from './pages/Signup'
 //  import Footer from './components/Footer'
 import Header from './components/Header'
+import Contact from './pages/Contact'
 import Login from './pages/Login'
 
 
@@ -21,12 +22,10 @@ function App() {
                 <Route path="/Community" element={<Community/>}/>
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Signup" element={<Signup />} />
+                <Route path="/Contact" element={<Contact />} />
         </Routes>
     </BrowserRouter>
-//         {/* <Home />
-//          <Community/>
-//         <Recruitment/>  */}
-//     </>
+         </>
    )
  }
 

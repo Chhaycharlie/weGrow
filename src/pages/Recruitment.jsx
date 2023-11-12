@@ -1,12 +1,17 @@
 import React from 'react'
 import Footer from '../components/Footer'
-import { Header } from '../components/Header'
-import Posts from '../components/post-recruitment/Posts'
+import Detail from '../components/post-recruitment/Detail'
+import Post from '../components/post-recruitment/Recruitment/Post'
+import Search from '../components/post-recruitment/Recruitment/Search'
+import Title from '../components/post-recruitment/Recruitment/Title'
 function Recruitment() {
   return (
     <>
-   <Header/>
-   <Posts/>
+   {/* <Header/> */}
+   <Title/>
+   <Search/>
+   <Post/>
+   <Detail/>
    <Footer/>
    </>
   )

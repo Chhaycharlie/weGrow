@@ -1,17 +1,17 @@
-import React from "react";
 import {
-  Navbar,
-  MobileNav,
-  Typography,
   Button,
   IconButton,
-  Avatar
+  MobileNav,
+  Navbar,
+  Typography
 } from "@material-tailwind/react";
+import { React, useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
-export function Header() {
-  const [openNav, setOpenNav] = React.useState(false);
+function Header() {
+  const [openNav, setOpenNav] = useState(false);
  
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false),
@@ -26,9 +26,9 @@ export function Header() {
         color="blue-gray"
         className="p-1 font-bold  text-sm menufont"
       >
-        <a href="#" className="flex items-center">
+        <Link to ="/" className="flex items-center">
           Home
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -36,9 +36,9 @@ export function Header() {
         color="blue-gray"
         className="p-1 font-bold text-sm menufont"
       >
-        <a href="#" className="flex items-center">
+        <Link to ="/Community" className="flex items-center">
           Workshop
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -46,9 +46,9 @@ export function Header() {
         color="blue-gray"
         className="p-1 font-bold text-sm menufont"
       >
-        <a href="#" className="flex items-center">
+        <Link to ="/Recruitment" className="flex items-center">
           Opportunity
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -56,9 +56,9 @@ export function Header() {
         color="blue-gray"
         className="p-1 text-sm font-bold menufont"
       >
-        <a href="#" className="flex items-center">
+        <Link to ="" className="flex items-center">
           Contact us
-        </a>
+        </Link>
       </Typography>
     </ul>
   );
@@ -74,11 +74,11 @@ export function Header() {
             {/* profile avatar */}
           {/* <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/> */}
           {/* login btn */}
-          <a href='#' className="hidden font-semibold lg:ml-5 lg:inline-block">
+          <Link to="/Login" className="hidden font-semibold lg:ml-5 lg:inline-block">
             Login
-          </a>
+          </Link>
           <Button size="lg" className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200">
-            <a href="#">Sign up</a>
+            <Link to ="/Signup">Sign up</Link>
           </Button>
         </div>
         <IconButton
@@ -123,10 +123,13 @@ export function Header() {
         <div className="container">
           {navList}
           <Button variant="gradient" size="sm" fullWidth className="mb-2">
-            <span>Login</span>
+            <Link to ="/Login">
+            Login
+            </Link>
           </Button>
         </div>
       </MobileNav>
     </Navbar>
   );
 }
+export default Header;

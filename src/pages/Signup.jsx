@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-import CreateAccount from '../assets/Auth/create-account.svg'
-import '../App.css'
+import '../App.css';
+import CreateAccount from '../assets/Auth/create-account.svg';
 
 const Signup = () => {
     const currYear = new Date().getFullYear();

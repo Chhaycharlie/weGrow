@@ -1,17 +1,19 @@
 import React from 'react'
-import Footer from '../components/Footer'
-import Below from '../components/inspiration/Below'
+import Header2 from '../components/Header2'
+import Content from '../components/inspiration/Content'
 import Top from '../components/inspiration/Top'
-import Content from '../components/inspiration/content'
 import VolunteerForm from '../components/opportunity/VolunteerForm'
+
 const Community = () => {
   return (
-   <>
+    <>
    <Top/>
-   <Content/>
-   <Below/>
-   <Footer/>
+   <Header2/>
+   <Content/> 
+  {/* //  <Below/> */}
+   {/* <Footer/> */}
    <VolunteerForm/>
+   {/* <Training/> */}
    </>
   )
 }

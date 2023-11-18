@@ -12,14 +12,18 @@ import Benefit from '../components/home/Benefits'
 const Home = () => {
   return (
     <>
-        <Header />
+      <Header>
+        <Header />  
+      </Header>
+      <main>
         <Hero />
         <Who />
         <Why />
         <WhyOrg />
         <Benefit />
         <Faq />
-        <Footer />
+      </main>
+      <Footer />
     </>
   )
 }

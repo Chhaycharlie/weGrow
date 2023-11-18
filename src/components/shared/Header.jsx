@@ -23,7 +23,7 @@ export function Header() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-bold  text-sm menufont"
+        className="p-1 font-bold  text-lg menufont"
       >
         <a href="#" className="flex items-center">
           Home
@@ -33,7 +33,7 @@ export function Header() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-bold text-sm menufont"
+        className="p-1 font-bold text-lg menufont"
       >
         <a href="#" className="flex items-center">
           Workshop
@@ -43,7 +43,7 @@ export function Header() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-bold text-sm menufont"
+        className="p-1 font-bold text-lg menufont"
       >
         <a href="#" className="flex items-center">
           Opportunity
@@ -53,7 +53,7 @@ export function Header() {
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 text-sm font-bold menufont"
+        className="p-1 text-lg font-bold menufont"
       >
         <a href="#" className="flex items-center">
           Contact us
@@ -63,23 +63,23 @@ export function Header() {
   );
  
   return (
-        <Navbar className="mx-auto shadow-none w-full py-2 px-4 lg:px-8 lg:py-4 rounded-none">
+        <Navbar className="mx-auto shadow-none w-full py-2 px-4 lg:px-8 lg:py-10 rounded-none">
         <div className="mx-auto flex items-center justify-between text-blue-gray-900">
           {/* menu */}
           <div className="hidden nav-link text-blue-gray-900 lg:block">{navList}</div>
 
           {/* logo  */}
-          <a className="pr-48 cursor-pointer py-1.5 customfont hover:text-gray-600 text-xl duration-200">
+          <a className="pr-48 cursor-pointer py-1.5 customfont hover:text-gray-600 text-3xl duration-200">
             We<span className="text-2xl">Grow</span>
           </a>
           <div className="flex items-center justify-between">
               {/* profile avatar */}
             {/* <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/> */}
             {/* login btn */}
-            <a href='#' className="hidden font-semibold lg:ml-5 lg:inline-block">
+            <a href='#' className="hidden font-semibold text-lg lg:ml-5 lg:inline-block">
               Login
             </a>
-            <Button size="lg" className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200">
+            <Button size="lg" className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#007EEA] duration-200">
               <a href="#">Sign up</a>
             </Button>
           </div>

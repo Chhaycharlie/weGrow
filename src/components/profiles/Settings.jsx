@@ -3,7 +3,7 @@ import React from 'react'
 const Settings = () => {
   return (
     <div>
-        <ul className='text-xl font-thin space-y-1'>
+        <ul className='text-2xl font-thin space-y-1'>
           <li><a href="#">General</a></li>
           <li><a href="#">Edit Profile</a></li>
           <li><a href="#">Password</a></li>

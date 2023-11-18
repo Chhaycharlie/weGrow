@@ -5,15 +5,18 @@ import "./App.css";
 // import Signup from './pages/Signup'
 // import Login from './pages/Login'
 // import Footer from './components/Footer'
-// import AccountPage from './pages/profiles/AccountPage'
-// import GeneralPage from './pages/profiles/GeneralPage'
-// import PasswordPage from './pages/profiles/PasswordPage'
+import AccountPage from "./pages/profiles/AccountPage";
+import GeneralPage from "./pages/profiles/GeneralPage";
+import PasswordPage from "./pages/profiles/PasswordPage";
 import UserDetails from "./pages/profiles/UserDetails";
 
 function App() {
   return (
     <>
       <UserDetails />
+      <AccountPage />
+      <GeneralPage />
+      <PasswordPage />
     </>
   );
 }

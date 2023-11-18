@@ -5,12 +5,12 @@ import Settings from "./Settings";
 
 import { Card } from "@material-tailwind/react";
 
-const Profile = ({ children, title, name }) => {
+const Profile = ({ children, title, name, quote }) => {
   return (
     <>
       <Header />
       <div className="container mx-auto">
-        <AvatarOption title={title} name={name} />
+        <AvatarOption title={title} name={name} quote={quote} />
 
         {/* settingOption + Form */}
         <div className="grid lg:grid-cols-3 place-items-center lg:place-items-start m-16">

@@ -6,7 +6,7 @@ import Profile from "../../components/profiles/profile";
 const GeneralPage = () => {
   return (
     <Profile
-      title={"General"}
+      title={"/ General"}
       name={"Son Chhay"}
       quote={"Set up your weGrow present and hiring needs"}
     >

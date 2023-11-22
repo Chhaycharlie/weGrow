@@ -1,9 +1,9 @@
-import React from 'react'
 import {
     Accordion,
-    AccordionHeader,
     AccordionBody,
-  } from "@material-tailwind/react";
+    AccordionHeader,
+} from "@material-tailwind/react";
+import React from 'react';
 
 function Icon({ id, open }) {
     return (

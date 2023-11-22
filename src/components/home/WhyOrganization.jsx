@@ -1,13 +1,13 @@
 import React from 'react'
 
-import OpporImg from '../../assets/home/opportunities.svg'
+import AffordImg from '../../assets/home/affordability.svg'
 import EasyImg from '../../assets/home/easy_to_use.svg'
 import FlexImg from '../../assets/home/flexibility.svg'
-import AffordImg from '../../assets/home/affordability.svg'
+import OpporImg from '../../assets/home/opportunities.svg'
 
 const WhyOrganization = () => {
   return (
-    <section className='w-full h-auto bg-white'>
+    <section className='w-full h-auto bg-gray-50'>
         <div className='container mx-auto py-20'>
           <h1 className='flex w-[70%] mx-auto justify-center md:text-5xl text-4xl font-extrabold text-center'>Why organization choose weGrow to post volunteer opportunities</h1>
           <div className="grid grid-cols-3 lg:grid-cols-4 md:grid-template-columns-3 gap-4 md:place-items-center mt-10 pl-[26%] lg:pl-[10%] ">

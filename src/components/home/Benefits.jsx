@@ -2,7 +2,7 @@ import React from 'react'
 
 const Benefits = () => {
   return (
-    <section className='h-auto w-full bg-gray-50'>
+    <section className='h-auto w-full bg-white'>
         <div className='container mx-auto py-20'>
           <h1 className='flex w-[70%] mx-auto justify-center md:text-5xl text-4xl font-extrabold text-center pb-10'>Benefits You will Get</h1>
           <div className='flex flex-wrap items-start justify-evenly w-full'>

@@ -1,14 +1,14 @@
 import React from 'react'
 
+import RecruitImg from '../../assets/home/recruit.svg'
 import TeamworkImg from '../../assets/home/teamwork.svg'
 import VolunteerImg from '../../assets/home/volunteer.svg'
-import RecruitImg from '../../assets/home/recruit.svg'
 
 
 
 const Whoarewe = () => {
   return (
-    <section className='w-full h-auto flex justify-center bg-white'> 
+    <section className='w-full h-auto flex justify-center bg-gray-50'> 
         <div className='w-3/4 pb-20'>
             {/* Who are we */}
             <div class="mx-auto grid max-w-4xl grid-cols-12 gap-4 bg-zinc-50 p-1 mt-12 lg:mt-10 w-full h-auto">

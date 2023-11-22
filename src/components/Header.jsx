@@ -19,7 +19,7 @@ function Header() {
   }, []);
  
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 nav-link">
+    <ul className="mb-2 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 nav-link">
       <Typography
         as="li"
         variant="small"
@@ -36,8 +36,8 @@ function Header() {
         color="blue-gray"
         className="p-1 font-bold text-sm menufont"
       >
-        <Link to ="/Community" className="flex items-center">
-          Workshop
+        <Link to ="/Course" className="flex items-center">
+          Inspiration
         </Link>
       </Typography>
       <Typography
@@ -64,11 +64,12 @@ function Header() {
   );
  
   return (
-    <Navbar className="mx-auto shadow-none max-w-screen-4xl py-2 px-4 lg:px-8 lg:py-4 rounded-none">
+    <Navbar className="mx-auto shadow-none max-w-screen-4xl py-1 px-4 lg:px-8 lg:py-1 rounded-none">
       <div className="mx-auto flex items-center justify-between text-blue-gray-900">
         <div className="hidden nav-link text-blue-gray-900 lg:block">{navList}</div>
-        <a className="pr-48 cursor-pointer py-1.5 customfont hover:text-gray-600 text-xl duration-200">
-          We<span className="text-2xl">Grow</span>
+        <a className="pr-48 ">
+          {/* We<span className="text-2xl">Grow</span> */}
+           <img src="src/assets/logos/logo6.png" alt="logo" className="w-20 h-20" /> 
         </a>
         <div className="flex items-center justify-between">
             {/* profile avatar */}

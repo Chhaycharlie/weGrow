@@ -3,11 +3,11 @@ const Contact = () => {
   return (
     <>
    
-<section class="bg-blue-50 ">
-    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <div class="mb-4">
-            <div class="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
-                <h2 class="font-heading mb-4 font-bold tracking-tight text-gray-900  text-3xl sm:text-5xl">Get In Touch With Us</h2>
+<section class="bg-white ">
+    <div class="mx-auto max-w-7xl lg:h-[87vh]  px-4 py-16 sm:px-6 lg:px-8 lg:py-12">
+        <div class="mb-2">
+            <div class="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-8">
+                <h2 class="font-heading mb-2 font-bold tracking-tight text-gray-900  text-3xl sm:text-5xl">Get In Touch With Us</h2>
                 <p class="mx-auto mt-4 max-w-3xl text-xl text-gray-600 ">Let's Start a Conversation</p>
             </div>
         </div>
@@ -17,7 +17,7 @@ const Contact = () => {
                 <p class="mt-6 mb-12 text-lg text-gray-600 ">Thank you for your interest in voluntary work! If you have any questions please do not hesitate to contact us.</p>
                     <ul class="mb-6 mt-6 md:mb-0">
                         <li class="flex">
-                            <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-600 text-gray-50">
+                            <div class="flex h-10 w-10 items-center justify-center rounded bg-purple-600 text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="h-6 w-6">
@@ -31,11 +31,10 @@ const Contact = () => {
                                 <h3 class="mb-2 text-lg font-medium leading-6 text-gray-900 ">Our Address
                                 </h3>
                                 <p class="text-gray-600 ">In Your Heart</p>
-                      
                             </div>
                         </li>
                         <li class="flex ">
-                            <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-600 text-gray-50">
+                            <div class="flex h-10 w-10 items-center justify-center rounded bg-purple-600 text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="h-6 w-6">
@@ -52,7 +51,7 @@ const Contact = () => {
                             </div>
                         </li>
                         <li class="flex">
-                            <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-600 text-gray-50">
+                            <div class="flex h-10 w-10 items-center justify-center rounded bg-purple-600 text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="h-6 w-6">
@@ -67,7 +66,7 @@ const Contact = () => {
                         </li>
                     </ul>
                 </div>
-                <div class="card h-fit max-w-6xl p-5 md:p-12" id="form">
+                <div class="card h-fit max-w-6xl p-5 md:p-5" id="form">
                     <h2 class="mb-4 text-2xl font-bold">Send Us A Message</h2>
                     <form id="contactForm">
                         <div class="mb-6">
@@ -85,8 +84,8 @@ const Contact = () => {
                                 <label for="textarea" class="pb-1 text-xs uppercase tracking-wider"></label><textarea id="textarea" name="textarea" cols="30" rows="5" placeholder="Write your message..." class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md sm:mb-0"></textarea>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 font-xl rounded-md sm:mb-0">Send Message</button>
+                        <div class="text-center ">
+                            <button type="submit" class="w-full bg-purple-600 text-white px-6 py-3 font-xl rounded-md sm:mb-0">Send Message</button>
                         </div>
                     </form>
                 </div>

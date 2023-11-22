@@ -1,12 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 // import { Header } from './components/Header'
-import Community from './pages/Community'
+import Course from './pages/Course'
 import Home from './pages/Home'
 import Recruitment from './pages/Recruitment'
 import Signup from './pages/Signup'
 //  import Footer from './components/Footer'
+import VolunteerForm from './components/Form/VolunteerForm'
 import Header from './components/Header'
+import Content from './components/inspiration/Content'
 import Contact from './pages/Contact'
 import Login from './pages/Login'
 
@@ -19,10 +21,12 @@ function App() {
         <Routes>
                 <Route path="/" index element={<Home />} />
                 <Route path="/Recruitment" element={<Recruitment />} />
-                <Route path="/Community" element={<Community/>}/>
+                <Route path="/Course" element={<Course/>}/>
                 <Route path="/Login" element={<Login />} />
                 <Route path="/Signup" element={<Signup />} />
                 <Route path="/Contact" element={<Contact />} />
+                <Route path="/VolunteerForm" element={<VolunteerForm/>} />
+                <Route path="/Content" element={<Content/>} />
         </Routes>
     </BrowserRouter>
          </>

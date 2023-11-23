@@ -4,19 +4,19 @@ import React from 'react';
 function Footer1() {
   return (
     <>
-    <footer class="bg-gray-50 ">
-       <div className="flex flex-row flex-wrap items-center justify-center gap-y-4 gap-x-12 bg-gray-50 text-center md:justify-between px-10">
+    <footer class="bg-gray-900 text-gray-200">
+       <div className="flex flex-row flex-wrap items-center justify-center gap-y-4 gap-x-12  text-center md:justify-between px-10">
         <div className="flex  justify-center items-center ">
         <img src="src/assets/logos/logo6.png" alt="logo" className="w-20 h-20" />
          <h1 className="font-bold ">WEGROW</h1>
         </div>
-         <ul className="flex flex-wrap items-center justify-center gap-y-2 gap-x-8 lg:px-10">
+         <ul className="flex flex-wrap items-center justify-center  gap-y-2 gap-x-8 lg:px-10">
            <li>
              <Typography
                as="a"
                href="#"
                color="blue-gray"
-               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+               className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
              >
                About Us
              </Typography>
@@ -26,7 +26,7 @@ function Footer1() {
                as="a"
                href="#"
                color="blue-gray"
-               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+               className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
              >
                Training
              </Typography>
@@ -36,7 +36,7 @@ function Footer1() {
                as="a"
                href="#"
                color="blue-gray"
-               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+               className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
              >
                Opportunity
              </Typography>
@@ -46,7 +46,7 @@ function Footer1() {
                as="a"
                href="#"
                color="blue-gray"
-               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+               className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
              >
                Recruitment
              </Typography>
@@ -56,7 +56,7 @@ function Footer1() {
                as="a"
                href="#"
                color="blue-gray"
-               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+               className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
              >
                Contact Us
              </Typography>
@@ -66,19 +66,21 @@ function Footer1() {
                as="a"
                href="#"
                color="blue-gray"
-               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+               className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
              >
-               Recruitment
+               FAQs
              </Typography>
            </li>
          </ul>
        </div>
-       <hr className="my-8 border-blue-gray-50" />
+       <div className="flex justify-center">
+       <hr className="my-8 border-blue-gray-50 w-1/2" />
+       </div>
        <div class="text-center">
-                <span class="block text-sm text-center text-gray-500 ">© 2023 Wegrow™. All Rights Reserved.</span>
-                <ul class="flex justify-center mt-5 space-x-5">
+                <span class="block text-md text-center text-gray-500 ">© 2023 Wegrow™. All Rights Reserved.</span>
+                <ul class="flex justify-center mt-5 pb-5 space-x-5">
                     <li>
-                        <a href="#" class="text-gray-500 hover:text-gray-900">
+                        <a href="#" class="text-gray-500 hover:text-gray-900 ">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
                         </a>
                     </li>

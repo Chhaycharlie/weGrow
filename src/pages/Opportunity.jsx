@@ -1,7 +1,15 @@
 import React from 'react'
-function Opportunity() {
+import Footer from '../components/Footer'
+import Pagination from '../components/Pagination'
+import Content from '../components/inspiration/Content'
+const Opportunity = () => {
   return (
-    <div>Opportunity</div>
+    
+    <>
+    <Content/>
+    <Pagination/>
+    <Footer/>
+    </>
   )
 }
 

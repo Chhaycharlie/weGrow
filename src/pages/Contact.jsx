@@ -17,7 +17,7 @@ const Contact = () => {
                 <p class="mt-6 mb-12 text-lg text-gray-600 ">Thank you for your interest in voluntary work! If you have any questions please do not hesitate to contact us.</p>
                     <ul class="mb-6 mt-6 md:mb-0">
                         <li class="flex">
-                            <div class="flex h-10 w-10 items-center justify-center rounded bg-purple-600 text-gray-50">
+                            <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-500 text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="h-6 w-6">
@@ -34,7 +34,7 @@ const Contact = () => {
                             </div>
                         </li>
                         <li class="flex ">
-                            <div class="flex h-10 w-10 items-center justify-center rounded bg-purple-600 text-gray-50">
+                            <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-500 text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="h-6 w-6">
@@ -51,7 +51,7 @@ const Contact = () => {
                             </div>
                         </li>
                         <li class="flex">
-                            <div class="flex h-10 w-10 items-center justify-center rounded bg-purple-600 text-gray-50">
+                            <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-500 text-gray-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="h-6 w-6">
@@ -85,7 +85,7 @@ const Contact = () => {
                             </div>
                         </div>
                         <div class="text-center ">
-                            <button type="submit" class="w-full bg-purple-600 text-white px-6 py-3 font-xl rounded-md sm:mb-0">Send Message</button>
+                            <button type="submit" class="w-full bg-blue-500 text-white px-6 py-3 font-xl rounded-md sm:mb-0">Send Message</button>
                         </div>
                     </form>
                 </div>

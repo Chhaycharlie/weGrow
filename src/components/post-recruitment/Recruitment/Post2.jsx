@@ -83,7 +83,7 @@ const posts = [
     return (
       <>
       <section className='w-full lg:h-[90vh] mt-[-4px] h-auto object-cover'>
-        <div className="bg-blue-50 h-full flex justify-center items-center bg-no-repeat">
+        <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-full flex justify-center items-center bg-no-repeat">
             <div className="container mx-auto flex flex-col items-center py-12 sm:py-24">
             <div className="w-11/12 sm:w-full lg:flex justify-center items-center flex-col  mb-5 sm:mb-10">
                 <h1 className="text-4xl font-bold text-black sm:text-6xl text-center ">The Platform for Voluntary Work</h1>

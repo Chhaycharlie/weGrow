@@ -60,8 +60,6 @@ const Content = () => {
   ]
 
   return (
-
-    
     <div class="container my-12 mx-auto md:px-6">
       <div>
   <div class="mb-8 text-center lg:text-left">

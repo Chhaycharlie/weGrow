@@ -1,13 +1,13 @@
-import React from "react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import React from "react";
 
 export function Pagination() {
   const [active, setActive] = React.useState(1);
 
   const getItemProps = (index) => ({
     variant: active === index ? "filled" : "text",
-    color: "gray",
+    color: "blue",
     onClick: () => setActive(index),
   });
 
@@ -24,14 +24,15 @@ export function Pagination() {
   };
 
   return (
-    <div className="flex justify-center items-center gap-4">
+    <div className="flex justify-center items-center gap-4 p-8 md:py-10">
       <Button
         variant="text"
         className="flex items-center gap-2"
+        color="blue"
         onClick={prev}
         disabled={active === 1}
       >
-        <ArrowLeftIcon strokeWidth={2} className="h-6 w-6" /> Previous
+        <ArrowLeftIcon strokeWidth={2} className="h-6 w-6 rounded-full" /> Previous
       </Button>
       <div className="flex items-center gap-2">
         <IconButton size="lg" {...getItemProps(1)}>
@@ -53,6 +54,7 @@ export function Pagination() {
       <Button
         variant="text"
         className="flex items-center gap-2"
+        color="blue"
         onClick={next}
         disabled={active === 5}
       >
@@ -62,3 +64,4 @@ export function Pagination() {
     </div>
   );
 }
+export default Pagination;

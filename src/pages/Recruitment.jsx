@@ -1,16 +1,16 @@
 import React from 'react'
 import Footer from '../components/Footer'
-import Below from '../components/inspiration/Below'
+import Pagination from '../components/Pagination'
 import Post2 from '../components/post-recruitment/Recruitment/Post2'
 import Title from '../components/post-recruitment/Recruitment/Title'
-function Recruitment() {
+const Recruitment = () => {
   return (
     <>
    {/* <Header/> */}
    <Title/>
    {/* <Search/> */}
    <Post2/>
-   <Below/>
+   <Pagination/>
    <Footer/>
    </>
   )

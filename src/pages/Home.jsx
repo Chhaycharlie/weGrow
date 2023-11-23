@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Footer2 from '../components/Footer2';
 import Post from '../components/Form/Post';
 import Hero from '../components/Home/Hero';
+import { Modal } from "../components/Modal";
 import Benefit from '../components/home/Benefits';
 import Faq from '../components/home/Faq';
 import Quote from '../components/home/Quote';
@@ -25,16 +26,8 @@ const Home = () => {
         <Faq />
         <Footer />
         <Post/>
-     <Footer2/>
-{/* =======
-      
-      <Hero />
-      <Who />
-      <Why />
-      <WhyOrg />
-      <Benefit />
-      <Faq />
-      <Footer /> 66517d617ed8ad3f26ca051897f6645c7dfb6e1e */}
+        <Footer2/>
+        <Modal/>
     </>
   );
 };

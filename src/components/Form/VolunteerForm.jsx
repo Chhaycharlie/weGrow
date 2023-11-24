@@ -6,50 +6,50 @@ const VolunteerForm = () => {
   return (
     <>
     <div>
-    <h2 class=" text-center text-3xl font-bold p-2">Apply to become a potential volunteer!</h2>
+    <h2 className=" text-center text-3xl font-bold p-2">Apply to become a potential volunteer!</h2>
     </div>
-    <div className='p-7'>
+    <div classNameName='p-7'>
     <form>
-    <div class="grid gap-6 mb-6 md:grid-cols-2">
+    <div className="grid gap-6 mb-6 md:grid-cols-2">
         <div>
-            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">Full Name</label>
-            <input type="text" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Nana" required/>
+            <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">Full Name</label>
+            <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Nana" required/>
         </div>
         <div>
-            <label for="company" class="block mb-2 text-sm font-medium text-gray-900 ">Sex</label>
-            <input type="text" id="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Female, Male or Nothing to say" required/>
+            <label for="company" className="block mb-2 text-sm font-medium text-gray-900 ">Sex</label>
+            <input type="text" id="company" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Female, Male or Nothing to say" required/>
         </div>
         <div>
-            <label for="company" class="block mb-2 text-sm font-medium text-gray-900 ">Date of Birth</label>
-            <input type="text" id="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="MM/DD/YY" required/>
+            <label for="company" className="block mb-2 text-sm font-medium text-gray-900 ">Date of Birth</label>
+            <input type="text" id="company" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="MM/DD/YY" required/>
         </div>  
         <div>
-            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Phone number</label>
-            <input type="tel" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required/>
+            <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 ">Phone number</label>
+            <input type="tel" id="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required/>
         </div>
     </div>
-    <div class="mb-6">
-            <label for="address" class="block mb-2 text-sm font-medium text-gray-900 ">Current Address</label>
-            <input type="text" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Village a, pp commune, Khan sen sok, Phnom Penh" required/>
+    <div className="mb-6">
+            <label for="address" className="block mb-2 text-sm font-medium text-gray-900 ">Current Address</label>
+            <input type="text" id="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Village a, pp commune, Khan sen sok, Phnom Penh" required/>
         </div>
-    <div class="mb-6">
-        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
-        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Example@gmail.com" required/>
+    <div className="mb-6">
+        <label for="email" className="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
+        <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Example@gmail.com" required/>
     </div> 
-    <div class="mb-6">
-        <label for="file_input" class="block mb-2 text-sm font-medium text-gray-900">Upload Your CV file</label>
-        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 " aria-describedby="file_input_help" id="file_input" type="file"/>
-        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
+    <div className="mb-6">
+        <label for="file_input" className="block mb-2 text-sm font-medium text-gray-900">Upload Your CV file</label>
+        <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 " aria-describedby="file_input_help" id="file_input" type="file"/>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
     </div> 
-    <div class="flex items-start mb-6">
-        <div class="flex items-center h-5">
-        <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 " required/>
+    <div className="flex items-start mb-6">
+        <div className="flex items-center h-5">
+        <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 " required/>
         </div>
-        <label for="remember" class="ml-2 text-sm font-medium text-gray-900 ">I agree with the 
+        <label for="remember" className="ml-2 text-sm font-medium text-gray-900 ">I agree with the 
             <a href="#" data-modal-target="default-modal" data-modal-toggle="default-modal"><Modal/></a>.
         </label>
     </div>
-    <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Apply Now</button>
+    <button type="submit" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Apply Now</button>
 </form>
 </div>
     </>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Footer from '../components/Footer'
 import Pagination from '../components/Pagination'
-import Post2 from '../components/post-recruitment/Recruitment/Post2'
+import RecruimentPost from '../components/post-recruitment/Recruitment/RecruitmentPost'
 import Title from '../components/post-recruitment/Recruitment/Title'
 const Recruitment = () => {
   return (
@@ -9,7 +9,7 @@ const Recruitment = () => {
    {/* <Header/> */}
    <Title/>
    {/* <Search/> */}
-   <Post2/>
+   <RecruimentPost/>
    <Pagination/>
    <Footer/>
    </>

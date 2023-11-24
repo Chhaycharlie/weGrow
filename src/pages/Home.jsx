@@ -1,6 +1,7 @@
 import React from "react";
 import Footer from '../components/Footer';
 import Hero from '../components/Home/Hero';
+import Modal_Post from '../components/course/Modal_Post';
 import Benefit from '../components/home/Benefits';
 import Faq from '../components/home/Faq';
 import Quote from '../components/home/Quote';
@@ -20,6 +21,7 @@ const Home = () => {
         <Quote/>
         <Faq />
         <Footer />
+        <Modal_Post/>
     </>
   );
 };

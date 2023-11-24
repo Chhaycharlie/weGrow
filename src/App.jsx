@@ -7,6 +7,7 @@ import Recruitment from './pages/Recruitment';
 import Signup from './pages/Signup';
 
 //  import Footer from './components/Footer'
+import RecruitmentForm from "./components/Form/RecruitmentForm";
 import VolunteerForm from './components/Form/VolunteerForm';
 import Header from './components/Header';
 import { Modal } from "./components/Modal";
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/Pagination" element={<Pagination/>} />
                 <Route path="/Modal" index element={<Modal/>}/>
                 <Route path="/Opportunity" element={<Opportunity/>}/>
+                <Route path="/RecruitmentForm" element={<RecruitmentForm/>}/>
 
         </Routes>
       </BrowserRouter>

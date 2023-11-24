@@ -79,7 +79,7 @@ const posts = [
         },
       },
   ]
-  function Post2(){
+  function RecruitmentPost(){
     return (
       <>
       <section className='w-full lg:h-[90vh] mt-[-4px] h-auto object-cover'>
@@ -90,7 +90,8 @@ const posts = [
                 <p className="mt-5 sm:mt-10 lg:w-10/12 text-gray-800  font-bold text-center text-sm sm:text-lg">is the heart of the change-maker community and the best resource to discover and connect with change-makers worldwide.</p>
             </div>
             <div className="flex justify-center items-center mt-2/3">
-                <button className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-[#1400FF] transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold  rounded-full text-white px-4 sm:px-6 border border-indigo-700 py-2 sm:py-3 text-sm">Post Recruitment Now +</button>
+                <a href="/RecruitmentForm" className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-[#1400FF] transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold  rounded-full text-white px-4 sm:px-6 border border-indigo-700 py-2 sm:py-3 text-sm">Post Recruitment Now +
+                </a>
             </div>
             </div>
         </div>
@@ -140,4 +141,4 @@ const posts = [
     )
   }
 
-export default Post2;
+export default RecruitmentPost;

@@ -1,12 +1,12 @@
 import React from 'react'
 import Footer from '../components/Footer'
 import Pagination from '../components/Pagination'
-import Content from '../components/inspiration/Content'
+import Inspiration from '../components/inspiration/Inspiration'
 const Opportunity = () => {
   return (
     
     <>
-    <Content/>
+    <Inspiration/>
     <Pagination/>
     <Footer/>
     </>

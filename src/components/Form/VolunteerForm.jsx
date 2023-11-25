@@ -8,8 +8,7 @@ const VolunteerForm = () => {
     <div>
     <h2 className=" text-center text-3xl font-bold p-2">Apply to become a potential volunteer!</h2>
     </div>
-    <div classNameName='p-7'>
-    <form>
+    <form className='p-10'>
     <div className="grid gap-6 mb-6 md:grid-cols-2">
         <div>
             <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">Full Name</label>
@@ -51,7 +50,6 @@ const VolunteerForm = () => {
     </div>
     <button type="submit" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Apply Now</button>
 </form>
-</div>
     </>
   ) 
 }

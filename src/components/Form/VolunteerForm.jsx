@@ -5,9 +5,12 @@ const VolunteerForm = () => {
   return (
     <>
     <div>
-    <h2 className=" text-center text-3xl font-bold p-2">Apply to become a potential volunteer!</h2>
+    <h2 className=" text-center text-3xl font-bold pt-5">Apply to become a potential volunteer!</h2>
+        <div className='flex justify-center items-center'>
+            <img src="/src/assets/image/haha.gif" alt="gif" width={300} />
+        </div>
     </div>
-    <form className='p-10'>
+    <form className='px-20 pb-10'>
     <div className="grid gap-6 mb-6 md:grid-cols-2">
         <div>
             <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">Full Name</label>
@@ -35,7 +38,15 @@ const VolunteerForm = () => {
         <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Example@gmail.com" required/>
     </div> 
     <div className="mb-6">
-        <label for="file_input" className="block mb-2 text-sm font-medium text-gray-900">Upload Your CV file</label>
+        <label for="question" className="block mb-2 text-sm font-medium text-gray-900 ">What position are you applying for?</label>
+        <input type="questions" id="choice" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Logistics member" required/>
+    </div> 
+    <div className="mb-6">
+        <label for="description" className="block mb-2 text-sm font-medium text-gray-900 ">Tell me your expectation</label>
+        <input type="description" id="description" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="..........." required/>
+    </div> 
+    <div className="mb-6">
+        <label for="file_input" className="block mb-2 text-sm font-medium text-gray-900">Upload Your Resume</label>
         <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 " aria-describedby="file_input_help" id="file_input" type="file"/>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
     </div> 
@@ -47,7 +58,7 @@ const VolunteerForm = () => {
             <a href="#" data-modal-target="default-modal" data-modal-toggle="default-modal"><ModalTerms/></a>.
         </label>
     </div>
-    <button type="submit" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Apply Now</button>
+    <button type="submit" className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Apply Now</button>
 </form>
     </>
   ) 

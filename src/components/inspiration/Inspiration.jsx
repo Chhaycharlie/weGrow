@@ -103,6 +103,7 @@ const data = [
   },
   {
     id: 12,
+    author:'src/assets/icons/people.png',
     title: 'Charity at KompongCham Province',
     name: 'meow meow',
     category: 'most_visited',
@@ -168,29 +169,20 @@ const Post = () => {
       {/* Filter Row */}
       <div className='flex flex-col lg:flex-row justify-between pt-10'>
         {/* Fliter Type */}
-        <div>
-          <p className='font-bold text-gray-700'>Filter </p>
-          <div className='flex justfiy-between flex-wrap'>
-            <button
-              onClick={() => setPosts(data)}
-              className='m-1 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
-            >
-              All
-            </button>
-            <button
-              onClick={() => filterType('popular')}
-              className='m-1 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
-            >
-              Popular
-            </button>
-            <button
-              onClick={() => filterType('most_visited')}
-              className='m-1 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
-            >
-              Most Visited
-            </button>
-        </div>
-        </div>
+      <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+          <ul className="flex flex-wrap -mb-px">
+              <li className="me-2" onClick={() => setPosts(data)}>
+                  <a href="#" className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active " aria-current="page">All</a>
+              </li>
+              <li className="me-2" onClick={() => filterType('popular')}>
+                  <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 " aria-current="page">Popular</a>
+              </li>
+              <li className="me-2" onClick={() => filterType('most_visited')}>
+                  <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 " aria-current="page" >Most Visited</a>
+              </li>
+          </ul>
+      </div>
+
         {/* New post */}
         <div>
           <Modal_Post/>

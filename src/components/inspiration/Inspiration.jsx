@@ -165,7 +165,6 @@ const Post = () => {
       <h1 className='text-blue-600 font-bold text-4xl text-center'>
         Post Inspiration to All Volunteer
       </h1>
-
       {/* Filter Row */}
       <div className='flex flex-col lg:flex-row justify-between pt-10'>
         {/* Fliter Type */}

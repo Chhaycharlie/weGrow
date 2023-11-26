@@ -18,7 +18,7 @@ export function Modal_Post() {
   return (
     <>
       <Button onClick={handleOpen}>New +</Button>
-    <Dialog open={open} size="xs" handler={handleOpen}>
+      <Dialog open={open} size="xs" handler={handleOpen}>
         <div className="flex items-center justify-between">
           <DialogHeader className="flex flex-col items-start">
             {" "}
@@ -61,9 +61,7 @@ export function Modal_Post() {
               <span class="mb-2 block text-base font-medium text-[#6B7280]">
                 Or
               </span>
-              <span
-                class="inline-flex rounded border border-[#e0e0e0] px-7 text-base font-medium text-gray-900"
-              >
+              <span class="inline-flex rounded border border-[#e0e0e0] px-7 text-base font-medium text-gray-900">
                 Browse
               </span>
             </div>

@@ -24,7 +24,7 @@ export function Pagination() {
   };
 
   return (
-    <div className="flex justify-center items-center gap-4 p-8 md:py-10">
+    <div className="flex justify-center items-center gap-4 px-24 md:py-10">
       <Button
         variant="text"
         className="flex items-center gap-2"

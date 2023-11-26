@@ -1,7 +1,6 @@
 import React from 'react';
-
 import '../App.css';
-import CreateAccount from '../assets/Auth/create-account.svg';
+import run2 from '../assets/image/run2.gif';
 
 const Signup = () => {
     const currYear = new Date().getFullYear();
@@ -9,16 +8,16 @@ const Signup = () => {
   return (
     <div>
         {/* header logo wegrow */}
-        <header className='flex items-center bg-white justify-center mr-9 mt-2 lg:justify-start lg:pl-20 w-full h-[8vh] customfont text-2xl'>
-            <h1>WeGrow</h1>
+        <header className='flex items-center bg-white justify-center mr-9 mt-2 lg:justify-start lg:pl-20 w-full h-[8vh]'>
+            <img src="src/assets/logos/logo6.png" alt="logo" className="w-20 h-20" />
         </header>
 
         {/* sign up page body */}
-        <div className='flex items-center justify-around w-full h-[84vh] bg-gray-50'>
+        <div className='flex items-center justify-around w-full h-[84vh] bg-white'>
 
             {/* left pic */}
             <div className='hidden lg:flex'>
-                <img src={CreateAccount} alt="login_image" width={400} className=''/>
+                <img src={run2} alt="login_image" width={500}/>
             </div>
 
             {/* right form */}

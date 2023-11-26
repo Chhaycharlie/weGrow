@@ -5,11 +5,6 @@ const Course = () => {
   return (
     <>
    <Training/>
-   {/* <Header2/>
-   <Content/>  */}
-  {/* //  <Below/> */}
-   {/* <Footer/> */}
-   {/* <Training/> */}
    </>
   )
 }

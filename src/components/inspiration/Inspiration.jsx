@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import Pagination from '../Pagination';
 import Modal_Post from '../course/Modal_Post';
-
 const data = [
   {
     id: 1,
@@ -161,7 +161,7 @@ const Post = () => {
   };
 
   return (
-    <div className='max-w-[1640px] m-auto px-4 py-12'>
+    <div className='max-w-[1980px] m-auto px-4 py-12'>
       <h1 className='text-blue-600 font-bold text-4xl text-center'>
         Post Inspiration to All Volunteer
       </h1>
@@ -224,8 +224,10 @@ const Post = () => {
           </div>
         ))}
       </div>
+    <Pagination/>
     </div>
   );
 };
+
 
 export default Post;

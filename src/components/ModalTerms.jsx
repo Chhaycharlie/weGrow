@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 
-export function Modal() {
+export function ModalTerms() {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open);

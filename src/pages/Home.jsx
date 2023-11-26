@@ -1,5 +1,4 @@
 import React from "react";
-import Footer from '../components/Footer';
 import Hero from '../components/Home/Hero';
 import Benefit from '../components/home/Benefits';
 import Faq from '../components/home/Faq';
@@ -19,7 +18,6 @@ const Home = () => {
         <Benefit />
         <Quote/>
         <Faq />
-        <Footer />
     </>
   );
 };

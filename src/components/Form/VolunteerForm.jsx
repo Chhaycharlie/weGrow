@@ -1,6 +1,5 @@
 import React from 'react';
-import { Modal } from '../Modal';
-
+import { ModalTerms } from '../ModalTerms';
 const VolunteerForm = () => {
 
   return (
@@ -44,8 +43,8 @@ const VolunteerForm = () => {
         <div className="flex items-center h-5">
         <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 " required/>
         </div>
-        <label for="remember" className="ml-2 text-sm font-medium text-gray-900 ">I agree with the 
-            <a href="#" data-modal-target="default-modal" data-modal-toggle="default-modal"><Modal/></a>.
+        <label for="remember" className="ml-2 text-sm font-medium text-gray-900 ">I agree with the &nbsp;  
+            <a href="#" data-modal-target="default-modal" data-modal-toggle="default-modal"><ModalTerms/></a>.
         </label>
     </div>
     <button type="submit" className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Apply Now</button>

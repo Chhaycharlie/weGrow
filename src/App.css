@@ -26,7 +26,7 @@
 }
 
 .bg-img {
-  //background-image: url("./assets/image");
+  /* background-image: url("./assets/image"); */
   background-image: linear-gradient(
     to right,
     indigo 500 10%,

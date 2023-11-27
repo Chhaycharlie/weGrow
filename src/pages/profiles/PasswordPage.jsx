@@ -6,7 +6,7 @@ import SaveButton from "../../components/shared/SaveButton";
 const PasswordPage = () => {
   return (
     <Profile
-      title={"Password"}
+      title={"/ Password"}
       name={"Son chhay"}
       quote={"Set up your weGrow present and hiring needs"}
     >

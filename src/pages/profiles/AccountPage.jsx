@@ -8,7 +8,7 @@ import { Textarea } from "@material-tailwind/react";
 const AccountPage = () => {
   return (
     <Profile
-      title={"Edit Profile"}
+      title={"/ Edit Profile"}
       name={"Son Chhay"}
       quote={"Set up your weGrow present and hiring needs"}
     >

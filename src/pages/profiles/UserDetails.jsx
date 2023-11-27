@@ -113,7 +113,7 @@ const UserDetails = () => {
               </Tab>
             ))}
           </TabsHeader>
-          <TabsBody className="h-auto">
+          <TabsBody className="h-auto min-h-screen">
             {data.map(({ value, imgs }) => (
               <TabPanel
                 key={value}

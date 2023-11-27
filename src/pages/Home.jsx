@@ -1,31 +1,26 @@
-import React from 'react'
-
-import { Header } from '../components/Header'
-import Footer from '../components/Footer'
-import Hero from '../components/Home/Hero'
-import Who from '../components/home/Whoarewe'
-import Why from '../components/home/WhySection'
-import WhyOrg from '../components/home/WhyOrganization'
-import Faq from '../components/home/Faq'
-import Benefit from '../components/home/Benefits'
+import React from "react";
+import Footer from "../components/shared/Footer";
+import { Header } from "../components/shared/Header";
+import Hero from "../components/home/Hero";
+import Benefit from "../components/home/Benefits";
+import Faq from "../components/home/Faq";
+import Who from "../components/home/Whoarewe";
+import WhyOrg from "../components/home/WhyOrganization";
+import Why from "../components/home/WhySection";
 
 const Home = () => {
   return (
     <>
-      <Header>
-        <Header />  
-      </Header>
-      <main>
-        <Hero />
-        <Who />
-        <Why />
-        <WhyOrg />
-        <Benefit />
-        <Faq />
-      </main>
+      <Header />
+      <Hero />
+      <Who />
+      <Why />
+      <WhyOrg />
+      <Benefit />
+      <Faq />
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

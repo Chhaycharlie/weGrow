@@ -38,6 +38,9 @@ function App() {
       <Route path="/Inspiration" element={<Inspiration />} />
       <Route path="/ModalDetail" element={<ModalDetail />} />
       <Route path="/Opportunity" element={<Opportunity />} />
+      <Route path="/profile">
+        
+      </Route>
     </Routes>
   );
 }

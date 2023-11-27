@@ -4,6 +4,7 @@ import {
   MobileNav,
   Navbar,
   Typography,
+  Avatar,
 } from "@material-tailwind/react";
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -79,7 +80,13 @@ function Header() {
         </a>
         <div className="flex items-center justify-between">
           {/* profile avatar */}
-          {/* <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/> */}
+          <Link to={"/"}>
+            <Avatar
+              src="src/assets/icons/x.svg"
+              alt="avatar"
+              className="cursor-pointer hidden lg:flex w-10 h-10 shadow-sm hover:shadow-lg"
+            />
+          </Link>
           {/* login btn */}
           <Link
             to="/Login"

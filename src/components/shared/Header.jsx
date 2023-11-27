@@ -1,16 +1,17 @@
-import React from "react";
 import {
-  Navbar,
-  MobileNav,
-  Typography,
   Button,
   IconButton,
+  MobileNav,
+  Navbar,
+  Typography,
 } from "@material-tailwind/react";
+import { React, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-export function Header() {
-  const [openNav, setOpenNav] = React.useState(false);
+function Header() {
+  const [openNav, setOpenNav] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
@@ -18,77 +19,79 @@ export function Header() {
   }, []);
 
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col items-center gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 nav-link">
+    <ul className="mb-2 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 nav-link">
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-bold  text-lg menufont"
+        className="p-1 font-bold  text-sm menufont"
       >
-        <a href="#" className="flex items-center">
+        <Link to="/" className="flex items-center">
           Home
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-bold text-lg menufont"
+        className="p-1 font-bold text-sm menufont"
       >
-        <a href="#" className="flex items-center">
-          Workshop
-        </a>
+        <Link to="/Course" className="flex items-center">
+          Inspiration
+        </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 font-bold text-lg menufont"
+        className="p-1 font-bold text-sm menufont"
       >
-        <a href="#" className="flex items-center">
+        <Link to="/Recruitment" className="flex items-center">
           Opportunity
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
         variant="small"
         color="blue-gray"
-        className="p-1 text-lg font-bold menufont"
+        className="p-1 text-sm font-bold menufont"
       >
-        <a href="#" className="flex items-center">
+        <Link to="/Contact" className="flex items-center">
           Contact us
-        </a>
+        </Link>
       </Typography>
     </ul>
   );
 
   return (
-    <Navbar className="mx-auto shadow-none w-full  px-4 lg:px-8 lg:py-10 rounded-none">
-      <div className="mx-auto w-full flex items-center justify-between text-blue-gray-900">
-        {/* menu */}
+    <Navbar className="mx-auto shadow-none max-w-screen-4xl py-1 px-4 lg:px-8 lg:py-1 rounded-none">
+      <div className="mx-auto flex items-center justify-between text-blue-gray-900">
         <div className="hidden nav-link text-blue-gray-900 lg:block">
           {navList}
         </div>
-
-        {/* logo  */}
-        <a className="pr-48 cursor-pointer py-1.5 customfont hover:text-gray-600 text-3xl duration-200">
-          We<span className="text-2xl">Grow</span>
+        <a className="pr-48 ">
+          {/* We<span className="text-2xl">Grow</span> */}
+          <img
+            src="src/assets/logos/logo6.png"
+            alt="logo"
+            className="w-20 h-20"
+          />
         </a>
         <div className="flex items-center justify-between">
           {/* profile avatar */}
           {/* <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/> */}
           {/* login btn */}
-          <a
-            href="#"
-            className="hidden font-semibold text-lg lg:ml-5 lg:inline-block"
+          <Link
+            to="/Login"
+            className="hidden font-semibold lg:ml-5 lg:inline-block"
           >
             Login
-          </a>
+          </Link>
           <Button
             size="lg"
-            className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#007EEA] duration-200"
+            className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200"
           >
-            <a href="#">Sign up</a>
+            <Link to="/Signup">Sign up</Link>
           </Button>
         </div>
         <IconButton
@@ -130,13 +133,14 @@ export function Header() {
         </IconButton>
       </div>
       <MobileNav open={openNav}>
-        <div className="w-full">
+        <div className="container">
           {navList}
           <Button variant="gradient" size="sm" fullWidth className="mb-2">
-            <span>Login</span>
+            <Link to="/Login">Login</Link>
           </Button>
         </div>
       </MobileNav>
     </Navbar>
   );
 }
+export default Header;

@@ -27,9 +27,6 @@ const Hero = () => {
             <button className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-[#1400FF] transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold  rounded text-white px-4 sm:px-10 border border-indigo-700 py-2 sm:py-4 text-sm">
               Get Started
             </button>
-            <button className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-transparent transition duration-150 ease-in-out hover:border-indigo-600 lg:text-xl lg:font-bold  hover:text-indigo-600 rounded border border-[#1400FF]  text-[#1400FF] px-4 sm:px-10 py-2 sm:py-4 text-sm">
-              See more
-            </button>
           </div>
         </div>
       </div>

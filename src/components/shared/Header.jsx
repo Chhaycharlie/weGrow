@@ -1,10 +1,14 @@
 import {
-  Button,
   IconButton,
   MobileNav,
   Navbar,
   Typography,
   Avatar,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
 } from "@material-tailwind/react";
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -80,13 +84,26 @@ function Header() {
         </a>
         <div className="flex items-center justify-between">
           {/* profile avatar */}
-          <Link to={"/"}>
+          {/* <Link to={"/"}>
             <Avatar
               src="src/assets/icons/x.svg"
               alt="avatar"
               className="cursor-pointer hidden lg:flex w-10 h-10 shadow-sm hover:shadow-lg"
             />
-          </Link>
+          </Link> */}
+          <Menu>
+            <MenuHandler>
+              <Avatar
+                src="src/assets/icons/x.svg"
+                alt="avatar"
+                className="cursor-pointer hidden lg:flex w-10 h-10 shadow-sm hover:shadow-lg"
+              />
+            </MenuHandler>
+            <MenuList>
+              <MenuItem>My profile</MenuItem>
+              <MenuItem>Logout</MenuItem>
+            </MenuList>
+          </Menu>
           {/* login btn */}
           <Link
             to="/Login"

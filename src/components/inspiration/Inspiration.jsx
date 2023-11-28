@@ -169,7 +169,7 @@ const Post = () => {
       {/* Filter Row */}
       <div className='flex flex-col lg:flex-row justify-between pt-10'>
         {/* Fliter Type */}
-      <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+      <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
           <ul className="flex flex-wrap -mb-px">
               <li className="me-2" onClick={() => setPosts(data)}>
                   <a href="#" className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active " aria-current="page">All</a>
@@ -178,10 +178,11 @@ const Post = () => {
                   <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 " aria-current="page">Popular</a>
               </li>
               <li className="me-2" onClick={() => filterType('most_visited')}>
-                  <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 " aria-current="page" >Most Visited</a>
+                  <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300  " aria-current="page" >Most Visited</a>
               </li>
           </ul>
       </div>
+      
 
         {/* New post */}
         <div>

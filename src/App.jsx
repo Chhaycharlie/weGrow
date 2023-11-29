@@ -17,6 +17,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Recruitment from "./pages/Recruitment";
 import Signup from "./pages/Signup";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
       <Route path="/ModalDetail" element={<ModalDetail />} />
       <Route path="/Opportunity" element={<Opportunity />} />
       <Route path="/profile"></Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

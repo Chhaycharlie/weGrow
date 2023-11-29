@@ -13,6 +13,8 @@ import {
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import Logo from "../../assets/logos/logo6.png";
+
 function Header() {
   const [openNav, setOpenNav] = useState(false);
 
@@ -74,23 +76,10 @@ function Header() {
         <div className="hidden nav-link text-blue-gray-900 lg:block">
           {navList}
         </div>
-        <a className="pr-48 ">
-          {/* We<span className="text-2xl">Grow</span> */}
-          <img
-            src="src/assets/logos/logo6.png"
-            alt="logo"
-            className="w-20 h-20"
-          />
-        </a>
+        <Link to={"/"} className="pr-48 ">
+          <img src={Logo} alt="logo" className="w-20 h-20" />
+        </Link>
         <div className="flex items-center justify-between">
-          {/* profile avatar */}
-          {/* <Link to={"/"}>
-            <Avatar
-              src="src/assets/icons/x.svg"
-              alt="avatar"
-              className="cursor-pointer hidden lg:flex w-10 h-10 shadow-sm hover:shadow-lg"
-            />
-          </Link> */}
           <Menu>
             <MenuHandler>
               <Avatar

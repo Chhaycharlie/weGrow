@@ -14,6 +14,7 @@ import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Logo from "../../assets/logos/logo6.png";
+import X from "../../assets/icons/x.svg";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
@@ -83,7 +84,7 @@ export default function Header() {
           <Menu>
             <MenuHandler>
               <Avatar
-                src="src/assets/icons/x.svg"
+                src={X}
                 alt="avatar"
                 className="cursor-pointer hidden lg:flex w-10 h-10 shadow-sm hover:shadow-lg"
               />

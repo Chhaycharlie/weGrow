@@ -1,8 +1,11 @@
 import React from "react";
+import Header from "../shared/Header";
+import Footer from "../shared/Footer";
 
 const RecruitmentForm = () => {
   return (
     <>
+      <Header />
       <div class="w-full h-20 py-5 text-center bg-blue-600  shadow overflow-hidden sm:rounded-md font-bold text-3xl text-white">
         Volunteer Recruitment Form
       </div>
@@ -426,6 +429,7 @@ const RecruitmentForm = () => {
           <div class=""></div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

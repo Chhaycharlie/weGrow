@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <footer class="bg-gray-900 text-gray-200">
+      <footer className="bg-gray-900 text-gray-200">
         <div className="flex flex-row flex-wrap items-center justify-center gap-y-4 gap-x-12  text-center md:justify-between px-10">
           <div className="flex  justify-center items-center ">
             <img
@@ -91,15 +91,15 @@ const Footer = () => {
         <div className="flex justify-center">
           <hr className="my-8 border-blue-gray-50 w-1/2" />
         </div>
-        <div class="text-center">
-          <span class="block text-md text-center text-gray-500 ">
+        <div className="text-center">
+          <span className="block text-md text-center text-gray-500 ">
             © 2023 Wegrow™. All Rights Reserved.
           </span>
-          <ul class="flex justify-center mt-5 pb-5 space-x-5">
+          <ul className="flex justify-center mt-5 pb-5 space-x-5">
             <li>
-              <a href="#" class="text-gray-500 hover:text-gray-900 ">
+              <a href="#" className="text-gray-500 hover:text-[#3D5081]">
                 <svg
-                  class="w-5 h-5"
+                  className="w-5 h-5"
                   fill="currentColor"
                   xmlns="#"
                   viewBox="0 0 24 24"
@@ -114,9 +114,9 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="#" class="text-gray-500 hover:text-gray-900">
+              <a href="#" className="text-gray-500 hover:text-pink-600">
                 <svg
-                  class="w-5 h-5"
+                  className="w-5 h-5"
                   fill="currentColor"
                   xmlns="#"
                   viewBox="0 0 24 24"
@@ -131,9 +131,9 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="#" class="text-gray-500 hover:text-gray-900">
+              <a href="#" className="text-gray-500 hover:text-[#96dcfc]">
                 <svg
-                  class="w-5 h-5"
+                  className="w-5 h-5"
                   fill="currentColor"
                   xmlns="#"
                   viewBox="0 0 24 24"
@@ -144,9 +144,9 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="#" class="text-gray-500 hover:text-gray-900">
+              <a href="#" className="text-gray-500 hover:text-[#2D64BC]">
                 <svg
-                  class="w-5 h-5"
+                  className="w-5 h-5"
                   fill="currentColor"
                   xmlns="#"
                   viewBox="0 0 50 50"
@@ -157,9 +157,9 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="#" class="text-gray-500 hover:text-gray-900">
+              <a href="#" className="text-gray-500 hover:text-[#2D64BC]">
                 <svg
-                  class="w-5 h-5"
+                  className="w-5 h-5"
                   fill="currentColor"
                   xmlns="#"
                   viewBox="0 0 50 50"

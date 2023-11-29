@@ -18,28 +18,38 @@ import Login from "./pages/Login";
 import Recruitment from "./pages/Recruitment";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
+import Profile from "./components/profiles/Profile";
+import AccountPage from "./pages/profiles/AccountPage";
+import GeneralPage from "./pages/profiles/GeneralPage";
+import PasswordPage from "./pages/profiles/PasswordPage";
+import UserDetial from "./pages/profiles/UserDetails";
 
 function App() {
   return (
     <Routes>
       <Route path="/" index element={<Home />} />
-      <Route path="/Recruitment" element={<Recruitment />} />
-      <Route path="/Course" element={<Course />} />
-      <Route path="/Contact" element={<Contact />} />
-      <Route path="/Login" element={<Login />} />
-      <Route path="/Signup" element={<Signup />} />
-      <Route path="/VolunteerForm" element={<VolunteerForm />} />
-      <Route path="/Pagination" element={<Pagination />} />
-      <Route path="/ModalTerms" index element={<ModalTerms />} />
-      <Route path="/RecruitmentForm" element={<RecruitmentForm />} />
-      <Route path="/Training" element={<Training />} />
-      <Route path="/Whoarewe" element={<Whoarewe />} />
-      <Route path="/Faq" element={<Faq />} />
-      <Route path="/PostRecruitment" element={<PostRecruitment />} />
-      <Route path="/Inspiration" element={<Inspiration />} />
-      <Route path="/ModalDetail" element={<ModalDetail />} />
-      <Route path="/Opportunity" element={<Opportunity />} />
-      <Route path="/profile"></Route>
+      <Route path="/recruitment" element={<Recruitment />} />
+      <Route path="/course" element={<Course />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/volunteerForm" element={<VolunteerForm />} />
+      <Route path="/pagination" element={<Pagination />} />
+      <Route path="/modalTerms" index element={<ModalTerms />} />
+      <Route path="/recruitmentForm" element={<RecruitmentForm />} />
+      <Route path="/training" element={<Training />} />
+      <Route path="/whoarewe" element={<Whoarewe />} />
+      <Route path="/faq" element={<Faq />} />
+      <Route path="/post-recruitment" element={<PostRecruitment />} />
+      <Route path="/inspiration" element={<Inspiration />} />
+      <Route path="/modalDetail" element={<ModalDetail />} />
+      <Route path="/opportunity" element={<Opportunity />} />
+      <Route path="/profile">
+        <Route path="account" element={<AccountPage />} />
+        <Route path="general" element={<GeneralPage />} />
+        <Route path="password" element={<PasswordPage />} />
+        <Route path="user_detail" element={<UserDetial />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

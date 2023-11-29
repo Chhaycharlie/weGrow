@@ -1,5 +1,5 @@
 import React from "react";
-import { Header } from "../../components/shared/Header";
+import Header from "../../components/shared/Header";
 import Footer from "../../components/shared/Footer";
 import AvatarOption from "../../components/profiles/AvatarOption";
 

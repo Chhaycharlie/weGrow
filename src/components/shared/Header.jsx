@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 import Logo from "../../assets/logos/logo6.png";
 
-function Header() {
+export default function Header() {
   const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {
@@ -89,8 +89,12 @@ function Header() {
               />
             </MenuHandler>
             <MenuList>
-              <MenuItem>My profile</MenuItem>
-              <MenuItem>Logout</MenuItem>
+              <MenuItem>
+                <Link to={"/profile/general"}>My profile</Link>
+              </MenuItem>
+              <MenuItem>
+                <Link to={"/login"}>Logout</Link>
+              </MenuItem>
             </MenuList>
           </Menu>
           {/* login btn */}
@@ -156,4 +160,3 @@ function Header() {
     </Navbar>
   );
 }
-export default Header;

@@ -1,5 +1,5 @@
 import React from "react";
-import Profile from "../../components/profiles/profile";
+import Profile from "../../components/profiles/Profile";
 import InputFields from "../../components/shared/InputFields";
 import SaveButton from "../../components/shared/SaveButton";
 

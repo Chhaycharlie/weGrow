@@ -1,7 +1,7 @@
 import React from "react";
 import InputFields from "../../components/shared/InputFields";
 import SaveButton from "../../components/shared/SaveButton";
-import Profile from "../../components/profiles/profile";
+import Profile from "../../components/profiles/Profile";
 
 import { Textarea } from "@material-tailwind/react";
 

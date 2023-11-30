@@ -34,15 +34,12 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/volunteerForm" element={<VolunteerForm />} />
-      <Route path="/pagination" element={<Pagination />} />
       <Route path="/modalTerms" index element={<ModalTerms />} />
       <Route path="/recruitmentForm" element={<RecruitmentForm />} />
       <Route path="/training" element={<Training />} />
-      <Route path="/faq" element={<Faq />} />
       <Route path="/post-recruitment" element={<PostRecruitment />} />
       <Route path="/inspiration" element={<Inspiration />} />
       <Route path="/modalDetail" element={<ModalDetail />} />
-      <Route path="/opportunity" element={<Opportunity />} />
       <Route path="/profile">
         <Route path="account" element={<AccountPage />} />
         <Route path="general" element={<GeneralPage />} />

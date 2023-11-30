@@ -32,7 +32,7 @@ const Faq = () => {
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
   return (
-    <div className="w-full h-auto bg-gray-50">
+    <div className="w-full h-auto bg-gray-50" id="faq">
       <div className="container mx-auto py-20">
         {/* title */}
         <div className="text-center">

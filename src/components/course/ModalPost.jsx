@@ -43,7 +43,11 @@ export function ModalPost() {
           </svg>
         </div>
         <DialogBody>
-          <Typography className="mb-10 -mt-7 " color="blue" variant="lead">
+          <Typography
+            className="mb-5 sm:mb-10 -mt-7"
+            color="blue"
+            variant="lead"
+          >
             What's on your mind?
           </Typography>
           <div className="grid gap-6">
@@ -51,11 +55,11 @@ export function ModalPost() {
               You can post your Inspiration here by add photos, title and
               description of post
             </Typography>
-            <div class="mb-8">
+            <div class="sm:mb-8 mb-1">
               <input type="file" name="file" id="file" class="sr-only" />
               <label
                 for="file"
-                class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] px-12 text-center"
+                class="relative flex min-h-[150px] sm:min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] px-12 text-center"
               >
                 <div>
                   <span class="mb-2 block text-xl font-semibold text-gray-900">

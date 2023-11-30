@@ -1,6 +1,7 @@
 import { Typography } from "@material-tailwind/react";
 import React from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../assets/logos/logo6.png";
 
 const Footer = () => {
   return (
@@ -8,11 +9,7 @@ const Footer = () => {
       <footer className="bg-gray-900 text-gray-200">
         <div className="flex flex-row flex-wrap items-center justify-center gap-y-4 gap-x-12  text-center md:justify-between px-10">
           <div className="flex  justify-center items-center ">
-            <img
-              src="src/assets/logos/logo6.png"
-              alt="logo"
-              className="w-20 h-20"
-            />
+            <img src={Logo} alt="logo" className="w-20 h-20" />
             <h1 className="font-bold ">WEGROW</h1>
           </div>
           <ul className="flex flex-wrap items-center justify-center  gap-y-2 gap-x-8 lg:px-10">
@@ -83,7 +80,7 @@ const Footer = () => {
                 color="blue-gray"
                 className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
               >
-                <Link to="/Faq">FAQs</Link>
+                <Link to="/#faq">FAQs</Link>
               </Typography>
             </li>
           </ul>

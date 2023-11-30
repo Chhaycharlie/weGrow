@@ -25,7 +25,7 @@ const Hero = () => {
             </p>
           </div>
           <div className="flex justify-center items-center">
-            <Link to={"/Login"}>
+            <Link to={"/login"}>
               <button className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-[#1400FF] transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold  rounded text-white px-4 sm:px-10 border border-indigo-700 py-2 sm:py-4 text-sm">
                 Get Started
               </button>

@@ -24,36 +24,27 @@ export function Pagination() {
   };
 
   return (
-    <div className="flex justify-center items-center gap-4 px-24 md:py-10">
+    <div className="flex flex-col md:flex-row justify-center items-center gap-4 px-6 md:px-24 py-10 ">
       <Button
         variant="text"
-        className="flex items-center gap-2"
+        className="md:flex items-center gap-2 hidden"
         color="blue"
         onClick={prev}
         disabled={active === 1}
       >
-        <ArrowLeftIcon strokeWidth={2} className="h-6 w-6 rounded-full" /> Previous
+        <ArrowLeftIcon strokeWidth={2} className="h-6 w-6 rounded-full" />{" "}
+        Previous
       </Button>
-      <div className="flex items-center gap-2">
-        <IconButton size="lg" {...getItemProps(1)}>
-          1
-        </IconButton>
-        <IconButton size="lg" {...getItemProps(2)}>
-          2
-        </IconButton>
-        <IconButton size="lg" {...getItemProps(3)}>
-          3
-        </IconButton>
-        <IconButton size="lg" {...getItemProps(4)}>
-          4
-        </IconButton>
-        <IconButton size="lg" {...getItemProps(5)}>
-          5
-        </IconButton>
+      <div className="flex items-center gap-2 mt-4 md:mt-0">
+        {[1, 2, 3, 4, 5].map((index) => (
+          <IconButton key={index} size="lg" {...getItemProps(index)}>
+            {index}
+          </IconButton>
+        ))}
       </div>
       <Button
         variant="text"
-        className="flex items-center gap-2"
+        className="md:flex items-center gap-2 hidden"
         color="blue"
         onClick={next}
         disabled={active === 5}
@@ -64,4 +55,5 @@ export function Pagination() {
     </div>
   );
 }
+
 export default Pagination;

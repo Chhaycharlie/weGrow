@@ -90,19 +90,19 @@ const posts = [
 function Opportunity() {
   return (
     <>
-      <section>
+      <section id="opportunity">
         <div className="py-16">
           <div className="mx-auto max-w-7xl px-4 lg:px-4">
-            <div className="flex justify-between">
+            <div className="flex justify-between flex-wrap">
               <div className="mx-auto max-w-2xl lg:mx-0">
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <h2 className="text-3xl text-center md:text-left font-bold tracking-tight text-gray-900 sm:text-4xl">
                   Opportunity
                 </h2>
-                <p className="mt-3 text-lg leading-8 text-gray-600">
+                <p className="mt-3 text-lg text-center md:text-left leading-8 text-gray-600">
                   Find opportunity to grow your experience and potential here.
                 </p>
               </div>
-              <form class="flex items-center">
+              <form class="flex items-center my-10 mx-auto md:mx-0 md:my-0">
                 <label for="simple-search" class="sr-only">
                   Search
                 </label>

@@ -17,8 +17,10 @@ export function ModalPost() {
 
   return (
     <>
-      <Button onClick={handleOpen}>New +</Button>
-      <Dialog open={open} size="xs" handler={handleOpen}>
+      <Button onClick={handleOpen} className="my-10">
+        New +
+      </Button>
+      <Dialog open={open} size="sm" handler={handleOpen}>
         <div className="flex items-center justify-between">
           <DialogHeader className="flex flex-col items-start">
             {" "}

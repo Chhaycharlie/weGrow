@@ -1,9 +1,10 @@
 import React from "react";
 import { Checkbox } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 import LoginImg from "../assets/Auth/login-img.svg";
+import Logo from "../assets/logos/logo6.png";
 import "../App.css";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
@@ -12,7 +13,9 @@ const Login = () => {
     <div>
       {/* logo wegrow */}
       <header className="flex items-center justify-center mr-9 mt-2 lg:justify-start lg:pl-20 w-full h-[8vh] customfont text-2xl">
-        <Link to={"/"}>WeGrow</Link>
+        <Link to={"/"}>
+          <img src={Logo} alt="logo" className="w-20 h-20" />
+        </Link>
       </header>
       <div className="flex items-center justify-around w-full h-[84vh] bg-gray-50">
         {/* left pic */}

@@ -9,7 +9,7 @@ const WhyOrganization = () => {
   return (
     <div className="container my-24 mx-auto px-4 md:px-10 min-h-[90%]">
       <section className="mb-32">
-        <h2 className="mb-12 px-32 mt-10 text-center text-3xl lg:text-4xl xl:text-5xl font-bold">
+        <h2 className="mb-12 sm:px-32 mt-10 text-center text-3xl lg:text-4xl xl:text-5xl font-bold">
           Why organization choose weGrow to post volunteer opportunities?
         </h2>
 

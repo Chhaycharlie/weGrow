@@ -38,7 +38,6 @@ function App() {
       <Route path="/modalTerms" index element={<ModalTerms />} />
       <Route path="/recruitmentForm" element={<RecruitmentForm />} />
       <Route path="/training" element={<Training />} />
-      <Route path="/whoarewe" element={<Whoarewe />} />
       <Route path="/faq" element={<Faq />} />
       <Route path="/post-recruitment" element={<PostRecruitment />} />
       <Route path="/inspiration" element={<Inspiration />} />

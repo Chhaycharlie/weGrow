@@ -7,10 +7,10 @@ import ReliaImg from "../../assets/home/reliability.svg";
 
 const why = () => {
   return (
-    <div className="bg-gray-50 w-full min-h-screen">
-      <div class="container my-24 mx-auto px-4 md:px-10 ">
+    <div className="bg-gray-50 w-full min-h-[90%]">
+      <div class="container my-24 mx-auto px-4 md:px-10 pb-3">
         <section class="mb-32">
-          <h2 class="mb-12 px-32 pt-24 text-center text-3xl lg:text-4xl xl:text-5xl font-bold">
+          <h2 class="mb-12 sm:px-32 mt-10 pt-24 text-center text-3xl lg:text-4xl xl:text-5xl font-bold">
             Why people choose weGrow to find volunteer work?
           </h2>
 

@@ -23,7 +23,7 @@ const Footer = () => {
                 color="blue-gray"
                 className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
               >
-                <Link to="/Whoarewe">About Us</Link>
+                <Link to="/#hero">About Us</Link>
               </Typography>
             </li>
             <li>
@@ -33,7 +33,7 @@ const Footer = () => {
                 color="blue-gray"
                 className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
               >
-                <Link to="/Opportunity">Opportunity</Link>
+                <Link to="/recruitment">Opportunity</Link>
               </Typography>
             </li>
             <li>
@@ -43,7 +43,7 @@ const Footer = () => {
                 color="blue-gray"
                 className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
               >
-                <Link to="/Training">Training</Link>
+                <Link to="/course">Training</Link>
               </Typography>
             </li>
             <li>
@@ -63,7 +63,7 @@ const Footer = () => {
                 color="blue-gray"
                 className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
               >
-                <Link to="/PostRecruitment">Recruitment Post+</Link>
+                <Link to="/recruitment">Recruitment Post+</Link>
               </Typography>
             </li>
             <li>

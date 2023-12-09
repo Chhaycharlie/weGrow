@@ -11,13 +11,23 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { React, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "../../assets/logos/logo6.png";
 import X from "../../assets/icons/x.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/userSlice";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
 
   useEffect(() => {
     window.addEventListener(
@@ -81,36 +91,40 @@ export default function Header() {
           <img src={Logo} alt="logo" className="w-20 h-20" />
         </Link>
         <div className="flex items-center justify-between">
-          <Menu>
-            <MenuHandler>
-              <Avatar
-                src={X}
-                alt="avatar"
-                className="cursor-pointer hidden lg:flex w-10 h-10 shadow-sm hover:shadow-lg"
-              />
-            </MenuHandler>
-            <MenuList>
-              <MenuItem>
-                <Link to={"/profile/general"}>My profile</Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to={"/login"}>Logout</Link>
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          {user ? (
+            <Menu>
+              <MenuHandler>
+                <Avatar
+                  src={X}
+                  alt="avatar"
+                  className="cursor-pointer hidden lg:flex w-10 h-10 shadow-sm hover:shadow-lg"
+                />
+              </MenuHandler>
+              <MenuList>
+                <Link to={"/profile/general"}>
+                  <MenuItem>My profiles</MenuItem>
+                </Link>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          ) : null}
           {/* login btn */}
-          <Link
-            to="/Login"
-            className="hidden font-semibold lg:ml-5 lg:inline-block"
-          >
-            Login
-          </Link>
-          <Button
-            size="lg"
-            className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200"
-          >
-            <Link to="/Signup">Sign up</Link>
-          </Button>
+          {!user ? (
+            <>
+              <Link
+                to="/Login"
+                className="hidden font-semibold lg:ml-5 lg:inline-block"
+              >
+                Login
+              </Link>
+              <Button
+                size="lg"
+                className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200"
+              >
+                <Link to="/Signup">Sign up</Link>
+              </Button>
+            </>
+          ) : null}
         </div>
         <IconButton
           variant="text"
@@ -153,9 +167,11 @@ export default function Header() {
       <MobileNav open={openNav}>
         <div className="container">
           {navList}
-          <Button variant="gradient" size="sm" fullWidth className="mb-2">
-            <Link to="/Login">Login</Link>
-          </Button>
+          {!user && (
+            <Button variant="gradient" size="sm" fullWidth className="mb-2">
+              <Link to="/Login">Login</Link>
+            </Button>
+          )}
         </div>
       </MobileNav>
     </Navbar>

@@ -1,13 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { Checkbox } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 import LoginImg from "../assets/Auth/login-img.svg";
 import Logo from "../assets/logos/logo6.png";
 import "../App.css";
+import { auth } from "../firebase";
+import { useDispatch } from "react-redux";
+import { login } from "../features/userSlice";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [forms, setForms] = useState({
+    email: "",
+    password: "",
+  });
+
+  const onChange = (e) => {
+    setForms({ ...forms, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, forms.email, forms.password)
+      .then((userAuth) => {
+        dispatch(
+          login({
+            uid: userAuth.uid,
+            email: userAuth.email,
+            displayName: userAuth.displayName,
+            photoURL: userAuth.photoURL,
+          })
+        );
+        navigate("/recruitment");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("An error occured: ", errorCode, errorMessage);
+      });
+  };
 
   return (
     <div>
@@ -59,6 +94,9 @@ const Login = () => {
                   type="text"
                   className=" outline-none w-full h-[50px] text-lg pl-5 bg-transparent"
                   placeholder="Email"
+                  name="email"
+                  value={forms["email"]}
+                  onChange={onChange}
                 />
               </div>
 
@@ -80,6 +118,9 @@ const Login = () => {
                   type="password"
                   className=" outline-none w-full h-[50px] text-lg pl-5 bg-none bg-transparent"
                   placeholder="Password"
+                  name="password"
+                  value={forms["password"]}
+                  onChange={onChange}
                 />
               </div>
 
@@ -92,6 +133,7 @@ const Login = () => {
               {/* login btn */}
               <button
                 type="submit"
+                onClick={handleLogin}
                 className="flex justify-center items-center font-extrabold text-xl text-white bg-[#42ADFC] w-full h-[50px] mt-6 rounded-lg hover:bg-[#33a6fed7]"
               >
                 Login

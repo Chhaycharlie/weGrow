@@ -1,8 +1,37 @@
-import React from "react";
-import Header from "../components/shared/Header";
+import React, { useState } from "react";
 import Footer from "../components/shared/Footer";
-
+import Header from "../components/shared/Header";
+import { db } from "../firebase";
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [loader, setLoader] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoader(true)
+
+    db.collection('contactus').add({
+      name: name,
+      email: email,
+      message: message,
+    })
+    .then(() => {
+      alert('Message has been submitted')
+      setLoader(false);
+    })
+    .catch((error) => {
+      alert(error.message);
+      setLoader(false);
+    });
+
+    setName("");
+    setEmail("");
+    setMessage("");
+  };
+
   return (
     <>
       <Header />
@@ -119,6 +148,8 @@ const Contact = () => {
                           id="name"
                           autocomplete="given-name"
                           placeholder="Your name"
+                          value={name} 
+                          onChange={(e) => setName(e.target.value)}
                           class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
                           name="name"
                         />
@@ -133,6 +164,8 @@ const Contact = () => {
                           id="email"
                           autocomplete="email"
                           placeholder="Your email address"
+                          value={email} 
+                          onChange={(e) => setEmail(e.target.value)}
                           class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
                           name="email"
                         />
@@ -149,6 +182,8 @@ const Contact = () => {
                         cols="30"
                         rows="5"
                         placeholder="Write your message..."
+                        value={message} 
+                        onChange={(e) => setMessage(e.target.value)}
                         class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md sm:mb-0"
                       ></textarea>
                     </div>

@@ -9,6 +9,7 @@ import "../App.css";
 import { auth } from "../firebase";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
@@ -35,7 +36,10 @@ const Login = () => {
             photoURL: userAuth.photoURL,
           })
         );
-        navigate("/recruitment");
+        navigate("/");
+        toast.success("Login successfully !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 const userSlice = createSlice({
   name: "user",
@@ -10,6 +12,7 @@ const userSlice = createSlice({
       state.user = action.payload;
     },
     logout: (state) => {
+      signOut(auth);
       state.user = null;
     },
   },

@@ -17,6 +17,7 @@ import Logo from "../../assets/logos/logo6.png";
 import X from "../../assets/icons/x.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/userSlice";
+import { toast } from "react-toastify";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
@@ -26,7 +27,10 @@ export default function Header() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
+    toast.success("Logout successfully !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   useEffect(() => {
@@ -90,14 +94,14 @@ export default function Header() {
         <Link to={"/"} className="pr-48 ">
           <img src={Logo} alt="logo" className="w-20 h-20" />
         </Link>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mr-6">
           {user ? (
             <Menu>
               <MenuHandler>
                 <Avatar
                   src={X}
                   alt="avatar"
-                  className="cursor-pointer hidden lg:flex w-10 h-10 shadow-sm hover:shadow-lg"
+                  className="cursor-pointer hidden lg:flex w-10 h-10 shadow-md hover:shadow-lg border border-gray-100"
                 />
               </MenuHandler>
               <MenuList>

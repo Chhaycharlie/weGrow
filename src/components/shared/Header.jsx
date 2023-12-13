@@ -1,23 +1,45 @@
 import {
-  Button,
   IconButton,
   MobileNav,
   Navbar,
-  Typography
+  Typography,
+  Avatar,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
 } from "@material-tailwind/react";
 import { React, useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
-function Header() {
+import Logo from "../../assets/logos/logo6.png";
+import X from "../../assets/icons/x.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../features/userSlice";
+import { toast } from "react-toastify";
+
+export default function Header() {
   const [openNav, setOpenNav] = useState(false);
- 
+  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+    toast.success("Logout successfully !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
   useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
+      () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
- 
+
   const navList = (
     <ul className="mb-2 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 nav-link">
       <Typography
@@ -26,7 +48,7 @@ function Header() {
         color="blue-gray"
         className="p-1 font-bold  text-sm menufont"
       >
-        <Link to ="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           Home
         </Link>
       </Typography>
@@ -36,7 +58,7 @@ function Header() {
         color="blue-gray"
         className="p-1 font-bold text-sm menufont"
       >
-        <Link to ="/Course" className="flex items-center">
+        <Link to="/Course" className="flex items-center">
           Inspiration
         </Link>
       </Typography>
@@ -46,7 +68,7 @@ function Header() {
         color="blue-gray"
         className="p-1 font-bold text-sm menufont"
       >
-        <Link to ="/Recruitment" className="flex items-center">
+        <Link to="/Recruitment" className="flex items-center">
           Opportunity
         </Link>
       </Typography>
@@ -56,31 +78,57 @@ function Header() {
         color="blue-gray"
         className="p-1 text-sm font-bold menufont"
       >
-        <Link to ="/Contact" className="flex items-center">
+        <Link to="/Contact" className="flex items-center">
           Contact us
         </Link>
       </Typography>
     </ul>
   );
- 
+
   return (
     <Navbar className="mx-auto shadow-none max-w-screen-4xl py-1 px-4 lg:px-8 lg:py-1 rounded-none">
       <div className="mx-auto flex items-center justify-between text-blue-gray-900">
-        <div className="hidden nav-link text-blue-gray-900 lg:block">{navList}</div>
-        <a className="pr-48 ">
-          {/* We<span className="text-2xl">Grow</span> */}
-           <img src="src/assets/logos/logo6.png" alt="logo" className="w-20 h-20" /> 
-        </a>
-        <div className="flex items-center justify-between">
-            {/* profile avatar */}
-          {/* <Avatar src="src/assets/icons/x.svg" alt="avatar" className="cursor-pointer hidden lg:flex w-10 h-10"/> */}
+        <div className="hidden nav-link text-blue-gray-900 lg:block">
+          {navList}
+        </div>
+        <Link to={"/"} className="pr-48 ">
+          <img src={Logo} alt="logo" className="w-20 h-20" />
+        </Link>
+        <div className="flex items-center justify-between mr-6">
+          {user ? (
+            <Menu>
+              <MenuHandler>
+                <Avatar
+                  src={X}
+                  alt="avatar"
+                  className="cursor-pointer hidden lg:flex w-10 h-10 shadow-md hover:shadow-lg border border-gray-100"
+                />
+              </MenuHandler>
+              <MenuList>
+                <Link to={"/profile/general"}>
+                  <MenuItem>My profiles</MenuItem>
+                </Link>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </MenuList>
+            </Menu>
+          ) : null}
           {/* login btn */}
-          <Link to="/Login" className="hidden font-semibold lg:ml-5 lg:inline-block">
-            Login
-          </Link>
-          <Button size="lg" className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200">
-            <Link to ="/Signup">Sign up</Link>
-          </Button>
+          {!user ? (
+            <>
+              <Link
+                to="/Login"
+                className="hidden font-semibold lg:ml-5 lg:inline-block"
+              >
+                Login
+              </Link>
+              <Button
+                size="lg"
+                className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200"
+              >
+                <Link to="/Signup">Sign up</Link>
+              </Button>
+            </>
+          ) : null}
         </div>
         <IconButton
           variant="text"
@@ -123,14 +171,13 @@ function Header() {
       <MobileNav open={openNav}>
         <div className="container">
           {navList}
-          <Button variant="gradient" size="sm" fullWidth className="mb-2">
-            <Link to ="/Login">
-            Login
-            </Link>
-          </Button>
+          {!user && (
+            <Button variant="gradient" size="sm" fullWidth className="mb-2">
+              <Link to="/Login">Login</Link>
+            </Button>
+          )}
         </div>
       </MobileNav>
     </Navbar>
   );
 }
-export default Header;

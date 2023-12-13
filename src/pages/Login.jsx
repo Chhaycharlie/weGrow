@@ -52,19 +52,19 @@ const Login = () => {
   return (
     <div>
       {/* logo wegrow */}
-      <header className="flex items-center justify-center mr-9 mt-2 lg:justify-start lg:pl-20 w-full h-[8vh] customfont text-2xl">
+      <header className="bg-gray-50 flex items-center justify-center mr-9  lg:justify-start lg:pl-20 w-full h-[10vh] customfont text-2xl">
         <Link to={"/"}>
-          <img src={Logo} alt="logo" className="w-20 h-20" />
+          <img src={Logo} alt="logo" className="mt-2 w-20 h-20" />
         </Link>
       </header>
-      <div className="flex items-center justify-around w-full h-[84vh] bg-gray-50">
+      <div className="flex items-center justify-around w-full h-[84vh] bg-white">
         {/* left pic */}
         <div className='hidden lg:flex'>
                 <img src={run2} alt="login_image" width={500} />
             </div>
 
         {/* right form */}
-        <div className="w-[300px] sm:w-[400px] h-[500px] flex flex-col justify-center border border-gray-400 rounded-2xl bg-white">
+        <div className="w-[300px] sm:w-[400px] h-[500px] flex flex-col justify-center border border-gray-100 rounded-2xl bg-gray-50">
           {/* title */}
           <div className="pt-10">
             <h1 className="text-[20px] font-black font-openSans text-center sm:text-[30px]">
@@ -157,7 +157,7 @@ const Login = () => {
       </div>
 
       {/* footer */}
-      <footer className="h-[8vh] flex justify-center items-center menufont text-lg">
+      <footer className="bg-gray-50 h-[6vh] flex justify-center items-center menufont text-lg">
         &#169;Copyright weGrow {currYear}
       </footer>
     </div>

@@ -1,9 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Footer from "../shared/Footer";
+import Header from "../shared/Header";
 
 function Training() {
   return (
     <>
+    <Header/>
       <section>
         <div className="max-w-screen lg:h-[90vh] px-4 mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12 lg:pb-10">
           <div className="flex-col justify-center items-center pt-20 w-full place-self-center 2xl:px-24">
@@ -549,6 +552,7 @@ function Training() {
       </section>
 
       <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    <Footer/>
     </>
   );
 }

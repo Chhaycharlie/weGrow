@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import run2 from '../assets/image/run2.gif';
+import Logo from "../assets/logos/logo6.png";
 import { auth } from "../firebase";
 
 const Signup = () => {
@@ -79,20 +80,22 @@ const Signup = () => {
 
   return (
     <div>
-      {/* header logo wegrow */}
-      <header className="flex items-center bg-white justify-center mr-9 mt-2 lg:justify-start lg:pl-20 w-full h-[8vh] customfont text-2xl">
-        <Link to={"/"}>WeGrow</Link>
+      {/* logo wegrow */}
+      <header className="bg-gray-50 flex items-center justify-center mr-9  lg:justify-start lg:pl-20 w-full h-[10vh] customfont text-2xl">
+        <Link to={"/"}>
+          <img src={Logo} alt="logo" className="mt-2 w-20 h-20" />
+        </Link>
       </header>
 
       {/* sign up page body */}
-      <div className="flex items-center justify-around w-full h-[84vh] bg-gray-50">
+      <div className="flex items-center justify-around w-full h-[84vh] bg-white">
         {/* left pic */}
         <div className='hidden lg:flex'>
                 <img src={run2} alt="login_image" width={500}/>
             </div>
 
         {/* right form */}
-        <div className="min-h-[550px] h-auto w-[300px] sm:w-[400px] flex flex-col justify-center border border-gray-400 rounded-2xl bg-white">
+        <div className="min-h-[550px] h-auto w-[300px] sm:w-[400px] flex flex-col justify-center border border-gray-100  bg-gray-50 rounded-2xl">
           {/* title */}
           <div>
             <h1 className="sm:text-[30px] font-black font-openSans text-center text-[20px] ">
@@ -223,7 +226,7 @@ const Signup = () => {
       </div>
 
       {/* footer */}
-      <footer className="h-[8vh] flex justify-center items-center menufont text-lg">
+      <footer className="bg-gray-50 h-[6vh] flex justify-center items-center menufont text-lg">
         &#169;Copyright weGrow {currYear}
       </footer>
     </div>

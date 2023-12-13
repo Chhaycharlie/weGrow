@@ -1,4 +1,6 @@
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import Footer from "../components/shared/Footer";
 import Header from "../components/shared/Header";
 import { db } from "../firebase";
@@ -9,27 +11,35 @@ const Contact = () => {
 
   const [loader, setLoader] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoader(true)
+    setLoader(true);
 
-    db.collection('contactus').add({
-      name: name,
-      email: email,
-      message: message,
-    })
-    .then(() => {
-      alert('Message has been submitted')
-      setLoader(false);
-    })
-    .catch((error) => {
-      alert(error.message);
-      setLoader(false);
-    });
+    try {
+      const docRef = await addDoc(collection(db, "contactus"), {
+        name: name,
+        email: email,
+        message: message,
+        timestamp: serverTimestamp(),
+      });
 
-    setName("");
-    setEmail("");
-    setMessage("");
+      toast.success("Thanks for Contact us !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+
+      setLoader(false);
+      setName("");
+      setEmail("");
+      setMessage("");
+
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      // Handle errors
+      console.error("Error adding document: ", error.message);
+      // Optionally, log the entire error object for debugging purposes
+      console.error(error);
+      setLoader(false);
+    }
   };
 
   return (
@@ -191,6 +201,7 @@ const Contact = () => {
                   <div class="text-center ">
                     <button
                       type="submit"
+                      onClick={handleSubmit}
                       class="w-full bg-blue-500 text-white px-6 py-3 font-xl rounded-md sm:mb-0"
                     >
                       Send Message

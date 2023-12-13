@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Footer from "../components/shared/Footer";
 import Header from "../components/shared/Header";
 import { db } from "../firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -9,27 +11,35 @@ const Contact = () => {
 
   const [loader, setLoader] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoader(true)
+    setLoader(true);
 
-    db.collection('contactus').add({
-      name: name,
-      email: email,
-      message: message,
-    })
-    .then(() => {
-      alert('Message has been submitted')
-      setLoader(false);
-    })
-    .catch((error) => {
-      alert(error.message);
-      setLoader(false);
-    });
+    try {
+      const docRef = await addDoc(collection(db, "contactus"), {
+        name: name,
+        email: email,
+        message: message,
+        timestamp: serverTimestamp(),
+      });
 
-    setName("");
-    setEmail("");
-    setMessage("");
+      toast.success("Thanks for Contact us !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+
+      setLoader(false);
+      setName("");
+      setEmail("");
+      setMessage("");
+
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      // Handle errors
+      console.error("Error adding document: ", error.message);
+      // Optionally, log the entire error object for debugging purposes
+      console.error(error);
+      setLoader(false);
+    }
   };
 
   return (
@@ -148,7 +158,7 @@ const Contact = () => {
                           id="name"
                           autocomplete="given-name"
                           placeholder="Your name"
-                          value={name} 
+                          value={name}
                           onChange={(e) => setName(e.target.value)}
                           class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
                           name="name"
@@ -164,7 +174,7 @@ const Contact = () => {
                           id="email"
                           autocomplete="email"
                           placeholder="Your email address"
-                          value={email} 
+                          value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
                           name="email"
@@ -182,7 +192,7 @@ const Contact = () => {
                         cols="30"
                         rows="5"
                         placeholder="Write your message..."
-                        value={message} 
+                        value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md sm:mb-0"
                       ></textarea>
@@ -191,6 +201,7 @@ const Contact = () => {
                   <div class="text-center ">
                     <button
                       type="submit"
+                      onClick={handleSubmit}
                       class="w-full bg-blue-500 text-white px-6 py-3 font-xl rounded-md sm:mb-0"
                     >
                       Send Message

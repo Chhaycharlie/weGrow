@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import Footer from "../components/shared/Footer";
 import Header from "../components/shared/Header";
 import { db } from "../firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -158,7 +160,7 @@ const Contact = () => {
                           id="name"
                           autocomplete="given-name"
                           placeholder="Your name"
-                          value={name} 
+                          value={name}
                           onChange={(e) => setName(e.target.value)}
                           class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
                           name="name"
@@ -174,7 +176,7 @@ const Contact = () => {
                           id="email"
                           autocomplete="email"
                           placeholder="Your email address"
-                          value={email} 
+                          value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md  sm:mb-0"
                           name="email"
@@ -192,7 +194,7 @@ const Contact = () => {
                         cols="30"
                         rows="5"
                         placeholder="Write your message..."
-                        value={message} 
+                        value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         class="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md sm:mb-0"
                       ></textarea>

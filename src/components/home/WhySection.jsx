@@ -1,21 +1,5 @@
 import React from "react";
 
-<<<<<<< HEAD
-import ConvenienceImg from '../../assets/home/convenience.svg'
-import ReliaImg from '../../assets/home/reliability.svg'
-import VarietyImg from '../../assets/home/variety.svg'
-import WorkImg from '../../assets/home/worktgt.svg'
-
-const why = () => {
-  return (
-    <section className='w-full h-auto bg-white'>
-        <div className='container mx-auto py-20'>
-          <h1 className='flex w-[70%] mx-auto justify-center md:text-5xl text-3xl font-extrabold text-center'>Why people choose weGrow to find volunteer work</h1>
-            <div className="grid grid-cols-3 lg:grid-cols-4 md:grid-template-columns-3 place-items-center mt-20 pl-[26%] lg:pl-0 ">
-              {/* left side  */}
-              <div className="col-span-2">
-                <img src={WorkImg} width={400} alt="Why people choose weGrow to find volunteer work" />
-=======
 import WorkImg from "../../assets/home/worktgt.svg";
 import ConvenienceImg from "../../assets/home/convenience.svg";
 import VarietyImg from "../../assets/home/variety.svg";
@@ -41,7 +25,6 @@ const why = () => {
                   src={WorkImg}
                   className="min-w-[70%] h-[50%] xl:max-w-[70%] rounded-lg"
                 />
->>>>>>> origin/dana-merge
               </div>
             </div>
 

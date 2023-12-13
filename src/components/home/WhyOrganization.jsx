@@ -1,31 +1,9 @@
 import React from "react";
 
-<<<<<<< HEAD
-import AffordImg from '../../assets/home/affordability.svg'
-import EasyImg from '../../assets/home/easy_to_use.svg'
-import FlexImg from '../../assets/home/flexibility.svg'
-import OpporImg from '../../assets/home/opportunities.svg'
-
-const WhyOrganization = () => {
-  return (
-    <section className='w-full h-auto bg-gray-50'>
-        <div className='container mx-auto py-20'>
-          <h1 className='flex w-[70%] mx-auto justify-center md:text-5xl text-3xl font-extrabold text-center'>Why organization choose weGrow to post volunteer opportunities</h1>
-          <div className="grid grid-cols-3 lg:grid-cols-4 md:grid-template-columns-3 gap-4 md:place-items-center mt-10 pl-[26%] lg:pl-[10%] ">
-              {/* left side  */}
-              <div className='col-span-2'>
-                <div className="col-span-1 lg:pb-16 flex items-start lg:pt-12 pb-6">              
-                  <img src={EasyImg} alt="easy_to_use" />
-                  <div>
-                    <h1 className='text-2xl ml-4 pb-2 font-medium'>Ease of use</h1>
-                    <p className='text-base  ml-4'>is easy to use for organizations to post volunteer opportunities. Organizations can create an account and post opportunities in minutes.</p>
-                  </div>
-                </div>
-=======
-import OpporImg from "../../assets/home/opportunities.svg";
+import AffordImg from "../../assets/home/affordability.svg";
 import EasyImg from "../../assets/home/easy_to_use.svg";
 import FlexImg from "../../assets/home/flexibility.svg";
-import AffordImg from "../../assets/home/affordability.svg";
+import OpporImg from "../../assets/home/opportunities.svg";
 
 const WhyOrganization = () => {
   return (
@@ -34,7 +12,6 @@ const WhyOrganization = () => {
         <h2 className="mb-12 sm:px-32 mt-10 text-center text-3xl lg:text-4xl xl:text-5xl font-bold">
           Why organization choose weGrow to post volunteer opportunities?
         </h2>
->>>>>>> origin/dana-merge
 
         <div className="flex flex-wrap items-center">
           <div className="w-full shrink-0 grow-0 basis-auto md:px-6 lg:w-7/12 pt-10">

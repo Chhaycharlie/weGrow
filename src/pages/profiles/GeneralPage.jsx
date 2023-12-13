@@ -1,7 +1,7 @@
 import React from "react";
+import Profile from "../../components/profiles/Profile";
 import InputFields from "../../components/shared/InputFields";
 import SaveButton from "../../components/shared/SaveButton";
-import Profile from "../../components/profiles/profile";
 
 const GeneralPage = () => {
   return (

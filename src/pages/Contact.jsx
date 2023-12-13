@@ -218,4 +218,3 @@ const Contact = () => {
   );
 };
 export default Contact;
->>>>>>> origin/dana-merge

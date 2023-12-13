@@ -4,8 +4,6 @@ import { toast } from "react-toastify";
 import Footer from "../components/shared/Footer";
 import Header from "../components/shared/Header";
 import { db } from "../firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { toast } from "react-toastify";
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

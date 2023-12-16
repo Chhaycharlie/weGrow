@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
+import { Link } from "react-router-dom";
 
 const RecruitmentForm = () => {
   return (
@@ -404,16 +405,15 @@ const RecruitmentForm = () => {
                     </div>
                   </div>
                   <div class="px-4 py-3 bg-white text-right sm:px-6">
-                    <button
-                      type="submit"
-                      class="mr-4 inline-flex justify-center w-24 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md   text-white bg-gray-600 hover:bg-gray-900 focus:outline-none   focus:ring-indigo-500"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      class="inline-flex justify-center w-24 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md   bg-red-600 hover:bg-red-900 text-whitefocus:outline-none   focus:ring-indigo-500"
-                    >
+                    <Link to="/recruitment">
+                      <button
+                        type="submit"
+                        class="mr-4 inline-flex justify-center w-24 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md   text-white bg-gray-600 hover:bg-gray-900 focus:outline-none   focus:ring-indigo-500"
+                      >
+                        Cancel
+                      </button>
+                    </Link>
+                    <button class="inline-flex justify-center w-24 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md   bg-red-600 hover:bg-red-900 text-whitefocus:outline-none   focus:ring-indigo-500">
                       Saved
                     </button>
                   </div>

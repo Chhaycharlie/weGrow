@@ -43,26 +43,26 @@ function App() {
   });
 
   return (
-      <Routes>
-        <Route path="/" index element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/recruitment" element={<Recruitment />} />
-          <Route path="/course" element={<Course />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/volunteerForm" element={<VolunteerForm />} />
-          <Route path="/recruitmentForm" element={<RecruitmentForm />} />
-          <Route path="/inspiration" element={<Inspiration />} />
-          <Route path="/profile">
-            <Route path="account" element={<AccountPage />} />
-            <Route path="general" element={<GeneralPage />} />
-            <Route path="password" element={<PasswordPage />} />
-            <Route path="user_detail" element={<UserDetial />} />
-          </Route>
+    <Routes>
+      <Route path="/" index element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/recruitment" element={<Recruitment />} />
+        <Route path="/course" element={<Course />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/volunteerForm" element={<VolunteerForm />} />
+        <Route path="/recruitmentForm" element={<RecruitmentForm />} />
+        <Route path="/inspiration" element={<Inspiration />} />
+        <Route path="/profile">
+          <Route path="account" element={<AccountPage />} />
+          <Route path="general" element={<GeneralPage />} />
+          <Route path="password" element={<PasswordPage />} />
+          <Route path="user_detail" element={<UserDetial />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 

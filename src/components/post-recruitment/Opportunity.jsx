@@ -1,6 +1,7 @@
 import React from "react";
 import Pagination from "../shared/Pagination";
 import { ModalDetail } from "./ModalDetail";
+import { Link } from "react-router-dom";
 const posts = [
   {
     id: 1,
@@ -197,12 +198,12 @@ function Opportunity() {
                     </p>
                   </div>
                   <div className="flex space-x-2 mt-3">
-                    <a
-                      href="/VolunteerForm"
+                    <Link
+                      to="/VolunteerForm"
                       class="text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-4 py-2 text-center"
                     >
                       Apply Now
-                    </a>
+                    </Link>
                     <a>
                       <ModalDetail />
                     </a>

@@ -1,10 +1,95 @@
 import React, { useState } from "react";
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, db } from "../../firebase";
+import { doc, setDoc, serverTimestamp, collection } from "firebase/firestore";
+import { toast } from "react-toastify";
+import Loading from "../../pages/loading";
 
 const RecruitmentForm = () => {
-  const [recrut, setRecruit] = useState(0);
+  const [inputData, setInputData] = useState({
+    title: "",
+    description: "",
+    country: "",
+    gender: "",
+    age: "",
+    people: "",
+    position: "",
+    department: "",
+    academic: "",
+    url: "",
+    experience: "",
+    email: "",
+    result: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [deadline, setDeadline] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const navigate = useNavigate();
+
+  const onChange = (e) => {
+    setInputData({
+      ...inputData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Step 1: Initialize state for checkbox values
+  const [checkboxValues, setCheckboxValues] = useState({
+    projectManagement: false,
+    research: false,
+    teamwork: false,
+    communication: false,
+    timeManagement: false,
+  });
+
+  // Step 2: Create onChange handler to update the state
+  const handleCheckboxChange = (checkboxName) => {
+    setCheckboxValues((prevValues) => ({
+      ...prevValues,
+      [checkboxName]: !prevValues[checkboxName],
+    }));
+  };
+
+  // Step 3: Function to get selected values
+  const getSelectedValues = () => {
+    return Object.keys(checkboxValues).filter((key) => checkboxValues[key]);
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const user = auth.currentUser;
+      setLoading(true);
+      const formData = {
+        ...inputData,
+        skill: getSelectedValues(),
+        userId: user.uid,
+        deadline: deadline,
+        startDate: startDate,
+        timestamp: serverTimestamp(),
+      };
+      // Add a new document with a generated id
+      const recruitRef = doc(collection(db, "volunteer-recruits"));
+      const addRecruit = await setDoc(recruitRef, formData);
+
+      setLoading(false);
+      toast.success("Data added to Firestore successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      console.log("Data added to Firestore successfully!");
+      navigate("/recruitment");
+    } catch (error) {
+      setLoading(false);
+      console.error("Error adding data to Firestore:", error);
+    }
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -19,82 +104,83 @@ const RecruitmentForm = () => {
         <div className="flex flex-col text-center w-full mb-1"></div>
 
         <div className="mt-10 md:mt-0 md:col-span-2 px-24 pt-10 ">
-          <form>
+          <form onSubmit={handleFormSubmit}>
             <div className="shadow overflow-hidden sm:rounded-md border border-gray-400">
               <div className="px-2 py-8 bg-white sm:p-6">
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="first-name"
+                      htmlFor="title"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Recruitment No.
+                      Title Recruitment
+                    </label>
+                    <input
+                      value={inputData["title"]}
+                      onChange={onChange}
+                      type="text"
+                      name="title"
+                      placeholder="Write a short Title here..."
+                      required
+                      className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      htmlFor="description"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Recruiment Description
                     </label>
                     <input
                       type="text"
-                      nameName="No"
-                      placeholder="1"
-                      id="first-name"
-                      autocomplete="given-name"
-                      onChange={(e) => setRecruit(e.target.value)}
-                      value={recrut}
-                      class="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full border border-gray-300 shadow-sm sm:text-sm rounded-md"
+                      value={inputData.description}
+                      onChange={onChange}
+                      name="description"
+                      placeholder="Write Description of Organization here"
+                      required
+                      className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
+                      htmlFor="startDate"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Recruitment Date
                     </label>
                     <input
                       type="date"
-                      name="last-name"
+                      name="startDate"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
                       placeholder="DD/MM/YYYY"
-                      id="last-name"
-                      autocomplete="family-name"
+                      required
                       className="mt-1 p-2 focus:ring-indigo-500 border border-gray-300  focus:border-indigo-500 block w-full shadow-sm sm:text-sm  rounded-md"
                     />
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
+                      htmlFor="deadline"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Recruitment Deadline
                     </label>
                     <input
                       type="date"
-                      name="last-name"
-                      placeholder="09/02/2023"
-                      id="last-name"
-                      autocomplete="family-name"
+                      name="deadline"
+                      value={deadline}
+                      onChange={(e) => setDeadline(e.target.value)}
+                      placeholder="DD/MM/YYYY"
                       className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      required
                     />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Title Recruitment
-                    </label>
-                    <input
-                      type="text"
-                      name="last-name"
-                      placeholder="Write a short Title here..."
-                      id="last-name"
-                      autocomplete="family-name"
-                      className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      for="country"
+                      htmlFor="country"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Location
@@ -102,89 +188,82 @@ const RecruitmentForm = () => {
                     <select
                       id="country"
                       name="country"
-                      autocomplete="country"
+                      onChange={onChange}
+                      value={inputData.country}
+                      defaultValue="Phnom Penh"
                       className="mt-1 p-2 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
                     >
-                      <option>PhnomPenh</option>
-                      <option>KompongCham</option>
-                      <option>SiemReap</option>
+                      <option>Phnom Penh</option>
+                      <option>Kompong Cham</option>
+                      <option>Siem Reap</option>
                       <option>Battambang</option>
                       <option>Kandal</option>
-                      <option>SvayRieng</option>
+                      <option>Svay Rieng</option>
                       <option>Takeo</option>
                       <option>Kompot</option>
-                      <option>PreahSihanouk</option>
-                      <option>KohKong</option>
+                      <option>Preah Sihanouk</option>
+                      <option>Koh Kong</option>
                       <option>Keb</option>
                       <option>Kratie</option>
-                      <option>TbongKmom</option>
-                      <option>KompongSpeu</option>
+                      <option>Tbong Kmom</option>
+                      <option>Kompong Speu</option>
                     </select>
-                  </div>
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      for="country"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Recruiment Description
-                    </label>
-                    <input
-                      type="text"
-                      name="last-name"
-                      placeholder="Write Description of Organization here"
-                      id="last-name"
-                      autocomplete="family-name"
-                      className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="country"
+                      htmlFor="gender"
                       class="block text-sm font-medium text-gray-700"
                     >
                       Gender
                     </label>
                     <select
-                      id="country"
-                      name="country"
-                      autocomplete="country"
+                      id="gender"
+                      name="gender"
+                      onChange={onChange}
+                      value={inputData.gender}
+                      defaultValue="Both"
                       className="mt-1 p-2 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
                     >
                       <option>Male</option>
                       <option>female</option>
-                      <option>other</option>
+                      <option>Both</option>
                     </select>
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
+                      htmlFor="age"
                       class="block text-sm font-medium text-gray-700"
                     >
                       Age
                     </label>
                     <input
                       type="text"
-                      name="last-name"
+                      name="age"
                       placeholder="above 15"
-                      id="last-name"
-                      autocomplete="family-name"
+                      onChange={onChange}
+                      value={inputData.age}
                       className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      required
                     />
                   </div>
 
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="country"
+                      htmlFor="people"
                       className="block text-sm font-medium text-gray-700"
                     >
                       How many people you are recruit?
                     </label>
                     <select
-                      id="country"
-                      name="country"
-                      autocomplete="country"
+                      id="people"
+                      name="people"
+                      onChange={onChange}
+                      value={inputData.people}
                       className="mt-1 p-2 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
                     >
                       <option>1</option>
                       <option>2 or 3</option>
@@ -196,33 +275,35 @@ const RecruitmentForm = () => {
                   </div>
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
+                      htmlFor="position"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Position
                     </label>
                     <input
                       type="text"
-                      name="last-name"
-                      id="last-name"
+                      name="position"
                       placeholder="trainer..."
-                      autocomplete="family-name"
+                      onChange={onChange}
+                      value={inputData.position}
                       className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      required
                     />
                   </div>
 
                   <div class="col-span-6 sm:col-span-3">
                     <label
-                      for="country"
+                      htmlFor="department"
                       class="block text-sm font-medium text-gray-700"
                     >
                       Department
                     </label>
                     <select
-                      id="country"
-                      name="country"
-                      autocomplete="country"
+                      name="department"
+                      onChange={onChange}
+                      value={inputData.department}
                       className="mt-3 block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
                     >
                       <option>Project Management</option>
                       <option>Media</option>
@@ -231,85 +312,94 @@ const RecruitmentForm = () => {
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
+                      htmlFor="web_url"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Website Organization
                     </label>
                     <input
                       type="text"
-                      name="last-name"
+                      name="url"
+                      onChange={onChange}
+                      value={inputData.url}
                       placeholder="Link Url"
-                      id="last-name"
-                      autocomplete="family-name"
                       className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      required
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
+                      htmlFor="academic"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Academic Qualification
                     </label>
                     <input
                       type="text"
-                      name="last-name"
+                      name="academic"
                       placeholder="Undergraduate"
-                      id="last-name"
-                      autocomplete="family-name"
+                      onChange={onChange}
+                      value={inputData.academic}
                       className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      required
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
+                      htmlFor="experience"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Required experience
                     </label>
                     <input
                       type="text"
-                      name="last-name"
+                      name="experience"
+                      onChange={onChange}
+                      value={inputData.experience}
                       placeholder="Need to have softskill"
-                      id="last-name"
-                      autocomplete="family-name"
                       className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      required
                     />
                   </div>
 
                   <div className="col-span-6 sm:col-span-6">
                     <label
-                      for="email-address"
+                      htmlFor="email-address"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Email Organization
                     </label>
                     <input
-                      type="text"
-                      name="email-address"
-                      placeholder="Socheata123@emaple.com."
-                      id="email-address"
-                      autocomplete="email"
+                      type="email"
+                      name="email"
+                      onChange={onChange}
+                      placeholder="Socheata123@example.com."
+                      value={inputData.email}
                       className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      required
                     />
                   </div>
 
                   <div class="col-span-6 sm:col-span-6">
                     <label
-                      for="email-address"
+                      htmlFor="email-address"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Result Announcement
                     </label>
-                    <input
-                      type="text"
-                      name="email-address"
-                      placeholder="After 14 september we will contact you if you passed"
-                      id="email-address"
-                      autocomplete="email"
-                      className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
+                    <select
+                      id="result"
+                      name="result"
+                      onChange={onChange}
+                      value={inputData.result}
+                      className="mt-1 p-2 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required
+                    >
+                      <option>After 1 Week</option>
+                      <option>After 2 Week</option>
+                      <option>After 3 Week</option>
+                      <option>After 1 month</option>
+                    </select>
                   </div>
                 </div>
                 <div className="mt-8 ">
@@ -320,15 +410,20 @@ const RecruitmentForm = () => {
                     <div className="flex place-items-center">
                       <div className="flex items-center h-5">
                         <input
-                          id="comments"
-                          name="comments"
+                          id="project-management"
+                          name="projectManagement"
                           type="checkbox"
+                          checked={checkboxValues.projectManagement}
+                          onChange={() =>
+                            handleCheckboxChange("projectManagement")
+                          }
                           className="focus:ring-indigo-500 p-2 h-4 w-4 border text-indigo-600 border-gray-300 rounded"
+                          required
                         />
                       </div>
                       <div className="ml-3 text-sm">
                         <label
-                          for="comments"
+                          htmlFor="projectManagement"
                           className="font-regular text-gray-700"
                         >
                           Project management
@@ -338,15 +433,17 @@ const RecruitmentForm = () => {
                     <div className="flex items-start">
                       <div className="flex items-center h-5">
                         <input
-                          id="comments"
-                          name="comments"
+                          id="research"
+                          name="research"
                           type="checkbox"
+                          checked={checkboxValues.research}
+                          onChange={() => handleCheckboxChange("research")}
                           className="focus:ring-indigo-500 p-2 h-4 w-4 border text-indigo-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
                         <label
-                          for="comments"
+                          htmlFor="research"
                           className="font-regular text-gray-700"
                         >
                           Research
@@ -356,15 +453,17 @@ const RecruitmentForm = () => {
                     <div className="flex items-start">
                       <div clasName="flex items-center h-5">
                         <input
-                          id="comments"
-                          name="comments"
+                          id="teamwork"
+                          name="teamwork"
                           type="checkbox"
+                          checked={checkboxValues.teamwork}
+                          onChange={() => handleCheckboxChange("teamwork")}
                           className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
                         <label
-                          for="comments"
+                          htmlFor="teamwork"
                           className="font-regular text-gray-700"
                         >
                           Teamwork
@@ -374,15 +473,17 @@ const RecruitmentForm = () => {
                     <div className="flex items-start">
                       <div className="flex items-center h-5">
                         <input
-                          id="comments"
-                          name="comments"
+                          id="communication"
+                          name="communication"
                           type="checkbox"
+                          checked={checkboxValues.communication}
+                          onChange={() => handleCheckboxChange("communication")}
                           className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
                         <label
-                          for="comments"
+                          htmlFor="communication"
                           className="font-regular text-gray-700"
                         >
                           communication
@@ -392,15 +493,19 @@ const RecruitmentForm = () => {
                     <div className="flex items-start">
                       <div className="flex items-center h-5">
                         <input
-                          id="comments"
-                          name="comments"
+                          id="timeManagement"
+                          name="timeManagement"
                           type="checkbox"
+                          checked={checkboxValues.timeManagement}
+                          onChange={() =>
+                            handleCheckboxChange("timeManagement")
+                          }
                           className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-300 rounded"
                         />
                       </div>
                       <div className="ml-3 text-sm">
                         <label
-                          for="comments"
+                          htmlFor="timeManagement"
                           className="font-regular text-gray-700"
                         >
                           Time management

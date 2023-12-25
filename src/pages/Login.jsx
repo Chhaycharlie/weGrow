@@ -9,12 +9,14 @@ import { auth } from "../firebase";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import { toast } from "react-toastify";
+import Loading from "./loading";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
   const [formErrors, setFormErrors] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [forms, setForms] = useState({
     email: "",
     password: "",
@@ -26,6 +28,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const userAuth = await signInWithEmailAndPassword(
         auth,
@@ -41,12 +44,13 @@ const Login = () => {
           photoURL: userAuth.photoURL,
         })
       );
-
+      setLoading(false);
       navigate("/");
       toast.success("Login successfully !", {
         position: toast.POSITION.TOP_RIGHT,
       });
     } catch (error) {
+      setLoading(false);
       setFormErrors("Invalid credential !!!");
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -57,6 +61,10 @@ const Login = () => {
   useEffect(() => {
     setForms("");
   }, [formErrors]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>

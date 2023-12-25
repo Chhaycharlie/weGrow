@@ -1,16 +1,12 @@
 import React from "react";
-
-import AvatarIcon from "../../assets/profiles/avatar_icon.svg";
+import { Avatar } from "@mui/material";
 
 const AvatarOption = ({ title, name, quote }) => {
   return (
     <div className="w-[40%] h-auto flex flex-wrap mt-10 text-center lg:text-left lg:justify-normal justify-center lg:space-x-10 lg:items-center lg:m-10">
-      <img
-        src={AvatarIcon}
-        width={70}
-        alt="profile avatar"
-        className="cursor-pointer"
-      />
+      <Avatar sx={{ width: 60, height: 60 }} src="">
+        {name[0]}
+      </Avatar>
       <div>
         <h1 className="font-thin text-3xl">
           {name} {title}

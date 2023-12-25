@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Checkbox } from "@material-tailwind/react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -13,6 +12,7 @@ import { toast } from "react-toastify";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
+  const [formErrors, setFormErrors] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [forms, setForms] = useState({
@@ -24,29 +24,39 @@ const Login = () => {
     setForms({ ...forms, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, forms.email, forms.password)
-      .then((userAuth) => {
-        dispatch(
-          login({
-            uid: userAuth.uid,
-            email: userAuth.email,
-            displayName: userAuth.displayName,
-            photoURL: userAuth.photoURL,
-          })
-        );
-        navigate("/");
-        toast.success("Login successfully !", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log("An error occured: ", errorCode, errorMessage);
+    try {
+      const userAuth = await signInWithEmailAndPassword(
+        auth,
+        forms.email,
+        forms.password
+      );
+
+      dispatch(
+        login({
+          uid: userAuth.uid,
+          email: userAuth.email,
+          displayName: userAuth.displayName,
+          photoURL: userAuth.photoURL,
+        })
+      );
+
+      navigate("/");
+      toast.success("Login successfully !", {
+        position: toast.POSITION.TOP_RIGHT,
       });
+    } catch (error) {
+      setFormErrors("Invalid credential !!!");
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("An error occurred: ", errorCode, errorMessage);
+    }
   };
+
+  useEffect(() => {
+    setForms("");
+  }, [formErrors]);
 
   return (
     <div>
@@ -67,7 +77,7 @@ const Login = () => {
           {/* title */}
           <div className="pt-10">
             <h1 className="text-[20px] font-black font-openSans text-center sm:text-[30px]">
-              Login
+              Please Login
             </h1>
             <h4 className="text-center text-sm text-gray-500 font-bold">
               Doesn't have account yet?{" "}
@@ -129,9 +139,8 @@ const Login = () => {
               </div>
 
               {/* remember me */}
-              <div className="mt-2 mr-10 flex justify-center items-center font-bold text-gray-500">
-                <Checkbox className="w-4 h-4" />
-                <p className="text-sm">Remember me</p>
+              <div className="mt-4 mr-10 flex justify-center items-center font-bold text-gray-500">
+                <h1 className="ml-10 text-red-500 font-sans">{formErrors}</h1>
               </div>
 
               {/* login btn */}

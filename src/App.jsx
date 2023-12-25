@@ -16,51 +16,98 @@ import UserDetial from "./pages/profiles/UserDetails";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 
 import { Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import { login, logout } from "./features/userSlice";
-import { auth } from "./firebase";
+import ProfileLayout from "./components/profiles/ProfileLayout";
+import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (userAuth) => {
-      if (userAuth) {
-        dispatch(
-          login({
-            uid: userAuth.uid,
-            email: userAuth.email,
-            displayName: userAuth.displayName,
-            photoURL: userAuth.photoURL,
-          })
-        );
-      } else {
-        dispatch(logout());
-      }
-    });
-  });
-
   return (
     <Routes>
-      <Route path="/" index element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route element={<ProtectedRoute />}>
-        <Route path="/recruitment" element={<Recruitment />} />
-        <Route path="/course" element={<Course />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/volunteerForm" element={<VolunteerForm />} />
-        <Route path="/recruitmentForm" element={<RecruitmentForm />} />
-        <Route path="/inspiration" element={<Inspiration />} />
-        <Route path="/profile">
-          <Route path="account" element={<AccountPage />} />
-          <Route path="general" element={<GeneralPage />} />
-          <Route path="password" element={<PasswordPage />} />
-          <Route path="user_detail" element={<UserDetial />} />
-        </Route>
+      <Route path="/" element={<Home />} />
+      <Route
+        path="/login"
+        element={
+          <ProtectLoginRoute>
+            <Login />
+          </ProtectLoginRoute>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <ProtectLoginRoute>
+            <Signup />
+          </ProtectLoginRoute>
+        }
+      />
+      <Route
+        path="/recruitment"
+        element={
+          <ProtectedRoute>
+            <Recruitment />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/course"
+        element={
+          <ProtectedRoute>
+            <Course />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/contact"
+        element={
+          <ProtectedRoute>
+            <Contact />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/volunteerForm"
+        element={
+          <ProtectedRoute>
+            <VolunteerForm />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/recruitmentForm"
+        element={
+          <ProtectedRoute>
+            <RecruitmentForm />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/inspiration"
+        element={
+          <ProtectedRoute>
+            <Inspiration />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfileLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index path="account" element={<AccountPage />} />
+        <Route path="general" element={<GeneralPage />} />
+        <Route path="password" element={<PasswordPage />} />
       </Route>
+      <Route
+        path="/profile/user_details"
+        element={
+          <ProtectedRoute>
+            <UserDetial />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

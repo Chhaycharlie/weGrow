@@ -15,13 +15,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "../../assets/logos/logo6.png";
 import X from "../../assets/icons/x.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../features/userSlice";
 import { toast } from "react-toastify";
+import { auth } from "../../firebase";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
-  const user = useSelector((state) => state.user.user);
+  const user = auth.currentUser;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -58,7 +59,7 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-bold text-sm menufont"
       >
-        <Link to="/Course" className="flex items-center">
+        <Link to="/course" className="flex items-center">
           Inspiration
         </Link>
       </Typography>
@@ -68,7 +69,7 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-bold text-sm menufont"
       >
-        <Link to="/Recruitment" className="flex items-center">
+        <Link to="/recruitment" className="flex items-center">
           Opportunity
         </Link>
       </Typography>
@@ -78,8 +79,18 @@ export default function Header() {
         color="blue-gray"
         className="p-1 text-sm font-bold menufont"
       >
-        <Link to="/Contact" className="flex items-center">
+        <Link to="/contact" className="flex items-center">
           Contact us
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 text-sm font-bold menufont"
+      >
+        <Link to="/dashboard" className="flex items-center">
+          Dashboard
         </Link>
       </Typography>
     </ul>
@@ -128,7 +139,9 @@ export default function Header() {
                 <Link to="/Signup">Sign up</Link>
               </Button>
             </>
-          ) : null}
+          ) : (
+            ""
+          )}
         </div>
         <IconButton
           variant="text"

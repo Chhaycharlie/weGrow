@@ -8,11 +8,8 @@ import WhyOrg from "../components/home/WhyOrganization";
 import Why from "../components/home/WhySection";
 import Footer from "../components/shared/Footer";
 import Header from "../components/shared/Header";
-import { useSelector } from "react-redux";
 
 const Home = () => {
-  const user = useSelector((state) => state.user.user);
-  console.log(user);
 
   return (
     <>

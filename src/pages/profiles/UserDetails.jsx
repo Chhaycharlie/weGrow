@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/shared/Header";
 import Footer from "../../components/shared/Footer";
 import AvatarOption from "../../components/profiles/AvatarOption";
@@ -10,9 +10,12 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
+import { auth } from "../../firebase";
 
 const UserDetails = () => {
+  const currentUser = auth.currentUser;
   const [activeTab, setActiveTab] = React.useState("posts");
+  const [username, setUsername] = useState(currentUser.displayName);
   const data = [
     {
       label: "Posts",
@@ -88,7 +91,7 @@ const UserDetails = () => {
       <main>
         <div className="w-full flex justify-center">
           <AvatarOption
-            name={"Son Chhay"}
+            name={username}
             quote={"Set up your weGrow present and hiring needs"}
           />
         </div>

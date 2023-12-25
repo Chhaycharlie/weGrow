@@ -27,7 +27,7 @@ const VolunteerForm = () => {
             <input
               type="text"
               id="first_name"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              className="bg-gray-50 p-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
               placeholder="Nana"
               required
             />
@@ -37,15 +37,17 @@ const VolunteerForm = () => {
               for="company"
               className="block mb-2 text-sm font-medium text-gray-900 "
             >
-              Sex
+              Gender
             </label>
-            <input
-              type="text"
-              id="company"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="Female, Male or Nothing to say"
+            <select
+              className="bg-gray-50 border p-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
               required
-            />
+              placeholder="Female, Male or Nothing to say"
+              name="selectedGender"
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
           </div>
           <div>
             <label
@@ -55,10 +57,10 @@ const VolunteerForm = () => {
               Date of Birth
             </label>
             <input
-              type="text"
+              type="date"
               id="company"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="MM/DD/YY"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+              placeholder="DD/MM/YYYY"
               required
             />
           </div>
@@ -72,8 +74,8 @@ const VolunteerForm = () => {
             <input
               type="tel"
               id="phone"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              placeholder="123-45-678"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+              placeholder="012-345-678"
               pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
               required
             />
@@ -89,7 +91,7 @@ const VolunteerForm = () => {
           <input
             type="text"
             id="address"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Village a, pp commune, Khan sen sok, Phnom Penh"
             required
           />
@@ -104,7 +106,7 @@ const VolunteerForm = () => {
           <input
             type="email"
             id="email"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Example@gmail.com"
             required
           />
@@ -119,7 +121,7 @@ const VolunteerForm = () => {
           <input
             type="questions"
             id="choice"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Logistics member"
             required
           />
@@ -134,7 +136,7 @@ const VolunteerForm = () => {
           <input
             type="description"
             id="description"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="..........."
             required
           />
@@ -186,7 +188,7 @@ const VolunteerForm = () => {
         </div>
         <button
           type="submit"
-          className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+          className="text-white bg-blue-600 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
         >
           Apply Now
         </button>

@@ -1,7 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/userSlice";
+import { toast } from "react-toastify";
 
 const Settings = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    dispatch(logout());
+    toast.success("Logout successfully !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    navigate("/");
+  };
+
   return (
     <div>
       <ul className="text-2xl font-thin space-y-1">
@@ -18,8 +32,11 @@ const Settings = () => {
           <Link to={"/profile/user_detail"}>Switch Account</Link>
         </li>
         <hr className="w-56 h-[2px] bg-gray-300" />
-        <li className="text-red-500 cursor-pointer hover:text-gray-800 pt-1">
-          Delete Account
+        <li
+          onClick={handleClick}
+          className="text-red-500 cursor-pointer hover:text-gray-800 pt-1"
+        >
+          Sign Out
         </li>
       </ul>
     </div>

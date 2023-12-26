@@ -93,14 +93,14 @@ export default function Header() {
   return (
     <Navbar className="mx-auto shadow-none max-w-screen-4xl py-1 px-4 lg:px-8 lg:py-1 rounded-none">
       <div className="mx-auto flex items-center justify-between text-blue-gray-900">
-        <div className="hidden nav-link text-blue-gray-900 lg:block">
+        <div className="flex-3 hidden nav-link text-blue-gray-900 lg:block">
           {navList}
         </div>
-        <Link to={"/"} className="pr-48 ">
+        <Link to={"/"} className="mr-48 flex-1">
           <img src={Logo} alt="logo" className="w-20 h-20" />
         </Link>
         <div
-          className={`flex items-center justify-between mr-6 ${
+          className={`flex items-center justify-between mr-4 sm:mr-6 ${
             user
               ? "border rounded-full shadow-xl hover:shadow-lg cursor-pointer"
               : ""
@@ -114,6 +114,8 @@ export default function Header() {
                 </Avatar>
               </MenuHandler>
               <MenuList>
+                {/* avoid error */}
+                <MenuItem className="hidden"></MenuItem>
                 <Link to={"/profile/general"}>
                   <MenuItem>My profiles</MenuItem>
                 </Link>

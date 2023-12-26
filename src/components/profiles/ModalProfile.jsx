@@ -14,8 +14,6 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
-  height: 400,
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -99,15 +97,20 @@ export default function ModalProfile({ toggle, name }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} className="lg:w-[600px] h-[400px] w-[400px]">
           {/* title */}
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            className="text-center lg:text-left"
+          >
             Edit Profile Image
           </Typography>
 
           {/* add profile image */}
-          <form className="m-20">
-            <div className="flex items-center space-x-6">
+          <form className="lg:m-20 m-10">
+            <div className="flex lg:items-center flex-wrap justify-center space-x-6">
               <div className="shrink-0">
                 <img
                   id="preview_img"
@@ -116,7 +119,7 @@ export default function ModalProfile({ toggle, name }) {
                   alt="Current profile photo"
                 />
               </div>
-              <label className="block">
+              <label className="block mt-10 lg:mt-0">
                 <span className="sr-only">Choose profile photo</span>
                 <input
                   type="file"

@@ -60,12 +60,12 @@ const Contact = () => {
           <div class="flex items-stretch justify-center">
             <div class="grid md:grid-cols-2">
               <div class="h-full pr-6">
-                <p class="mt-6 mb-12 text-lg text-gray-600 ">
+                <p class="mt-6 mb-12 text-lg text-gray-600 text-center sm:text-start">
                   Thank you for your interest in voluntary work! If you have any
                   questions please do not hesitate to contact us.
                 </p>
-                <ul class="mb-6 mt-6 md:mb-0">
-                  <li class="flex">
+                <ul class="mb-6 mt-6 md:mb-0 ">
+                  <li class="flex justify-center sm:justify-start pr-24 sm:pr-0">
                     <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-500 text-gray-50">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +90,7 @@ const Contact = () => {
                       <p class="text-gray-600 ">In Your Heart</p>
                     </div>
                   </li>
-                  <li class="flex ">
+                  <li class="flex justify-center sm:justify-start ">
                     <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-500 text-gray-50">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ const Contact = () => {
                       <p class="text-gray-600 ">Mobile: +855(123) 456-789</p>
                     </div>
                   </li>
-                  <li class="flex">
+                  <li class="flex justify-center sm:justify-start pl-3 sm:pl-0">
                     <div class="flex h-10 w-10 items-center justify-center rounded bg-blue-500 text-gray-50">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

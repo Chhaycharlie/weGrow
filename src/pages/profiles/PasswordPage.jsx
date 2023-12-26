@@ -7,12 +7,12 @@ const PasswordPage = () => {
     <form className="mb-2 w-80 sm:w-full">
       <div className="mb-1 flex flex-col gap-6">
         <InputFields
-          placeholder={"Enter Old Password"}
+          placeholder={"Enter New Password"}
           label={"Old Password"}
         />
         <InputFields
           placeholder={"Enter at least 8 characters"}
-          label={"New Password"}
+          label={"Enter Confirm New Password"}
           className={"mt-10"}
         />
       </div>

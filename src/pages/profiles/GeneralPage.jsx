@@ -31,9 +31,6 @@ const GeneralPage = () => {
           onChange={onUsernameChange}
           disable={true}
         />
-        <h1 className="text-xl text-gray-500 ml-4 ">
-          Your weGrow URL: https://weGrow.com/{currentUser.displayName}
-        </h1>
         <InputFields
           placeholder={"Email Address"}
           label={"Email"}

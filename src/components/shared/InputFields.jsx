@@ -1,6 +1,13 @@
 import React from "react";
 
-const InputFields = ({ placeholder, label, value, className, onChange }) => {
+const InputFields = ({
+  placeholder,
+  label,
+  value,
+  className,
+  onChange,
+  disable,
+}) => {
   return (
     <>
       <h1 className={`-mb-1 ${className} text-2xl`}>{label}</h1>
@@ -9,6 +16,7 @@ const InputFields = ({ placeholder, label, value, className, onChange }) => {
         className="focus:border-gray-800 focus:border-2 outline-none pl-5 h-16 text-xl border border-gray-300 rounded-xl"
         value={value}
         onChange={onChange}
+        disabled={disable}
       />
     </>
   );

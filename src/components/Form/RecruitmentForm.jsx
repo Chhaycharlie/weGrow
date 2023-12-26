@@ -73,7 +73,7 @@ const RecruitmentForm = () => {
       };
       // Add a new document with a generated id
       const recruitRef = doc(collection(db, "volunteer-recruits"));
-      const addRecruit = await setDoc(recruitRef, formData);
+      await setDoc(recruitRef, formData);
 
       setLoading(false);
       toast.success("Data added to Firestore successfully", {

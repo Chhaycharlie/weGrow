@@ -3,13 +3,13 @@ import {
   MobileNav,
   Navbar,
   Typography,
-  Avatar,
   Menu,
   MenuHandler,
   MenuList,
   MenuItem,
   Button,
 } from "@material-tailwind/react";
+import { Avatar } from "@mui/material";
 import { React, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -28,10 +28,7 @@ export default function Header() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
-    toast.success("Logout successfully !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -105,15 +102,19 @@ export default function Header() {
         <Link to={"/"} className="pr-48 ">
           <img src={Logo} alt="logo" className="w-20 h-20" />
         </Link>
-        <div className="flex items-center justify-between mr-6">
+        <div
+          className={`flex items-center justify-between mr-6 ${
+            user
+              ? "border rounded-full shadow-xl hover:shadow-lg cursor-pointer"
+              : ""
+          }`}
+        >
           {user ? (
             <Menu>
               <MenuHandler>
-                <Avatar
-                  src={X}
-                  alt="avatar"
-                  className="cursor-pointer hidden lg:flex w-10 h-10 shadow-md hover:shadow-lg border border-gray-100"
-                />
+                <Avatar sx={{ width: 35, height: 35 }} src={user.photoURL}>
+                  {user.displayName[0]}
+                </Avatar>
               </MenuHandler>
               <MenuList>
                 <Link to={"/profile/general"}>
@@ -122,9 +123,7 @@ export default function Header() {
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </MenuList>
             </Menu>
-          ) : null}
-          {/* login btn */}
-          {!user ? (
+          ) : (
             <>
               <Link
                 to="/Login"
@@ -139,8 +138,6 @@ export default function Header() {
                 <Link to="/Signup">Sign up</Link>
               </Button>
             </>
-          ) : (
-            ""
           )}
         </div>
         <IconButton

@@ -1,12 +1,16 @@
-import React from "react";
-import { Avatar } from "@mui/material";
+import React, { useState } from "react";
+import ModalProfile from "./modalProfile";
 
 const AvatarOption = ({ title, name, quote }) => {
+  const [toggle, setToggle] = useState(false);
+
+  const onClick = () => {
+    setToggle(true);
+  };
+
   return (
     <div className="w-[40%] h-auto flex flex-wrap mt-10 text-center lg:text-left lg:justify-normal justify-center lg:space-x-10 lg:items-center lg:m-10">
-      <Avatar sx={{ width: 60, height: 60 }} src="">
-        {name[0]}
-      </Avatar>
+      <ModalProfile toggle={toggle} name={name} />
       <div>
         <h1 className="font-thin text-3xl">
           {name} {title}

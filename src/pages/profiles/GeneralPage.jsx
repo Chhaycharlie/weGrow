@@ -7,6 +7,7 @@ const GeneralPage = () => {
   const currentUser = auth.currentUser;
   const [email, setEmail] = useState(currentUser.email);
   const [username, setUsername] = useState(currentUser.displayName);
+  const [organization, setOrganization] = useState("Care For Cambodia");
 
   const onUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -14,6 +15,10 @@ const GeneralPage = () => {
 
   const onEmailChange = (e) => {
     setEmail(e.target.value);
+  };
+
+  const onOrganizationChange = (e) => {
+    setOrganization(e.target.value);
   };
 
   return (
@@ -24,6 +29,7 @@ const GeneralPage = () => {
           label={"Username"}
           value={username}
           onChange={onUsernameChange}
+          disable={true}
         />
         <h1 className="text-xl text-gray-500 ml-4 ">
           Your weGrow URL: https://weGrow.com/{currentUser.displayName}
@@ -33,10 +39,15 @@ const GeneralPage = () => {
           label={"Email"}
           value={email}
           onChange={onEmailChange}
+          disable={true}
         />
-      </div>
-      <div className="w-full flex justify-end mt-10">
-        <SaveButton name={"Save Profile"} />
+        <InputFields
+          placeholder={"Organization Name"}
+          label={"Organization Name"}
+          value={organization}
+          onChange={onOrganizationChange}
+          disable={true}
+        />
       </div>
     </form>
   );

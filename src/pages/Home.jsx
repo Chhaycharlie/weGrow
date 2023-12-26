@@ -8,9 +8,9 @@ import WhyOrg from "../components/home/WhyOrganization";
 import Why from "../components/home/WhySection";
 import Footer from "../components/shared/Footer";
 import Header from "../components/shared/Header";
+import ModalProfile from "../components/profiles/modalProfile";
 
 const Home = () => {
-
   return (
     <>
       <Header />

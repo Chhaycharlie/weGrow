@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../shared/Header";
+import Footer from "../shared/Footer";
 import AvatarOption from "./AvatarOption";
 import Settings from "./Settings";
 
@@ -27,6 +28,7 @@ const Profile = ({ children, title, name, quote }) => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

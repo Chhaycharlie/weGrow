@@ -34,14 +34,6 @@ const AccountPage = () => {
           className={"mt-2"}
           onChange={onLocationChange}
         />
-
-        {/* BiO textfields */}
-        <h1 className="-mb-3 mt-2 text-2xl">Bio</h1>
-        <Textarea
-          className="text-xl"
-          label="Brief description for your profile"
-          value={"Hello Kon PAPA"}
-        />
         {/* Link URL */}
         <InputFields
           placeholder={"Link URL"}
@@ -49,7 +41,7 @@ const AccountPage = () => {
           value={"www.chhay.com.kh"}
         />
       </div>
-      <div className="w-full flex justify-end mt-5">
+      <div className="w-full flex lg:justify-end mt-10 ml-12 lg:ml-auto">
         <SaveButton name={"Save Profile"} />
       </div>
     </form>

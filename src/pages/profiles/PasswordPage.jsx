@@ -6,17 +6,14 @@ const PasswordPage = () => {
   return (
     <form className="mb-2 w-80 sm:w-full">
       <div className="mb-1 flex flex-col gap-6">
+        <InputFields placeholder={"New Password"} label={"Old Password"} />
         <InputFields
-          placeholder={"Enter New Password"}
-          label={"Old Password"}
-        />
-        <InputFields
-          placeholder={"Enter at least 8 characters"}
-          label={"Enter Confirm New Password"}
+          placeholder={"Enter at least 8 chars "}
+          label={"Confirm New Password"}
           className={"mt-10"}
         />
       </div>
-      <div className="w-full flex justify-end mt-10">
+      <div className="w-full flex lg:justify-end mt-10 ml-12 lg:ml-auto">
         <SaveButton name={"Save Profile"} />
       </div>
     </form>

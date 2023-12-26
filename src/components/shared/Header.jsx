@@ -11,20 +11,17 @@ import {
 } from "@material-tailwind/react";
 import { Avatar } from "@mui/material";
 import { React, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Logo from "../../assets/logos/logo6.png";
-import X from "../../assets/icons/x.svg";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/userSlice";
-import { toast } from "react-toastify";
 import { auth } from "../../firebase";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
   const user = auth.currentUser;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());

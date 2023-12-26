@@ -93,7 +93,7 @@ export default function Header() {
   return (
     <Navbar className="mx-auto shadow-none max-w-screen-4xl py-1 px-4 lg:px-8 lg:py-1 rounded-none">
       <div className="mx-auto flex items-center justify-between text-blue-gray-900">
-        <div className="flex-3 hidden nav-link text-blue-gray-900 lg:block">
+        <div className="flex-3 lg:flex-auto hidden nav-link text-blue-gray-900 lg:block">
           {navList}
         </div>
         <Link to={"/"} className="mr-48 flex-1">

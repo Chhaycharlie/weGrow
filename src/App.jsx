@@ -13,7 +13,9 @@ import AccountPage from "./pages/profiles/AccountPage";
 import GeneralPage from "./pages/profiles/GeneralPage";
 import PasswordPage from "./pages/profiles/PasswordPage";
 import UserDetial from "./pages/profiles/UserDetails";
+import InspirationDetail from "./components/inspiration/InspirationDetail";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
+import ScrollToTop from "./components/shared/ScrollToTop";
 
 import { Route, Routes } from "react-router-dom";
 import ProfileLayout from "./components/profiles/ProfileLayout";
@@ -21,95 +23,107 @@ import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route
-        path="/login"
-        element={
-          <ProtectLoginRoute>
-            <Login />
-          </ProtectLoginRoute>
-        }
-      />
-      <Route
-        path="/signup"
-        element={
-          <ProtectLoginRoute>
-            <Signup />
-          </ProtectLoginRoute>
-        }
-      />
-      <Route
-        path="/recruitment"
-        element={
-          <ProtectedRoute>
-            <Recruitment />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/course"
-        element={
-          <ProtectedRoute>
-            <Course />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/contact"
-        element={
-          <ProtectedRoute>
-            <Contact />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/apply-form/:formId"
-        element={
-          <ProtectedRoute>
-            <VolunteerForm />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/recruitmentForm"
-        element={
-          <ProtectedRoute>
-            <RecruitmentForm />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/inspiration"
-        element={
-          <ProtectedRoute>
-            <Inspiration />
-          </ProtectedRoute>
-        }
-      />
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/login"
+          element={
+            <ProtectLoginRoute>
+              <Login />
+            </ProtectLoginRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <ProtectLoginRoute>
+              <Signup />
+            </ProtectLoginRoute>
+          }
+        />
+        <Route
+          path="/recruitment"
+          element={
+            <ProtectedRoute>
+              <Recruitment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/course"
+          element={
+            <ProtectedRoute>
+              <Course />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <ProtectedRoute>
+              <Contact />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/apply-form/:formId"
+          element={
+            <ProtectedRoute>
+              <VolunteerForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recruitmentForm"
+          element={
+            <ProtectedRoute>
+              <RecruitmentForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inspiration"
+          element={
+            <ProtectedRoute>
+              <Inspiration />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <ProfileLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index path="account" element={<AccountPage />} />
-        <Route path="general" element={<GeneralPage />} />
-        <Route path="password" element={<PasswordPage />} />
-      </Route>
-      <Route
-        path="/profile/user_detail"
-        element={
-          <ProtectedRoute>
-            <UserDetial />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route
+          path="/inspiration/:formId"
+          element={
+            <ProtectedRoute>
+              <InspirationDetail />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfileLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index path="account" element={<AccountPage />} />
+          <Route path="general" element={<GeneralPage />} />
+          <Route path="password" element={<PasswordPage />} />
+        </Route>
+        <Route
+          path="/profile/user_detail"
+          element={
+            <ProtectedRoute>
+              <UserDetial />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 

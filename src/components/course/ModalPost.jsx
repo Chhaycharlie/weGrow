@@ -8,16 +8,24 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 export function ModalPost() {
   const [open, setOpen] = React.useState(false);
+  const [isFileSelected, setIsFileSelected] = useState(false);
   const defaultPhotoURL =
     "https://www.shutterstock.com/image-vector/drag-drop-icon-linear-design-600nw-1386472832.jpg";
 
-  const handleOpen = () => setOpen(!open);
+  const handleOpen = () => {
+    setIsFileSelected(false);
+    setOpen(!open);
+  };
   const fileInputRef = useRef(null);
 
+  const [inputData, setInputData] = useState({
+    title: "",
+    description: "",
+  });
   // preview image
   const loadFile = (event) => {
     const input = fileInputRef.current;
@@ -26,17 +34,31 @@ export function ModalPost() {
     const output = document.getElementById("preview_img");
 
     output.src = URL.createObjectURL(event.target.files[0]);
-    setIsSelectedFile(file);
+    setIsFileSelected(true);
     output.onload = () => {
       URL.revokeObjectURL(output.src); // free memory
     };
   };
 
+  const onChange = (e) => {
+    setInputData({
+      ...inputData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // handle form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
-      <Button onClick={handleOpen} className="my-10">
-        New +
-      </Button>
+      <Button onClick={handleOpen}>New +</Button>
       <Dialog open={open} size="sm" handler={handleOpen}>
         <div className="flex items-center justify-between">
           <DialogHeader className="flex flex-col items-start">
@@ -49,7 +71,7 @@ export function ModalPost() {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="mr-3 h-5 w-5"
+            className="mr-3 h-5 w-5 cursor-pointer"
             onClick={handleOpen}
           >
             <path
@@ -69,7 +91,7 @@ export function ModalPost() {
               description of post
             </Typography>
 
-            <div className="h-[200px] mb-6 ">
+            <div className="h-[200px] mb-6">
               <input
                 type="file"
                 accept="image/*"
@@ -82,7 +104,7 @@ export function ModalPost() {
               />
               <label
                 htmlFor="file"
-                className="flex mb-6 sm:mb-20 h-full flex-wrap items-center justify-center rounded-md border border-dashed border-[#e0e0e0] px-12 text-center"
+                className="flex mb-6 sm:mb-20 h-full cursor-pointer flex-wrap items-center justify-center rounded-md border border-dashed border-[#e0e0e0] px-12 text-center"
               >
                 <div className="h-full">
                   <img
@@ -94,15 +116,29 @@ export function ModalPost() {
                 </div>
               </label>
             </div>
-            <Input label="Title" />
-            <Textarea label="Write your description..." />
+            <Input
+              label="Title"
+              name="title"
+              value={inputData.title}
+              onChange={onChange}
+            />
+            <Textarea
+              label="Write your description..."
+              value={inputData.description}
+              onChange={onChange}
+            />
           </div>
         </DialogBody>
         <DialogFooter className="space-x-2">
           <Button variant="text" color="blue" onClick={handleOpen}>
             cancel
           </Button>
-          <Button variant="gradient" color="blue" onClick={handleOpen}>
+          <Button
+            variant="gradient"
+            color="blue"
+            onClick={handleSubmit}
+            disabled={!isFileSelected}
+          >
             Post Now
           </Button>
         </DialogFooter>

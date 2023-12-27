@@ -8,12 +8,29 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
-import React from "react";
+import React, { useRef } from "react";
 
 export function ModalPost() {
   const [open, setOpen] = React.useState(false);
+  const defaultPhotoURL =
+    "https://www.shutterstock.com/image-vector/drag-drop-icon-linear-design-600nw-1386472832.jpg";
 
   const handleOpen = () => setOpen(!open);
+  const fileInputRef = useRef(null);
+
+  // preview image
+  const loadFile = (event) => {
+    const input = fileInputRef.current;
+    const file = input.files[0];
+
+    const output = document.getElementById("preview_img");
+
+    output.src = URL.createObjectURL(event.target.files[0]);
+    setIsSelectedFile(file);
+    output.onload = () => {
+      URL.revokeObjectURL(output.src); // free memory
+    };
+  };
 
   return (
     <>
@@ -43,34 +60,37 @@ export function ModalPost() {
           </svg>
         </div>
         <DialogBody>
-          <Typography
-            className="mb-5 sm:mb-10 -mt-7"
-            color="blue"
-            variant="lead"
-          >
+          <Typography className="sm:mb-10 -mt-7" color="blue" variant="lead">
             What's on your mind?
           </Typography>
           <div className="grid gap-6">
-            <Typography className="-mb-1" color="black" variant="h6">
+            <Typography className="-mb-1 sm:-mt-7" color="black" variant="h6">
               You can post your Inspiration here by add photos, title and
               description of post
             </Typography>
-            <div class="sm:mb-8 mb-1">
-              <input type="file" name="file" id="file" class="sr-only" />
+
+            <div className="h-[200px] mb-6 ">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={loadFile}
+                ref={fileInputRef}
+                name="file"
+                id="file"
+                className="sr-only"
+                required
+              />
               <label
-                for="file"
-                class="relative flex min-h-[150px] sm:min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] px-12 text-center"
+                htmlFor="file"
+                className="flex mb-6 sm:mb-20 h-full flex-wrap items-center justify-center rounded-md border border-dashed border-[#e0e0e0] px-12 text-center"
               >
-                <div>
-                  <span class="mb-2 block text-xl font-semibold text-gray-900">
-                    Upload Photo here
-                  </span>
-                  <span class="mb-2 block text-base font-medium text-[#6B7280]">
-                    Or
-                  </span>
-                  <span class="inline-flex rounded border border-[#e0e0e0] px-7 text-base font-medium text-gray-900">
-                    Browse
-                  </span>
+                <div className="h-full">
+                  <img
+                    className="h-full"
+                    id="preview_img"
+                    src={defaultPhotoURL}
+                    alt="Current profile photo"
+                  />
                 </div>
               </label>
             </div>

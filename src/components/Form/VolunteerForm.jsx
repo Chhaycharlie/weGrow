@@ -1,9 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 import { ModalTerms } from "../shared/ModalTerms";
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
+import { useParams, useNavigate } from "react-router-dom";
+import { db, auth, storage } from "../../firebase";
+import { setDoc, doc, collection, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Loading from "../../pages/loading";
+import { toast } from "react-toastify";
 
 const VolunteerForm = () => {
+  const { formId } = useParams();
+  const navigate = useNavigate();
+  const [inputData, setInputData] = useState({
+    fullname: "",
+    gender: "",
+    dob: "",
+    phone: "",
+    address: "",
+    email: "",
+    position: "",
+    expectation: "",
+  });
+  const [cvFile, setCvFile] = useState(null);
+  const [isReadTerms, setIsReadTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    setIsReadTerms(event.target.checked);
+  };
+
+  const onChange = (e) => {
+    setInputData({
+      ...inputData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // handle Form submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const user = auth.currentUser;
+      setLoading(true);
+      // add logic to submit cv here
+      let cvFileUrl = "";
+
+      //add image to storage
+      if (cvFile) {
+        const fileRef = ref(storage, `cv/${user.uid}+${formId}`);
+        await uploadBytes(fileRef, cvFile);
+        cvFileUrl = await getDownloadURL(fileRef);
+
+        const formData = {
+          ...inputData,
+          applyer: user.uid,
+          formId: formId,
+          cvUrl: cvFileUrl,
+          isReadTerms: isReadTerms,
+          timestamp: serverTimestamp(),
+        };
+
+        // store data in firestore
+        const applyRef = doc(collection(db, "apply-volunteers"));
+        await setDoc(applyRef, formData);
+
+        toast.success("Thanks for Apply !", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        setLoading(false);
+        navigate("/recruitment", { replace: true });
+      } else {
+        setLoading(false);
+        console.log("no cv file submit");
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error adding data to Firestore:", error);
+    }
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <Header />
@@ -19,61 +99,71 @@ const VolunteerForm = () => {
         <div className="grid gap-6 mb-6 md:grid-cols-2">
           <div>
             <label
-              for="first_name"
+              htmlFor="full_name"
               className="block mb-2 text-sm font-medium text-gray-900 "
             >
               Full Name
             </label>
             <input
               type="text"
-              id="first_name"
+              name="fullname"
+              value={inputData.fullname}
+              onChange={onChange}
               className="bg-gray-50 p-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
-              placeholder="Nana"
+              placeholder="Your full name"
               required
             />
           </div>
           <div>
             <label
-              for="company"
+              htmlFor="company"
               className="block mb-2 text-sm font-medium text-gray-900 "
             >
               Gender
             </label>
             <select
               className="bg-gray-50 border p-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
+              value={inputData.gender}
+              onChange={onChange}
+              placeholder="Female, Male"
+              name="gender"
+              defaultValue={"Male"}
               required
-              placeholder="Female, Male or Nothing to say"
-              name="selectedGender"
             >
+              <option>Choose a gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
           </div>
           <div>
             <label
-              for="company"
+              htmlFor="date_of_birth"
               className="block mb-2 text-sm font-medium text-gray-900 "
             >
               Date of Birth
             </label>
             <input
               type="date"
-              id="company"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
               placeholder="DD/MM/YYYY"
+              name="dob"
+              onChange={onChange}
+              value={inputData.dob}
               required
             />
           </div>
           <div>
             <label
-              for="phone"
+              htmlFor="phone"
               className="block mb-2 text-sm font-medium text-gray-900 "
             >
               Phone number
             </label>
             <input
-              type="tel"
-              id="phone"
+              type="text"
+              name="phone"
+              onChange={onChange}
+              value={inputData.phone}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
               placeholder="012-345-678"
               pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
@@ -83,14 +173,16 @@ const VolunteerForm = () => {
         </div>
         <div className="mb-6">
           <label
-            for="address"
+            htmlFor="address"
             className="block mb-2 text-sm font-medium text-gray-900 "
           >
             Current Address
           </label>
           <input
             type="text"
-            id="address"
+            name="address"
+            value={inputData.address}
+            onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Village a, pp commune, Khan sen sok, Phnom Penh"
             required
@@ -98,14 +190,16 @@ const VolunteerForm = () => {
         </div>
         <div className="mb-6">
           <label
-            for="email"
+            htmlFor="email"
             className="block mb-2 text-sm font-medium text-gray-900 "
           >
             Email address
           </label>
           <input
             type="email"
-            id="email"
+            name="email"
+            value={inputData.email}
+            onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Example@gmail.com"
             required
@@ -113,14 +207,16 @@ const VolunteerForm = () => {
         </div>
         <div className="mb-6">
           <label
-            for="question"
+            htmlFor="question"
             className="block mb-2 text-sm font-medium text-gray-900 "
           >
             What position are you applying for?
           </label>
           <input
-            type="questions"
-            id="choice"
+            type="text"
+            name="position"
+            value={inputData.position}
+            onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Logistics member"
             required
@@ -128,22 +224,24 @@ const VolunteerForm = () => {
         </div>
         <div className="mb-6">
           <label
-            for="description"
+            htmlFor="description"
             className="block mb-2 text-sm font-medium text-gray-900 "
           >
             Tell me your expectation
           </label>
           <input
-            type="description"
-            id="description"
+            type="text"
+            name="expectation"
+            value={inputData.expectation}
+            onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-            placeholder="..........."
+            placeholder="tell me what you expected from this work"
             required
           />
         </div>
         <div className="mb-6">
           <label
-            for="file_input"
+            htmlFor="file_input"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
             Upload Your Resume
@@ -151,7 +249,10 @@ const VolunteerForm = () => {
           <input
             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 "
             aria-describedby="file_input_help"
-            id="file_input"
+            onChange={(event) => {
+              setCvFile(event.target.files[0]);
+            }}
+            accept=".pdf, .docx, .doc"
             type="file"
           />
           <p
@@ -166,7 +267,8 @@ const VolunteerForm = () => {
             <input
               id="remember"
               type="checkbox"
-              value=""
+              checked={isReadTerms}
+              onChange={handleCheckboxChange}
               className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
               required
             />
@@ -176,19 +278,21 @@ const VolunteerForm = () => {
             className="ml-2 text-sm font-medium text-gray-900 "
           >
             I agree with the &nbsp;
-            <a
-              href="#"
-              data-modal-target="default-modal"
-              data-modal-toggle="default-modal"
-            >
-              <ModalTerms />
-            </a>
-            .
           </label>
+          <p
+            className="text-sm"
+            data-modal-target="default-modal"
+            data-modal-toggle="default-modal"
+          >
+            <ModalTerms />
+          </p>
         </div>
         <button
-          type="submit"
-          className="text-white bg-blue-600 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+          onClick={handleSubmit}
+          disabled={!isReadTerms}
+          className={`text-white bg-blue-600 ${
+            isReadTerms ? "hover:bg-blue-400" : ""
+          } focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center`}
         >
           Apply Now
         </button>

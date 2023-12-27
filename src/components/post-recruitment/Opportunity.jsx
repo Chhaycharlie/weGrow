@@ -4,7 +4,7 @@ import { ModalDetail } from "./ModalDetail";
 import { Link } from "react-router-dom";
 const posts = [
   {
-    id: 1,
+    id: "ajkshdkjahsdkj",
     title: "Title of Recruiment",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -18,7 +18,7 @@ const posts = [
     },
   },
   {
-    id: 2,
+    id: "akdjkashjkdhajkdhak",
     title: "Title of Recruiment",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -32,7 +32,7 @@ const posts = [
     },
   },
   {
-    id: 3,
+    id: "kandsjkandjkak",
     title: "Title of Recruiment",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -46,7 +46,7 @@ const posts = [
     },
   },
   {
-    id: 4,
+    id: "adkjnakjsndkandsjna",
     title: "Title of Recruiment",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -60,7 +60,7 @@ const posts = [
     },
   },
   {
-    id: 5,
+    id: "adsknajkdnjkac",
     title: "Title of Recruiment",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -74,7 +74,7 @@ const posts = [
     },
   },
   {
-    id: 6,
+    id: "aksjndjkansdkjnajkx",
     title: "Title of Recruiment",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -199,14 +199,13 @@ function Opportunity() {
                   </div>
                   <div className="flex space-x-2 mt-3">
                     <Link
-                      to="/VolunteerForm"
+                      to={`/apply-form/${post.id}`}
                       class="text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-4 py-2 text-center"
                     >
                       Apply Now
                     </Link>
-                    <a>
-                      <ModalDetail />
-                    </a>
+
+                    <ModalDetail />
                   </div>
                 </div>
               ))}

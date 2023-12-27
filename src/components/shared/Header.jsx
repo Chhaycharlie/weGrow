@@ -22,6 +22,7 @@ export default function Header() {
   const [openNav, setOpenNav] = useState(false);
   const user = auth.currentUser;
   const dispatch = useDispatch();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -77,16 +78,20 @@ export default function Header() {
           Contact us
         </Link>
       </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 text-sm font-bold menufont"
-      >
-        <Link to="/dashboard" className="flex items-center">
-          Dashboard
-        </Link>
-      </Typography>
+      {user && isAdmin ? (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 text-sm font-bold menufont"
+        >
+          <Link to="/dashboard" className="flex items-center">
+            Dashboard
+          </Link>
+        </Typography>
+      ) : (
+        ""
+      )}
     </ul>
   );
 

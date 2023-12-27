@@ -6,14 +6,10 @@ import { toast } from "react-toastify";
 
 const Settings = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleClick = async () => {
     dispatch(logout());
-    toast.success("Logout successfully !", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -29,7 +25,7 @@ const Settings = () => {
           <Link to={"/profile/password"}>Password</Link>
         </li>
         <li className="pb-6">
-          <Link to={"/profile/user_detail"}>Switch Account</Link>
+          <Link to={"/profile/user_detail"}>My Profile History</Link>
         </li>
         <hr className="w-56 h-[2px] bg-gray-300" />
         <li

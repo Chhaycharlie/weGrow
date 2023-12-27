@@ -64,7 +64,7 @@ function App() {
         }
       />
       <Route
-        path="/volunteerForm"
+        path="/apply-form/:formId"
         element={
           <ProtectedRoute>
             <VolunteerForm />
@@ -101,7 +101,7 @@ function App() {
         <Route path="password" element={<PasswordPage />} />
       </Route>
       <Route
-        path="/profile/user_details"
+        path="/profile/user_detail"
         element={
           <ProtectedRoute>
             <UserDetial />

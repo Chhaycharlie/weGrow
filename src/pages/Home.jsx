@@ -6,14 +6,11 @@ import Quote from "../components/home/Quote";
 import Who from "../components/home/Whoarewe";
 import WhyOrg from "../components/home/WhyOrganization";
 import Why from "../components/home/WhySection";
-import Footer from "../components/shared/Footer";
-import Header from "../components/shared/Header";
-import ModalProfile from "../components/profiles/modalProfile";
+import AppLayout from "../components/Layout/AppLayout";
 
 const Home = () => {
   return (
-    <>
-      <Header />
+    <AppLayout>
       <Hero />
       <Who />
       <Why />
@@ -21,8 +18,7 @@ const Home = () => {
       <Benefit />
       <Quote />
       <Faq />
-      <Footer />
-    </>
+    </AppLayout>
   );
 };
 

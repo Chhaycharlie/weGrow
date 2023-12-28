@@ -32,9 +32,12 @@ function Training() {
             >
               View Inspiration Post
             </Link>
-            <button className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-700 bg-transparent transition duration-150 ease-in-out hover:border-yellow-600 lg:text-xl lg:font-bold  hover:text-yellow-600 rounded-xl border border-yellow-700  text-yellow-700 px-4 sm:px-10 py-2 sm:py-4 text-sm">
-              See more
-            </button>
+            <Link
+              to={"/recruitment#opportunity"}
+              className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-700 bg-transparent transition duration-150 ease-in-out hover:border-yellow-600 lg:text-xl lg:font-bold  hover:text-yellow-600 rounded-xl border border-yellow-700  text-yellow-700 px-4 sm:px-10 py-2 sm:py-4 text-sm"
+            >
+              find volunteer
+            </Link>
           </div>
           <div className="flex items-center justify-center font-md uppercase text-gray-700 pt-14">
             Featured In

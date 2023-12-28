@@ -8,6 +8,9 @@ const GeneralPage = () => {
   const [email, setEmail] = useState(currentUser.email);
   const [username, setUsername] = useState(currentUser.displayName);
   const [organization, setOrganization] = useState("Care For Cambodia");
+  const [organizationWebsite, setOrganizationWebsite] = useState(
+    "www.organization_website.com.kh"
+  );
 
   const onUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -43,6 +46,13 @@ const GeneralPage = () => {
           label={"Organization Name"}
           value={organization}
           onChange={onOrganizationChange}
+          disable={true}
+        />
+        <InputFields
+          placeholder={"Oraginzation Website"}
+          label={"Organization Website"}
+          value={organizationWebsite}
+          onChange={(e) => setOrganizationWebsite(e.target.value)}
           disable={true}
         />
       </div>

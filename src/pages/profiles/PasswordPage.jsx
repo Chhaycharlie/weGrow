@@ -6,7 +6,7 @@ const PasswordPage = () => {
   return (
     <form className="mb-2 w-80 sm:w-full">
       <div className="mb-1 flex flex-col gap-6">
-        <InputFields placeholder={"New Password"} label={"Old Password"} />
+        <InputFields placeholder={"New Password"} label={"New Password"} />
         <InputFields
           placeholder={"Enter at least 8 chars "}
           label={"Confirm New Password"}

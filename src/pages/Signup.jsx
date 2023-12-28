@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const currYear = new Date().getFullYear();
@@ -20,6 +21,14 @@ const Signup = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
 
+  const [isChecked, setIsChecked] = useState(false);
+
+  console.log(isChecked);
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+
   const register = (e) => {
     e.preventDefault();
     setFormErrors(validate(forms));
@@ -29,7 +38,7 @@ const Signup = () => {
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       createUserWithEmailAndPassword(auth, forms.email, forms.password)
-        .then((userAuth) => {
+        .then(() => {
           updateProfile(auth.currentUser, {
             displayName: forms.username,
           });
@@ -43,6 +52,10 @@ const Signup = () => {
         });
 
       setForms({});
+    } else if (Object.keys(formErrors).length > 0) {
+      toast.error(Object.values(formErrors).join(", "), {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }, [formErrors]);
 
@@ -56,6 +69,7 @@ const Signup = () => {
     if (!values.username) {
       errors.username = "Username is required!";
     }
+
     if (!values.email) {
       errors.email = "Email is required!";
     } else if (!regex.test(values.email)) {
@@ -67,7 +81,7 @@ const Signup = () => {
     } else if (values.password.length < 8) {
       errors.password = "Password must be more than 8 characters";
     } else if (values.password.length > 10) {
-      errors.password = "Passeord cannot exceed more than 10 characters";
+      errors.password = "Password cannot exceed more than 10 characters";
     }
 
     if (!values.confirmPassword) {
@@ -94,7 +108,7 @@ const Signup = () => {
         </div>
 
         {/* right form */}
-        <div className="min-h-[550px] h-auto w-[300px] sm:w-[400px] flex flex-col justify-center border border-gray-400 rounded-2xl bg-white">
+        <div className="min-h-[580px] h-auto w-[300px] sm:w-[400px] flex flex-col justify-center border border-gray-400 rounded-2xl bg-white">
           {/* title */}
           <div>
             <h1 className="sm:text-[30px] font-black font-openSans text-center text-[20px] ">
@@ -201,6 +215,23 @@ const Signup = () => {
                   value={forms["confirmPassword"]}
                   onChange={onChange}
                 />
+              </div>
+
+              {/* checked box */}
+              <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem] pt-6 space-x-4">
+                <input
+                  className="relative float-left -ml-[1rem] mr-[6px] mt-[0.15rem] h-[1.125rem] w-[1.125rem] appearance-none rounded-[0.25rem] border-[0.125rem] border-solid border-neutral-300 outline-none before:pointer-events-none before:absolute before:h-[0.875rem] before:w-[0.875rem] before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] checked:border-primary checked:bg-black checked:before:opacity-[0.16] checked:after:absolute checked:after:-mt-px checked:after:ml-[0.25rem] checked:after:block checked:after:h-[0.8125rem] checked:after:w-[0.375rem] checked:after:rotate-45 checked:after:border-[0.125rem] checked:after:border-l-0 checked:after:border-t-0 checked:after:bg-transparent checked:after:content-[''] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:transition-[border-color_0.2s] focus:before:scale-100 focus:before:opacity-[0.12] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-[0.875rem] focus:after:w-[0.875rem] focus:after:rounded-[0.125rem] focus:after:content-[''] checked:focus:before:scale-100 checked:focus:after:-mt-px checked:focus:after:ml-[0.25rem] checked:focus:after:h-[0.8125rem] checked:focus:after:w-[0.375rem] checked:focus:after:rotate-45 checked:focus:after:rounded-none checked:focus:after:border-[0.125rem] checked:focus:after:border-l-0 checked:focus:after:border-t-0 "
+                  type="checkbox"
+                  value=""
+                  id="checkboxDefault"
+                  onChange={handleCheckboxChange}
+                />
+                <label
+                  className="inline-block pl-[0.15rem] hover:cursor-pointer font-openSans font-extrabold"
+                  htmlFor="checkboxDefault"
+                >
+                  create as organization account
+                </label>
               </div>
 
               {/* login btn */}

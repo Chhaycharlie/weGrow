@@ -16,7 +16,7 @@ const InspirationDetail = () => {
       <button
         type="button"
         onClick={handleBack}
-        class=" flex items-center justify-center w-1/2 m-10 px-5 py-2 text-sm text-black transition-colors duration-200 bg-gray-200 border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
+        class=" flex items-center justify-center m-10 px-5 py-2 text-sm text-black transition-colors duration-200 bg-gray-200 border rounded-lg gap-x-2 w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
       >
         <svg
           class="w-5 h-5 rtl:rotate-180"
@@ -38,7 +38,7 @@ const InspirationDetail = () => {
       {/* <!-- Container for demo purpose --> */}
       <div class="container my-24 mx-auto md:px-6">
         {/* <!-- Section: Design Block --> */}
-        <section class="mb-32">
+        <section class="mb-32 mx-6">
           <div class="flex flex-wrap">
             <div class="mb-12 w-full shrink-0 grow-0 basis-auto lg:mb-0 lg:w-5/12">
               <div class="flex lg:py-12">

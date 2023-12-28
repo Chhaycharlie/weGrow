@@ -1,8 +1,7 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import Footer from "../components/shared/Footer";
-import Header from "../components/shared/Header";
+import AppLayout from "../components/Layout/AppLayout";
 import { db } from "../firebase";
 const Contact = () => {
   const [name, setName] = useState("");
@@ -43,8 +42,7 @@ const Contact = () => {
   };
 
   return (
-    <>
-      <Header />
+    <AppLayout>
       <section class="bg-white ">
         <div class="mx-auto max-w-7xl lg:h-[87vh]  px-4 py-16 sm:px-6 lg:px-8 lg:py-12">
           <div class="mb-2">
@@ -213,8 +211,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
-      <Footer />
-    </>
+    </AppLayout>
   );
 };
 export default Contact;

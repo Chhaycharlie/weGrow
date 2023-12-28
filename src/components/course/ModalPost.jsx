@@ -9,10 +9,17 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import React, { useRef, useState } from "react";
+import { auth, storage, db } from "../../firebase";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
+import { setDoc, doc, serverTimestamp, collection } from "firebase/firestore";
+import SmallSpinner from "../shared/SmallSpinner";
+import { toast } from "react-toastify";
 
 export function ModalPost() {
   const [open, setOpen] = React.useState(false);
   const [isFileSelected, setIsFileSelected] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const date = new Date();
   const defaultPhotoURL =
     "https://www.shutterstock.com/image-vector/drag-drop-icon-linear-design-600nw-1386472832.jpg";
 
@@ -48,10 +55,42 @@ export function ModalPost() {
   };
 
   // handle form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const user = auth.currentUser;
+      const postPic = fileInputRef.current.files[0];
+      setLoading(true);
+
+      //post inspiration to storage
+      let inspirationUrl = "";
+      const fileRef = ref(storage, `inspirations/${user.uid}+${date}`);
+      await uploadBytes(fileRef, postPic);
+      inspirationUrl = await getDownloadURL(fileRef);
+
+      //create object for firestore
+      const formData = {
+        ...inputData,
+        publisher: user.uid,
+        inspirationUrl: inspirationUrl,
+        timestamp: serverTimestamp(),
+      };
+
+      // store data in firestore
+      const postRef = doc(collection(db, "inspirations"));
+      await setDoc(postRef, formData);
+
+      setInputData({
+        title: "",
+        description: "",
+      });
+      handleOpen();
+      setLoading(false);
+      toast.success("Posting Successfully !", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -124,6 +163,7 @@ export function ModalPost() {
             />
             <Textarea
               label="Write your description..."
+              name="description"
               value={inputData.description}
               onChange={onChange}
             />
@@ -138,8 +178,9 @@ export function ModalPost() {
             color="blue"
             onClick={handleSubmit}
             disabled={!isFileSelected}
+            className="h-10 w-30"
           >
-            Post Now
+            {loading ? <SmallSpinner /> : "Post Now"}
           </Button>
         </DialogFooter>
       </Dialog>

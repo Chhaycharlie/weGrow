@@ -91,7 +91,7 @@ const posts = [
 function Opportunity() {
   return (
     <>
-      <section id="opportunity">
+      <section>
         <div className="py-16">
           <div className="mx-auto max-w-7xl px-4 lg:px-4">
             <div className="flex justify-between flex-wrap">

@@ -178,9 +178,9 @@ export function ModalPost() {
             color="blue"
             onClick={handleSubmit}
             disabled={!isFileSelected}
-            className="h-10 w-30"
+            className="h-10 w-30 "
           >
-            {loading ? <SmallSpinner /> : "Post Now"}
+            {loading ? <SmallSpinner className={"mt-[-5px]"} /> : "Post Now"}
           </Button>
         </DialogFooter>
       </Dialog>

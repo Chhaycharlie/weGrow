@@ -9,7 +9,7 @@ import { auth } from "../firebase";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import { toast } from "react-toastify";
-import Loading from "./loading";
+import SmallSpinner from "../components/shared/SmallSpinner";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
@@ -61,10 +61,6 @@ const Login = () => {
   useEffect(() => {
     setForms("");
   }, [formErrors]);
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div>
@@ -157,7 +153,7 @@ const Login = () => {
                 onClick={handleLogin}
                 className="flex justify-center items-center font-extrabold text-xl text-white bg-[#42ADFC] w-full h-[50px] mt-6 rounded-lg hover:bg-[#33a6fed7]"
               >
-                Login
+                {loading ? <SmallSpinner /> : "Login"}
               </button>
             </form>
 

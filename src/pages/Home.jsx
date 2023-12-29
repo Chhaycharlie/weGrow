@@ -7,8 +7,13 @@ import Who from "../components/home/Whoarewe";
 import WhyOrg from "../components/home/WhyOrganization";
 import Why from "../components/home/WhySection";
 import AppLayout from "../components/Layout/AppLayout";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const user = useSelector((state) => state.user);
+
+  console.log(user);
+
   return (
     <AppLayout>
       <Hero />

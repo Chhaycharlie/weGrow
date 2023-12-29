@@ -11,22 +11,31 @@ import {
 } from "@material-tailwind/react";
 import { Avatar } from "@mui/material";
 import { React, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "../../assets/logos/logo6.png";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/userSlice";
 import { auth } from "../../firebase";
+import { toast } from "react-toastify";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
   const user = auth.currentUser;
   const dispatch = useDispatch();
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
-    window.location.reload();
+    navigate("/login");
+    toast.success("Logout Successfully!", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+  };
+
+  const handleRoute = () => {
+    navigate("/profile/general");
   };
 
   useEffect(() => {
@@ -119,11 +128,7 @@ export default function Header() {
                 </Avatar>
               </MenuHandler>
               <MenuList>
-                {/* avoid error */}
-                <MenuItem className="hidden"></MenuItem>
-                <Link to={"/profile/general"}>
-                  <MenuItem>My profiles</MenuItem>
-                </Link>
+                <MenuItem onClick={handleRoute}>My profiles</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </MenuList>
             </Menu>

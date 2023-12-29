@@ -5,16 +5,20 @@ import { auth } from "../../firebase";
 import TimeStamp from "../shared/TimeStamp";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@material-tailwind/react";
+import { Avatar } from "@mui/material";
 
 function Opportunity({ posts }) {
   const user = auth.currentUser;
   //pagination
   const [active, setActive] = useState(1);
-  const recordsPerPage = 9;
+  const recordsPerPage = 6;
   const lastIndex = active * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
+
   const records = posts.slice(firstIndex, lastIndex);
+  //number of page
   const npage = Math.ceil(posts.length / recordsPerPage);
+  //array of pageIndex
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
   const getItemProps = (index) => ({
@@ -33,6 +37,18 @@ function Opportunity({ posts }) {
     if (active === 1) return;
 
     setActive(active - 1);
+  };
+
+  //search data
+  const filterData = () => {
+    if (!searchTerm) {
+      return posts.slice(firstIndex, lastIndex);
+    }
+    return posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   };
 
   return (
@@ -111,37 +127,32 @@ function Opportunity({ posts }) {
                 >
                   <div>
                     <div className="relative flex items-center gap-x-4 m-4 cursor-pointer">
-                      <img
-                        src={user.photoURL}
-                        alt=""
-                        className="h-10 w-10 rounded-full bg-gray-50"
-                      />
+                      <Avatar
+                        sx={{ width: 40, height: 40 }}
+                        src={post.user?.photoUrl}
+                      >
+                        {post.user.displayName[0]}
+                      </Avatar>
                       <div className="text-sm leading-6">
                         <p className="font-semibold text-gray-900">
                           <span className="absolute inset-0" />
-                          {/* {post.author.name} */}
-                          {user.displayName}
+                          {post.user.organizationName}
                         </p>
                         <p className="text-gray-600 ">
-                          {/* {post.author.role} */}
-                          {user.displayName}
+                          {post.user.displayName}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-x-4 text-xs ml-[70px] mt-[-20px]">
-                      <time
-                        dateTime={post.data.timestamp}
-                        className="text-gray-500"
-                      >
-                        {/* {post.data.startDate} */}
-                        <TimeStamp post={post.data} />
+                      <time dateTime={post.timestamp} className="text-gray-500">
+                        <TimeStamp post={post} />
                       </time>
                       <a
-                        href={`https://${post.data.url}`}
+                        href={`https://${post.url}`}
                         target="blank"
                         className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-300 text-grey-100 hover:bg-blue-500 hover:text-white"
                       >
-                        {post.data.url}
+                        {post.url}
                       </a>
                     </div>
                   </div>
@@ -149,15 +160,15 @@ function Opportunity({ posts }) {
                     <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                       <span className="absolute inset-0" />
                       <span className="pl-2" />
-                      {post.data.title}
+                      {post.title}
                     </h3>
                     <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 pl-1">
                       <span className="pl-5" />
-                      {post.data.description}
+                      {post.description}
                     </p>
                   </div>
                   <div className="flex space-x-2 mt-3 pb-4 pl-2">
-                    {post.data.userId === user.uid ? (
+                    {post.userId === user.uid ? (
                       <>
                         <Link
                           to={`/recruitmentForm/${post.id}`}
@@ -166,7 +177,14 @@ function Opportunity({ posts }) {
                           {" "}
                           Edit Post
                         </Link>
-                        <ModalDetail post={post.data} />
+                        <ModalDetail post={post} />
+                        <Link
+                          to={`#`}
+                          className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
+                        >
+                          {" "}
+                          View Applications
+                        </Link>
                       </>
                     ) : (
                       <>
@@ -176,7 +194,7 @@ function Opportunity({ posts }) {
                         >
                           Apply Now
                         </Link>
-                        <ModalDetail post={post.data} />
+                        <ModalDetail post={post} />
                       </>
                     )}
                   </div>

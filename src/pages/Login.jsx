@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import { toast } from "react-toastify";
 import SmallSpinner from "../components/shared/SmallSpinner";
+import { getCurrentUser } from "../api/user.api";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
@@ -35,20 +36,13 @@ const Login = () => {
         forms.email,
         forms.password
       );
-
-      dispatch(
-        login({
-          uid: userAuth.uid,
-          email: userAuth.email,
-          displayName: userAuth.displayName,
-          photoURL: userAuth.photoURL,
-        })
-      );
-      setLoading(false);
-      navigate("/");
-      toast.success("Login successfully !", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      if (userAuth) {
+        setLoading(false);
+        navigate("/");
+        toast.success("Login successfully !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     } catch (error) {
       setLoading(false);
       setFormErrors("Invalid credential !!!");
@@ -158,12 +152,12 @@ const Login = () => {
             </form>
 
             {/* forget password */}
-            <a
-              href="#"
+            <Link
+              to="#"
               className="flex justify-center mt-6 text-gray-400 font-bold text-sm underline hover:text-red-400"
             >
               Forgot Password?
-            </a>
+            </Link>
           </div>
         </div>
       </div>

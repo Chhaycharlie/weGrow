@@ -1,28 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputFields from "../../components/shared/InputFields";
-import SaveButton from "../../components/shared/SaveButton";
 import { auth } from "../../firebase";
+import { getCurrentUser } from "../../api/user.api";
 
 const GeneralPage = () => {
   const currentUser = auth.currentUser;
+  const [user, setUser] = useState(null);
   const [email, setEmail] = useState(currentUser.email);
   const [username, setUsername] = useState(currentUser.displayName);
-  const [organization, setOrganization] = useState("Care For Cambodia");
-  const [organizationWebsite, setOrganizationWebsite] = useState(
-    "www.organization_website.com.kh"
-  );
 
-  const onUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getCurrentUser(currentUser.uid);
+        setUser(data);
+      } catch (error) {
+        console.error("Error fetching recruitment data:", error);
+      }
+    };
 
-  const onEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const onOrganizationChange = (e) => {
-    setOrganization(e.target.value);
-  };
+    // Only fetch data if formId is available
+    if (currentUser) {
+      fetchData();
+    }
+  }, []);
 
   return (
     <form className="mb-2 w-80 sm:w-full">
@@ -31,28 +32,24 @@ const GeneralPage = () => {
           placeholder={"Username"}
           label={"Username"}
           value={username}
-          onChange={onUsernameChange}
           disable={true}
         />
         <InputFields
           placeholder={"Email Address"}
           label={"Email"}
           value={email}
-          onChange={onEmailChange}
           disable={true}
         />
         <InputFields
           placeholder={"Organization Name"}
           label={"Organization Name"}
-          value={organization}
-          onChange={onOrganizationChange}
+          value={user?.organizationName ?? ""}
           disable={true}
         />
         <InputFields
           placeholder={"Oraginzation Website"}
           label={"Organization Website"}
-          value={organizationWebsite}
-          onChange={(e) => setOrganizationWebsite(e.target.value)}
+          value={user?.organizationEmail ?? ""}
           disable={true}
         />
       </div>

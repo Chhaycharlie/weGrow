@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Header from "../shared/Header";
-import Footer from "../shared/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { auth, db } from "../../firebase";
 import { doc, setDoc, serverTimestamp, collection } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { getRecruitmentById } from "../../api/post.api";
 import SmallSpinner from "../shared/SmallSpinner";
+import AppLayout from "../Layout/AppLayout";
 
 const RecruitmentForm = () => {
   const { formId } = useParams();
@@ -128,8 +127,7 @@ const RecruitmentForm = () => {
   };
 
   return (
-    <>
-      <Header />
+    <AppLayout>
       <div className="w-full h-20 py-5 text-center bg-blue-600  shadow overflow-hidden sm:rounded-md font-bold text-3xl text-white">
         Volunteer Recruitment Form
       </div>
@@ -465,10 +463,13 @@ const RecruitmentForm = () => {
                       className="mt-1 p-2 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       required
                     >
-                      <option>After 1 Week</option>
-                      <option>After 2 Week</option>
-                      <option>After 3 Week</option>
-                      <option>After 1 month</option>
+                      <option disabled value="">
+                        please select result anouncement duration
+                      </option>
+                      <option value="After 1 Week">After 1 Week</option>
+                      <option value="After 2 Week">After 2 Week</option>
+                      <option value="After 3 Week">After 3 Week</option>
+                      <option value="After 1 month">After 1 month</option>
                     </select>
                   </div>
                 </div>
@@ -613,8 +614,7 @@ const RecruitmentForm = () => {
           <div class=""></div>
         </div>
       </div>
-      <Footer />
-    </>
+    </AppLayout>
   );
 };
 

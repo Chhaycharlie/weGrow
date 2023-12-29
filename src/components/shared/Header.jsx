@@ -114,7 +114,7 @@ export default function Header() {
           {user ? (
             <Menu>
               <MenuHandler>
-                <Avatar sx={{ width: 35, height: 35 }} src={user.photoURL}>
+                <Avatar sx={{ width: 35, height: 35 }} src={user?.photoURL}>
                   {user.displayName[0]}
                 </Avatar>
               </MenuHandler>

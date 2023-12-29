@@ -83,6 +83,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/recruitmentForm/:formId"
+          element={
+            <ProtectedRoute>
+              <RecruitmentForm />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/inspiration"
           element={

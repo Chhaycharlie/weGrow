@@ -242,8 +242,8 @@ function Training() {
             </p>
             <div className="pt-6 mt-6 space-y-4 border-t border-gray-200 ">
               <div>
-                <a
-                  href="#"
+                <Link
+                  to={"/inspiration"}
                   className="inline-flex items-center text-base font-medium text-blue-600 hover:text-blue-800 "
                 >
                   Inspiration of People who use WeGrow
@@ -259,7 +259,7 @@ function Training() {
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -361,7 +361,7 @@ function Training() {
                     ></path>
                   </svg>
                   <span className="text-base font-medium leading-tight text-gray-900 ">
-                    Meet job requirements
+                    Meet volunteer requirements
                   </span>
                 </li>
                 <li className="flex space-x-3">

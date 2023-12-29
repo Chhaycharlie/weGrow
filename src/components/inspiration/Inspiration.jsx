@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Pagination from "../shared/Pagination";
 import ModalPost from "../course/ModalPost";
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
@@ -229,7 +228,6 @@ const Post = () => {
             </Link>
           ))}
         </div>
-        <Pagination />
       </div>
       <Footer />
     </>

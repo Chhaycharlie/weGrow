@@ -1,98 +1,39 @@
-import React from "react";
-import Pagination from "../shared/Pagination";
+import React, { useState } from "react";
 import { ModalDetail } from "./ModalDetail";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase";
 import TimeStamp from "../shared/TimeStamp";
-// const posts = [
-//   {
-//     id: "ajkshdkjahsdkj",
-//     title: "Title of Recruiment",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//     date: "Posted date",
-//     datetime: "2023-06-14",
-//     category: { title: "Website", href: "#" },
-//     author: {
-//       name: "Organization Name",
-//       role: "Name of User",
-//       imageUrl: "src/assets/icons/people.png",
-//     },
-//   },
-//   {
-//     id: "akdjkashjkdhajkdhak",
-//     title: "Title of Recruiment",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//     date: "Posted date",
-//     datetime: "2023-06-14",
-//     category: { title: "Website", href: "#" },
-//     author: {
-//       name: "Organization Name",
-//       role: "Name of User",
-//       imageUrl: "src/assets/icons/people.png",
-//     },
-//   },
-//   {
-//     id: "kandsjkandjkak",
-//     title: "Title of Recruiment",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//     date: "Posted date",
-//     datetime: "2023-06-14",
-//     category: { title: "Website", href: "#" },
-//     author: {
-//       name: "Organization Name",
-//       role: "Name of User",
-//       imageUrl: "src/assets/icons/people.png",
-//     },
-//   },
-//   {
-//     id: "adkjnakjsndkandsjna",
-//     title: "Title of Recruiment",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//     date: "Posted date",
-//     datetime: "2023-06-14",
-//     category: { title: "Website", href: "#" },
-//     author: {
-//       name: "Organization Name",
-//       role: "Name of User",
-//       imageUrl: "src/assets/icons/people.png",
-//     },
-//   },
-//   {
-//     id: "adsknajkdnjkac",
-//     title: "Title of Recruiment",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//     date: "Posted date",
-//     datetime: "2023-06-14",
-//     category: { title: "Website", href: "#" },
-//     author: {
-//       name: "Organization Name",
-//       role: "Name of User",
-//       imageUrl: "src/assets/icons/people.png",
-//     },
-//   },
-//   {
-//     id: "aksjndjkansdkjnajkx",
-//     title: "Title of Recruiment",
-//     description:
-//       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-//     date: "Posted date",
-//     datetime: "2023-06-14",
-//     category: { title: "Website", href: "#" },
-//     author: {
-//       name: "Organization Name",
-//       role: "Name of User",
-//       imageUrl: "src/assets/icons/people.png",
-//     },
-//   },
-// ];
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Button, IconButton } from "@material-tailwind/react";
+
 function Opportunity({ posts }) {
-  console.log(posts);
   const user = auth.currentUser;
+  //pagination
+  const [active, setActive] = useState(1);
+  const recordsPerPage = 9;
+  const lastIndex = active * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const records = posts.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(posts.length / recordsPerPage);
+  const numbers = [...Array(npage + 1).keys()].slice(1);
+
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "blue",
+    onClick: () => setActive(index),
+  });
+
+  const next = () => {
+    if (active === 5) return;
+
+    setActive(active + 1);
+  };
+
+  const prev = () => {
+    if (active === 1) return;
+
+    setActive(active - 1);
+  };
 
   return (
     <>
@@ -163,7 +104,7 @@ function Opportunity({ posts }) {
             </div>
             <div className=" border-t border-gray-400  pt-10 sm:mt-16 sm:pt-16"></div>
             <div className="mx-auto grid max-w-2xl shadow-sm grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-              {posts.map((post) => (
+              {records.map((post) => (
                 <div
                   key={post.id}
                   className="flex max-w-xl flex-col items-start justify-evenly border rounded-md"
@@ -244,7 +185,37 @@ function Opportunity({ posts }) {
             </div>
           </div>
         </div>
-        <Pagination />
+
+        {/* pagination */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4 px-6 md:px-24 py-10 ">
+          <Button
+            variant="text"
+            className="md:flex items-center gap-2 hidden text-[12px]"
+            color="blue"
+            onClick={prev}
+            disabled={active === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4 rounded-full" />{" "}
+            Previous
+          </Button>
+          <div className="flex items-center gap-2 mt-4 md:mt-0">
+            {numbers.map((index) => (
+              <IconButton key={index} size="sm" {...getItemProps(index)}>
+                {index}
+              </IconButton>
+            ))}
+          </div>
+          <Button
+            variant="text"
+            className="md:flex items-center gap-2 hidden text-[12px]"
+            color="blue"
+            onClick={next}
+            disabled={active === npage}
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
       </section>
     </>
   );

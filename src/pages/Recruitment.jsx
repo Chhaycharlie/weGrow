@@ -6,20 +6,27 @@ import { getPostsWithUserInfo } from "../api/post.api";
 
 const Recruitment = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchPosts = async () => {
-      const data = await getPostsWithUserInfo();
-      setPosts(data);
+      try {
+        setLoading(true); // Set loading to true before making the API call
+        const data = await getPostsWithUserInfo();
+        setPosts(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      } finally {
+        setLoading(false); // Set loading back to false after the data is fetched (or if there's an error)
+      }
     };
+
     fetchPosts();
   }, []);
-
-  console.log(posts);
 
   return (
     <AppLayout>
       <PostRecruitment />
-      <Opportunity posts={posts} />
+      <Opportunity posts={posts} loading={loading} />
     </AppLayout>
   );
 };

@@ -19,34 +19,30 @@ function Training() {
               communication. With our easy-to-use platform, you can learn at
               your own pace and from the comfort of your own home.
             </p>
-            {/* <div className="flex justify-center pt-4 space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-          <a href="/Inspiration" className="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-medium text-center bg-blue-600 text-gray-900 border border-gray-200 rounded-lg sm:w-auto hover:bg-blue-800 focus:ring-4 focus:ring-gray-100 ">
-          <svg className='pr-2 ' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M208.5 62.3l28.1-36.9C248.8 9.4 267.8 0 288 0c28.5 0 53.6 18.7 61.8 46l17.8 59.4c10.3 34.4 36.1 62 69.8 74.6l39.8 14.9c20.9 7.9 34.8 27.9 34.8 50.2c0 16.9-7.9 32.8-21.5 42.9l-67.3 50.5c-24.3 18.2-37.2 47.9-33.8 78.1l2.5 22.7c4.3 38.7-26 72.6-65 72.6c-14.8 0-29.3-5.1-40.8-14.3l-55.4-44.3c-4.5-3.6-9.3-6.7-14.5-9.2c-15.8-7.9-33.7-10.4-51-7.3L82.4 451.9C47.8 458.2 16 431.6 16 396.5c0-13.2 4.7-26 13.1-36.2l11.2-13.4c14.6-17.4 22.6-39.4 22.6-62.1c0-18.8-5.5-37.2-15.8-53L8.8 173.5C3.1 164.7 0 154.4 0 143.9c0-33.4 30.1-58.8 63-53.2l51.3 8.7c35.9 6.1 72.2-8.2 94.2-37.1z"/></svg> View Inspiration Post Here 
-          </a>
-        </div> */}
           </div>
           <div className="flex justify-center items-center">
             <Link
               to="/Inspiration"
-              className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-700 bg-yellow-700 transition duration-150 ease-in-out hover:bg-yellow-600 lg:text-xl lg:font-bold  rounded-xl text-white px-4 sm:px-10 border border-yellow-700 py-2 sm:py-4 text-sm"
+              className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 bg-blue-700 transition duration-150 ease-in-out hover:bg-blue-600 lg:text-xl lg:font-bold  rounded-xl text-white px-4 sm:px-10 border border-blue-700 py-2 sm:py-4 text-sm"
             >
               View Inspiration Post
             </Link>
             <Link
               to={"/recruitment#opportunity"}
-              className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-700 bg-transparent transition duration-150 ease-in-out hover:border-yellow-600 lg:text-xl lg:font-bold  hover:text-yellow-600 rounded-xl border border-yellow-700  text-yellow-700 px-4 sm:px-10 py-2 sm:py-4 text-sm"
+              className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 bg-transparent transition duration-150 ease-in-out hover:border-blue-600 lg:text-xl lg:font-bold  hover:text-blue-600 rounded-xl border border-blue-700  text-gray-500 px-4 sm:px-10 py-2 sm:py-4 text-sm"
             >
               find volunteer
             </Link>
           </div>
-          <div className="flex items-center justify-center font-md uppercase text-gray-700 pt-14">
+          <div className="flex items-center justify-center font-md uppercase text-gray-700 pt-24">
             Featured In
           </div>
-          <div className="bg-white pt-5 ">
+          <div className="bg-white pt-8">
             <div className="max-w-screen-xl px-6 mx-auto lg:pb-16">
               <div className="grid grid-cols-3 gap-6 text-gray-500 sm:gap-12 sm:grid-cols-6 lg:grid-cols-5 ">
                 <a
                   href="https://alison.com/"
+                  target="blank"
                   className="flex items-center lg:justify-center"
                 >
                   <svg

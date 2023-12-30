@@ -6,8 +6,9 @@ import TimeStamp from "../shared/TimeStamp";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@material-tailwind/react";
 import { Avatar } from "@mui/material";
+import Loading from "../../pages/loading";
 
-function Opportunity({ posts }) {
+function Opportunity({ posts, loading }) {
   const user = auth.currentUser;
   //pagination
   const [active, setActive] = useState(1);
@@ -118,88 +119,99 @@ function Opportunity({ posts }) {
                 </button>
               </form>
             </div>
-            <div className=" border-t border-gray-400  pt-10 sm:mt-16 sm:pt-16"></div>
-            <div className="mx-auto grid max-w-2xl shadow-sm grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-              {records.map((post) => (
-                <div
-                  key={post.id}
-                  className="flex max-w-xl flex-col items-start justify-evenly border rounded-md"
-                >
-                  <div>
-                    <div className="relative flex items-center gap-x-4 m-4 cursor-pointer">
-                      <Avatar
-                        sx={{ width: 40, height: 40 }}
-                        src={post.user?.photoUrl}
-                      >
-                        {post.user.displayName[0]}
-                      </Avatar>
-                      <div className="text-sm leading-6">
-                        <p className="font-semibold text-gray-900">
-                          <span className="absolute inset-0" />
-                          {post.user.organizationName}
-                        </p>
-                        <p className="text-gray-600 ">
-                          {post.user.displayName}
-                        </p>
+            <div className=" border-t border-gray-400  pt-10 sm:mt-10 sm:pt-10"></div>
+            <div
+              className={`mx-auto grid max-w-2xl shadow-sm ${
+                loading ? "h-[150px]" : ""
+              } grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3`}
+            >
+              {!loading ? (
+                records.map((post) => (
+                  <div
+                    key={post.id}
+                    className="flex max-w-xl flex-col items-start justify-evenly border rounded-md"
+                  >
+                    <div>
+                      <div className="relative flex items-center gap-x-4 m-4 cursor-pointer">
+                        <Avatar
+                          sx={{ width: 40, height: 40 }}
+                          src={post.user?.photoUrl}
+                        >
+                          {post.user.displayName[0]}
+                        </Avatar>
+                        <div className="text-sm leading-6">
+                          <p className="font-semibold text-gray-900">
+                            <span className="absolute inset-0" />
+                            {post.user.organizationName}
+                          </p>
+                          <p className="text-gray-600 ">
+                            {post.user.displayName}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-x-4 text-xs ml-[70px] mt-[-20px]">
+                        <time
+                          dateTime={post.timestamp}
+                          className="text-gray-500"
+                        >
+                          <TimeStamp post={post} />
+                        </time>
+                        <a
+                          href={`https://${post.url}`}
+                          target="blank"
+                          className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-300 text-grey-100 hover:bg-blue-500 hover:text-white"
+                        >
+                          {post.url}
+                        </a>
                       </div>
                     </div>
-                    <div className="flex items-center gap-x-4 text-xs ml-[70px] mt-[-20px]">
-                      <time dateTime={post.timestamp} className="text-gray-500">
-                        <TimeStamp post={post} />
-                      </time>
-                      <a
-                        href={`https://${post.url}`}
-                        target="blank"
-                        className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-300 text-grey-100 hover:bg-blue-500 hover:text-white"
-                      >
-                        {post.url}
-                      </a>
+                    <div className="group relative h-36">
+                      <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                        <span className="absolute inset-0" />
+                        <span className="pl-2" />
+                        {post.title}
+                      </h3>
+                      <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 pl-1">
+                        <span className="pl-5" />
+                        {post.description}
+                      </p>
+                    </div>
+                    <div className="flex space-x-2 mt-3 pb-4 pl-2">
+                      {post.userId === user.uid ? (
+                        <>
+                          <Link
+                            to={`/recruitmentForm/${post.id}`}
+                            className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
+                          >
+                            {" "}
+                            Edit Post
+                          </Link>
+                          <ModalDetail post={post} />
+                          <Link
+                            to={`#`}
+                            className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
+                          >
+                            {" "}
+                            View Applications
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            to={`/apply-form/${post.id}`}
+                            class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
+                          >
+                            Apply Now
+                          </Link>
+                          <ModalDetail post={post} />
+                        </>
+                      )}
                     </div>
                   </div>
-                  <div className="group relative h-36">
-                    <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                      <span className="absolute inset-0" />
-                      <span className="pl-2" />
-                      {post.title}
-                    </h3>
-                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 pl-1">
-                      <span className="pl-5" />
-                      {post.description}
-                    </p>
-                  </div>
-                  <div className="flex space-x-2 mt-3 pb-4 pl-2">
-                    {post.userId === user.uid ? (
-                      <>
-                        <Link
-                          to={`/recruitmentForm/${post.id}`}
-                          className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
-                        >
-                          {" "}
-                          Edit Post
-                        </Link>
-                        <ModalDetail post={post} />
-                        <Link
-                          to={`#`}
-                          className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
-                        >
-                          {" "}
-                          View Applications
-                        </Link>
-                      </>
-                    ) : (
-                      <>
-                        <Link
-                          to={`/apply-form/${post.id}`}
-                          class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
-                        >
-                          Apply Now
-                        </Link>
-                        <ModalDetail post={post} />
-                      </>
-                    )}
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <Loading className={"absolute left-[45%] mt-10"} />
+              )}
             </div>
           </div>
         </div>

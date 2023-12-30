@@ -110,7 +110,10 @@ export default function Header() {
         <div className="flex-3 lg:flex-auto hidden nav-link text-blue-gray-900 lg:block">
           {navList}
         </div>
-        <Link to={"/"} className=" flex-1  absolute left-[50%]">
+        <Link
+          to={"/"}
+          className=" flex-1  absolute left-[41%] sm:left-[44%] md:left-[50%]"
+        >
           <img src={Logo} alt="logo" className="w-20 h-20" />
         </Link>
         <div

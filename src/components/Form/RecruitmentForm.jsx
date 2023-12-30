@@ -128,16 +128,16 @@ const RecruitmentForm = () => {
 
   return (
     <AppLayout>
-      <div className="w-full h-20 py-5 text-center bg-blue-600  shadow overflow-hidden sm:rounded-md font-bold text-3xl text-white">
+      <div className="w-full h-20 py-5 text-center text-2xl bg-blue-600  shadow overflow-hidden sm:rounded-md font-bold sm:text-3xl text-white">
         Volunteer Recruitment Form
       </div>
 
       <section className="text-gray-600 body-font m-0 p-0 relative bg-blue-200"></section>
 
-      <div className="container mx-auto">
+      <div className="container mx-auto mb-10">
         <div className="flex flex-col text-center w-full mb-1"></div>
 
-        <div className="mt-10 md:mt-0 md:col-span-2 px-24 pt-10 ">
+        <div className="mt-10 md:mt-0 md:col-span-2 md:px-24 px-10 pt-10 ">
           <form onSubmit={handleFormSubmit}>
             <div className="shadow overflow-hidden sm:rounded-md border border-gray-400">
               <div className="px-2 py-8 bg-white sm:p-6">

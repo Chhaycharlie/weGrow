@@ -51,10 +51,11 @@ const Faq = () => {
               What is weGrow?{" "}
             </AccordionHeader>
             <AccordionBody className="text-md">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              weGrow is a social platform that connects people who want to make
+              a difference in their communities with volunteer opportunities. It
+              allows you to search for volunteer opportunities by location,
+              cause, or keyword. You can also create a profile to share your
+              skills and interests, and connect with other volunteers.
             </AccordionBody>
           </Accordion>
           <Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
@@ -62,10 +63,12 @@ const Faq = () => {
               How to find a voluntary work?
             </AccordionHeader>
             <AccordionBody className="text-md">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              To find voluntary work on weGrow, you can search for opportunities
+              by filter Organization. You can also browse through a list of
+              recent opportunities. Once you find an opportunity that you're
+              interested in, you can click on detail to learn more about it. You
+              can also apply for the opportunity directly just only click on
+              apply now.
             </AccordionBody>
           </Accordion>
           <Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
@@ -73,10 +76,10 @@ const Faq = () => {
               Is it really reach out audience?
             </AccordionHeader>
             <AccordionBody className="text-md">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              Yes, weGrow can help you reach a wide audience of potential
+              volunteers. When you post a volunteer opportunity, it will be
+              visible to all weGrow users who are searching for opportunities in
+              your area or who are interested in your cause.
             </AccordionBody>
           </Accordion>
           <Accordion open={open === 4} icon={<Icon id={4} open={open} />}>
@@ -84,10 +87,11 @@ const Faq = () => {
               How to use it effectively?
             </AccordionHeader>
             <AccordionBody className="text-md">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              To use weGrow effectively, you should create a profile and share
+              your skills and interests on inspiration part. This will help you
+              connect with other volunteers who have similar interests. You
+              should also regularly search for volunteer opportunities that
+              match your skills and interests.
             </AccordionBody>
           </Accordion>
           <Accordion open={open === 5} icon={<Icon id={5} open={open} />}>
@@ -95,10 +99,13 @@ const Faq = () => {
               How to post a recruitment?
             </AccordionHeader>
             <AccordionBody className="text-md">
-              We&apos;re not always in the position that we want to be at.
-              We&apos;re constantly growing. We&apos;re constantly making
-              mistakes. We&apos;re constantly trying to express ourselves and
-              actualize our dreams.
+              To post a recruitment on weGrow, you will need to create a new
+              post. You will then need to enter a title for your post, a
+              description of the opportunity, and any other relevant
+              information. You can also include a link to your website. Once you
+              have created your post, you will need to submit it for review.
+              Once your post has been approved, it will be visible to all weGrow
+              users.
             </AccordionBody>
           </Accordion>
         </div>

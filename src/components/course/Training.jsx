@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Subscription from "../course/Subscription";
 
 function Training() {
   return (
@@ -37,9 +38,9 @@ function Training() {
           <div className="flex items-center justify-center font-md uppercase text-gray-700 pt-24">
             Featured In
           </div>
-          <div className="bg-white pt-8">
+          <div className="bg-white py-8">
             <div className="max-w-screen-xl px-6 mx-auto lg:pb-16">
-              <div className="grid grid-cols-3 gap-6 text-gray-500 sm:gap-12 sm:grid-cols-6 lg:grid-cols-5 ">
+              <div className="grid grid-cols-3  gap-6 text-gray-500 sm:gap-12 sm:grid-cols-6 lg:grid-cols-5 ">
                 <a
                   href="https://alison.com/"
                   target="blank"
@@ -537,12 +538,7 @@ function Training() {
               Try WeGrow Platform for 30 days. No credit card required. To post
               video training of both skills{" "}
             </p>
-            <a
-              href="#"
-              className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2  focus:outline-none "
-            >
-              Free trial for 30 days
-            </a>
+            <Subscription />
           </div>
         </div>
       </section>

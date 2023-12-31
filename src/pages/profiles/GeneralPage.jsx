@@ -1,29 +1,13 @@
 import React, { useEffect, useState } from "react";
 import InputFields from "../../components/shared/InputFields";
 import { auth } from "../../firebase";
-import { getCurrentUser } from "../../api/user.api";
+import { useSelector } from "react-redux";
 
 const GeneralPage = () => {
   const currentUser = auth.currentUser;
-  const [user, setUser] = useState(null);
   const [email, setEmail] = useState(currentUser.email);
   const [username, setUsername] = useState(currentUser.displayName);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getCurrentUser(currentUser.uid);
-        setUser(data);
-      } catch (error) {
-        console.error("Error fetching recruitment data:", error);
-      }
-    };
-
-    // Only fetch data if formId is available
-    if (currentUser) {
-      fetchData();
-    }
-  }, []);
+  const userInfo = useSelector((state) => state.user);
 
   return (
     <form className="mb-2 w-80 sm:w-full">
@@ -41,15 +25,29 @@ const GeneralPage = () => {
           disable={true}
         />
         <InputFields
+          placeholder={"Current Location"}
+          label={"Location"}
+          value={location}
+          disable={true}
+        />
+
+        <InputFields
           placeholder={"Organization Name"}
           label={"Organization Name"}
-          value={user?.organizationName ?? ""}
+          value={userInfo?.user.organizationName ?? ""}
           disable={true}
         />
         <InputFields
           placeholder={"Oraginzation Website"}
           label={"Organization Website"}
-          value={user?.organizationEmail ?? ""}
+          value={userInfo?.user.organizationEmail ?? ""}
+          disable={true}
+        />
+
+        <InputFields
+          placeholder={"Phone Number"}
+          label={"Phone Number"}
+          value={userInfo?.user.phoneNumber ?? ""}
           disable={true}
         />
       </div>

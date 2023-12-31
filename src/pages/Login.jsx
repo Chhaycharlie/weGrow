@@ -31,18 +31,30 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const userAuth = await signInWithEmailAndPassword(
-        auth,
-        forms.email,
-        forms.password
+      signInWithEmailAndPassword(auth, forms.email, forms.password).then(
+        (user) => {
+          getCurrentUser(user.user.uid).then((userInfo) => {
+            dispatch(
+              login({
+                displayName: userInfo.displayName,
+                email: userInfo.email,
+                isAdmin: userInfo.isAdmin,
+                organizationEmail: userInfo.organizationEmail,
+                organizationName: userInfo.organizationName,
+                photoUrl: userInfo.photoUrl,
+                role: userInfo.role,
+                phoneNumber: userInfo.phoneNumber,
+                userId: userInfo.userId,
+              })
+            );
+            setLoading(false);
+            navigate("/");
+            toast.success("Login successfully !", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          });
+        }
       );
-      if (userAuth) {
-        setLoading(false);
-        navigate("/");
-        toast.success("Login successfully !", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
     } catch (error) {
       setLoading(false);
       setFormErrors("Invalid credential !!!");

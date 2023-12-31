@@ -18,13 +18,14 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../features/userSlice";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
   const user = auth.currentUser;
   const dispatch = useDispatch();
-  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+  const userInfo = useSelector((state) => state.user);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -87,7 +88,7 @@ export default function Header() {
           Contact us
         </Link>
       </Typography>
-      {user && isAdmin ? (
+      {user && userInfo?.isAdmin ? (
         <Typography
           as="li"
           variant="small"

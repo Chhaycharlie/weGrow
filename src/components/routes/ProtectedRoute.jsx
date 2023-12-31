@@ -12,13 +12,21 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      const currentUserInfo = await getCurrentUser(user.uid);
-      dispatch(
-        login({
-          userId: user.uid,
-          userInfo: currentUserInfo,
-        })
-      );
+      getCurrentUser(user.uid).then((userInfo) => {
+        dispatch(
+          login({
+            displayName: userInfo.displayName,
+            email: userInfo.email,
+            isAdmin: userInfo.isAdmin,
+            organizationEmail: userInfo.organizationEmail,
+            organizationName: userInfo.organizationName,
+            photoUrl: userInfo.photoUrl,
+            role: userInfo.role,
+            phoneNumber:userInfo.phoneNumber,
+            userId: userInfo.userId,
+          })
+        );
+      });
       setUserState(!!user);
     });
     return () => unsubscribe();

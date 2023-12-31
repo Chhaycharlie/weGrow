@@ -1,13 +1,34 @@
 import React, { useEffect, useState } from "react";
 import InputFields from "../../components/shared/InputFields";
 import { auth } from "../../firebase";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+import { getCurrentUser } from "../../api/user.api";
 
 const GeneralPage = () => {
   const currentUser = auth.currentUser;
   const [email, setEmail] = useState(currentUser.email);
   const [username, setUsername] = useState(currentUser.displayName);
-  const userInfo = useSelector((state) => state.user);
+
+  const [organizationName, setOrganizationName] = useState("");
+  const [organizationEmail, setOrganizationEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [location, setLocation] = useState("");
+  // const userInfo = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getCurrentUser(currentUser.uid);
+        setOrganizationEmail(data.organizationEmail);
+        setOrganizationName(data.organizationName);
+        setPhoneNumber(data.phoneNumber);
+        setLocation(data.location);
+      } catch (error) {
+        console.error("Error fetching recruitment data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <form className="mb-2 w-80 sm:w-full">
@@ -34,20 +55,20 @@ const GeneralPage = () => {
         <InputFields
           placeholder={"Organization Name"}
           label={"Organization Name"}
-          value={userInfo?.user.organizationName ?? ""}
+          value={organizationName}
           disable={true}
         />
         <InputFields
           placeholder={"Oraginzation Website"}
           label={"Organization Website"}
-          value={userInfo?.user.organizationEmail ?? ""}
+          value={organizationEmail}
           disable={true}
         />
 
         <InputFields
           placeholder={"Phone Number"}
           label={"Phone Number"}
-          value={userInfo?.user.phoneNumber ?? ""}
+          value={phoneNumber}
           disable={true}
         />
       </div>

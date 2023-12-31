@@ -16,12 +16,24 @@ import UserDetial from "./pages/profiles/UserDetails";
 import InspirationDetail from "./components/inspiration/InspirationDetail";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import ScrollToTop from "./components/shared/ScrollToTop";
+import Dashboard from "./pages/admin/Dashboard";
 
 import { Route, Routes } from "react-router-dom";
 import ProfileLayout from "./components/profiles/ProfileLayout";
 import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
 function App() {
+  const userInfo = useSelector((state) => state.user);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (userInfo && userInfo.user) {
+      setIsAdmin(userInfo.user.isAdmin);
+    }
+  }, [userInfo]); // Only re-run the effect if userInfo changes
+
   return (
     <>
       <ScrollToTop />
@@ -101,6 +113,8 @@ function App() {
           }
         />
 
+        {isAdmin && <Route path="/dashboard" element={<Dashboard />} />}
+
         <Route
           path="/inspiration/:formId"
           element={
@@ -110,20 +124,48 @@ function App() {
           }
         />
 
-        <Route
+        {/* <Route
           path="/profile"
           element={
             <ProtectedRoute>
               <ProfileLayout />
             </ProtectedRoute>
           }
-        >
-          <Route index path="account" element={<AccountPage />} />
-          <Route path="general" element={<GeneralPage />} />
-          <Route path="password" element={<PasswordPage />} />
-        </Route>
+        > */}
         <Route
-          path="/profile/user_detail"
+          index
+          path="/profile/edit-profile"
+          element={
+            <ProtectedRoute>
+              <ProfileLayout>
+                <AccountPage />
+              </ProfileLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/general"
+          element={
+            <ProtectedRoute>
+              <ProfileLayout>
+                <GeneralPage />
+              </ProfileLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/password"
+          element={
+            <ProtectedRoute>
+              <ProfileLayout>
+                <PasswordPage />
+              </ProfileLayout>
+            </ProtectedRoute>
+          }
+        />
+        {/* </Route> */}
+        <Route
+          path="/profile/user-detail"
           element={
             <ProtectedRoute>
               <UserDetial />

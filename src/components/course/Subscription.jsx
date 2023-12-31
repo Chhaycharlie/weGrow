@@ -10,7 +10,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 380,
-  height: 600,
+  height: 530,
   bgcolor: "background.paper",
   boxShadow: 24,
 };
@@ -91,7 +91,7 @@ export default function BasicModal() {
                         d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    Components
+                    No need approve Post
                   </p>
                 </div>
                 <div className="mb-4 w-full">

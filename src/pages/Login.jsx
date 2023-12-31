@@ -43,15 +43,16 @@ const Login = () => {
                 organizationName: userInfo.organizationName,
                 photoUrl: userInfo.photoUrl,
                 role: userInfo.role,
+                location: userInfo.location,
                 phoneNumber: userInfo.phoneNumber,
                 userId: userInfo.userId,
               })
             );
             setLoading(false);
-            navigate("/");
             toast.success("Login successfully !", {
               position: toast.POSITION.TOP_RIGHT,
             });
+            navigate("/");
           });
         }
       );

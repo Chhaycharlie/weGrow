@@ -22,10 +22,18 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(null);
+
   const user = auth.currentUser;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfo = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (userInfo && userInfo.user) {
+      setIsAdmin(userInfo.user.isAdmin);
+    }
+  }, [userInfo]); // Only re-run the effect if userInfo changes
 
   const handleLogout = () => {
     dispatch(logout());
@@ -88,7 +96,7 @@ export default function Header() {
           Contact us
         </Link>
       </Typography>
-      {user && userInfo?.isAdmin ? (
+      {isAdmin ? (
         <Typography
           as="li"
           variant="small"

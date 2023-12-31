@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Profile from "./Profile";
-import { Outlet } from "react-router-dom";
-import { auth } from "../../firebase";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const ProfileLayout = ({ title }) => {
-  const currentUser = auth.currentUser;
+const ProfileLayout = ({ children }) => {
+  // const currentUser = auth.currentUser;
+  const userInfo = useSelector((state) => state.user);
+  const [title, setTitle] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    const lastSlashIndex = location.pathname.lastIndexOf("/");
+    const extractedTitle = location.pathname.substring(lastSlashIndex + 1);
+    const capitalizedTitle =
+      extractedTitle.charAt(0).toUpperCase() + extractedTitle.slice(1);
+    setTitle(capitalizedTitle);
+  }, [location.pathname]);
 
   return (
     <Profile
       title={title}
-      name={currentUser.displayName}
       quote={"Set up your weGrow present and hiring needs"}
     >
-      <Outlet />
+      {children}
     </Profile>
   );
 };

@@ -19,13 +19,13 @@ const Settings = () => {
           <Link to={"/profile/general"}>General</Link>
         </li>
         <li>
-          <Link to={"/profile/account"}>Edit Profile</Link>
+          <Link to={"/profile/edit-profile"}>Edit Profile</Link>
         </li>
         <li>
           <Link to={"/profile/password"}>Password</Link>
         </li>
         <li className="pb-6">
-          <Link to={"/profile/user_detail"}>My Profile History</Link>
+          <Link to={"/profile/user-detail"}>My Profile History</Link>
         </li>
         <hr className="w-56 h-[2px] bg-gray-300" />
         <li

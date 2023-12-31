@@ -19,9 +19,11 @@ const style = {
   p: 4,
 };
 
-export default function ModalProfile({ toggle, name }) {
+export default function ModalProfile({ toggle }) {
   const [open, setOpen] = React.useState(toggle);
+  const currentUser = auth.currentUser;
   const handleOpen = () => setOpen(true);
+  const [name, setName] = useState(currentUser.displayName ?? "");
   const handleClose = () => {
     setOpen(false);
     setIsSelectedFile(null);

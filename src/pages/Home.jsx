@@ -10,9 +10,9 @@ import AppLayout from "../components/Layout/AppLayout";
 import { useSelector } from "react-redux";
 
 const Home = () => {
-  // const userInfo = useSelector((state) => state.user);
+  const userInfo = useSelector((state) => state.user);
 
-  // console.log(`home: ${userInfo}`);
+  console.log(userInfo);
   return (
     <AppLayout>
       <Hero />

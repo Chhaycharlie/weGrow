@@ -15,10 +15,15 @@ function Opportunity({ posts, loading }) {
   const recordsPerPage = 6;
   const lastIndex = active * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
+  const [filter, setFilter] = useState("all");
+  const filteredPosts =
+    filter === "myPosts"
+      ? posts.filter((post) => post.userId === user.uid)
+      : posts;
 
-  const records = posts.slice(firstIndex, lastIndex);
+  const records = filteredPosts.slice(firstIndex, lastIndex);
   //number of page
-  const npage = Math.ceil(posts.length / recordsPerPage);
+  const npage = Math.ceil(filteredPosts.length / recordsPerPage);
   //array of pageIndex
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
@@ -40,25 +45,16 @@ function Opportunity({ posts, loading }) {
     setActive(active - 1);
   };
 
-  //search data
-  const filterData = () => {
-    if (!searchTerm) {
-      return posts.slice(firstIndex, lastIndex);
-    }
-    return posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  };
-
   const handleDelete = (postId, event) => {
     event.preventDefault();
     console.log(postId);
     // Add your delete logic here
   };
 
-  console.log(posts);
+  const handleFilter = (type) => {
+    setFilter(type);
+    setActive(1); // Reset page to 1 when changing filters
+  };
 
   return (
     <>
@@ -104,30 +100,35 @@ function Opportunity({ posts, loading }) {
                     required
                   />
                 </div>
-                <button
-                  type="submit"
-                  class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  <svg
-                    class="w-4 h-4"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                  <span class="sr-only">Search</span>
-                </button>
               </form>
             </div>
-            <div className=" border-t border-gray-400  pt-10 sm:mt-10 sm:pt-10"></div>
+            <div className=" border-t border-gray-400 sm:mt-10 sm:pb-6">
+              {/* Filter buttons */}
+              <div className="flex gap-4 mt-4">
+                <Button
+                  variant="outlined"
+                  color="blue"
+                  onClick={() => handleFilter("all")}
+                  className={`
+                      ${filter === "all" ? "bg-blue-500 text-white" : ""}
+                      h-10
+                  `}
+                >
+                  All
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="blue"
+                  onClick={() => handleFilter("myPosts")}
+                  className={`
+                      ${filter === "myPosts" ? "bg-blue-500 text-white" : ""}
+                      h-10
+                  `}
+                >
+                  My Posts
+                </Button>
+              </div>
+            </div>
             <div
               className={`mx-auto grid max-w-2xl shadow-sm ${
                 loading ? "h-[150px]" : ""
@@ -195,7 +196,7 @@ function Opportunity({ posts, loading }) {
                         <a
                           href={`https://${post.url}`}
                           target="blank"
-                          className="relative z-10 rounded-full px-3 py-1.5 font-medium bg-gray-300 text-grey-100 hover:bg-blue-500 hover:text-white"
+                          className="relative z-10 rounded-full px-3 py-1.5 mt-1 font-medium bg-gray-300 text-grey-100 hover:bg-blue-500 hover:text-white"
                         >
                           {post.url}
                         </a>

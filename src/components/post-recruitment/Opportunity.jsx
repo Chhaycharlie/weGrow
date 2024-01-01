@@ -1,27 +1,41 @@
 import React, { useState } from "react";
 import { ModalDetail } from "./ModalDetail";
 import { Link } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import TimeStamp from "../shared/TimeStamp";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@material-tailwind/react";
 import { Avatar } from "@mui/material";
 import Loading from "../../pages/loading";
+import { ConfirmModal } from "../Form/ConfirmModal";
+import { deleteDoc, doc } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 function Opportunity({ posts, loading }) {
   const user = auth.currentUser;
+  const [searchQuery, setSearchQuery] = useState("");
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   //pagination
   const [active, setActive] = useState(1);
   const recordsPerPage = 6;
   const lastIndex = active * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const [filter, setFilter] = useState("all");
-  const filteredPosts =
-    filter === "myPosts"
-      ? posts.filter((post) => post.userId === user.uid)
-      : posts;
 
-  const records = filteredPosts.slice(firstIndex, lastIndex);
+  const filteredPosts = posts.filter((post) => {
+    const titleMatchesSearch = post.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const isMyPost = post.userId === user.uid;
+
+    // Combine search and filter conditions
+    return (
+      titleMatchesSearch &&
+      (filter === "all" || (filter === "myPosts" && isMyPost))
+    );
+  });
+
   //number of page
   const npage = Math.ceil(filteredPosts.length / recordsPerPage);
   //array of pageIndex
@@ -45,16 +59,53 @@ function Opportunity({ posts, loading }) {
     setActive(active - 1);
   };
 
-  const handleDelete = (postId, event) => {
-    event.preventDefault();
-    console.log(postId);
+  //handle delete post
+  const handleDelete = (postId) => {
     // Add your delete logic here
+    try {
+      setDeleteLoading(true);
+      const postRef = doc(db, "volunteer-recruits", postId);
+      deleteDoc(postRef).then(() => {
+        setDeleteLoading(false);
+        toast.success("post deleted !", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      });
+    } catch (error) {
+      setDeleteLoading(false);
+      toast.error(error);
+    }
   };
 
   const handleFilter = (type) => {
     setFilter(type);
     setActive(1); // Reset page to 1 when changing filters
   };
+
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+    setActive(1); // Reset page to 1 when changing search query
+  };
+
+  const sortedPosts = [...filteredPosts].sort((a, b) => {
+    const aTitleMatchesSearch = a.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const bTitleMatchesSearch = b.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    if (aTitleMatchesSearch && !bTitleMatchesSearch) {
+      return -1;
+    } else if (!aTitleMatchesSearch && bTitleMatchesSearch) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  //records that show in page
+  const records = sortedPosts.slice(firstIndex, lastIndex);
 
   return (
     <>
@@ -95,9 +146,10 @@ function Opportunity({ posts, loading }) {
                   <input
                     type="text"
                     id="simple-search"
+                    onChange={handleSearch}
+                    value={searchQuery}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search branch name..."
-                    required
+                    placeholder="Search By Title"
                   />
                 </div>
               </form>
@@ -130,122 +182,111 @@ function Opportunity({ posts, loading }) {
               </div>
             </div>
             <div
-              className={`mx-auto grid max-w-2xl shadow-sm ${
+              className={`mx-auto grid max-w-2xl shadow-sm min-h-[250px] ${
                 loading ? "h-[150px]" : ""
               } grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3`}
             >
               {!loading ? (
-                records.map((post) => (
-                  <div
-                    key={post.id}
-                    className="flex max-w-xl flex-col items-start justify-evenly border rounded-md"
-                  >
-                    <div>
-                      <div className="relative flex items-center gap-x-4 m-4 cursor-pointer">
-                        {post.userId === user.uid ? (
-                          <div
-                            onClick={(event) => handleDelete(post.id, event)}
-                            className="absolute left-[333px] top-[3px]"
+                records.length > 0 ? (
+                  records.map((post) => (
+                    <div
+                      key={post.id}
+                      className="flex max-w-xl flex-col items-start justify-evenly border rounded-md"
+                    >
+                      <div>
+                        <div className="relative flex items-center gap-x-4 m-4 cursor-pointer">
+                          {post.userId === user.uid ? (
+                            <div className="absolute left-[333px] top-[3px]">
+                              <ConfirmModal
+                                onDelete={() => handleDelete(post.id)}
+                                loading={deleteLoading}
+                              />
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          <Avatar
+                            sx={{ width: 40, height: 40 }}
+                            src={post.user?.photoUrl}
                           >
-                            <svg
-                              fill="#000000"
-                              width="17px"
-                              height="17px"
-                              viewBox="0 0 32 32"
-                              xmlns="http://www.w3.org/2000/svg"
-                              stroke="#000000"
-                            >
-                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                              <g
-                                id="SVGRepo_tracerCarrier"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              ></g>
-                              <g id="SVGRepo_iconCarrier">
-                                {" "}
-                                <path d="M18.8,16l5.5-5.5c0.8-0.8,0.8-2,0-2.8l0,0C24,7.3,23.5,7,23,7c-0.5,0-1,0.2-1.4,0.6L16,13.2l-5.5-5.5 c-0.8-0.8-2.1-0.8-2.8,0C7.3,8,7,8.5,7,9.1s0.2,1,0.6,1.4l5.5,5.5l-5.5,5.5C7.3,21.9,7,22.4,7,23c0,0.5,0.2,1,0.6,1.4 C8,24.8,8.5,25,9,25c0.5,0,1-0.2,1.4-0.6l5.5-5.5l5.5,5.5c0.8,0.8,2.1,0.8,2.8,0c0.8-0.8,0.8-2.1,0-2.8L18.8,16z"></path>{" "}
-                              </g>
-                            </svg>
+                            {post.user.displayName[0]}
+                          </Avatar>
+                          <div className="text-sm leading-6">
+                            <p className="font-semibold text-gray-900">
+                              <span className="absolute inset-0" />
+                              {post.user.organizationName}
+                            </p>
+                            <p className="text-gray-600 ">
+                              {post.user.displayName}
+                            </p>
                           </div>
-                        ) : (
-                          ""
-                        )}
-                        <Avatar
-                          sx={{ width: 40, height: 40 }}
-                          src={post.user?.photoUrl}
-                        >
-                          {post.user.displayName[0]}
-                        </Avatar>
-                        <div className="text-sm leading-6">
-                          <p className="font-semibold text-gray-900">
-                            <span className="absolute inset-0" />
-                            {post.user.organizationName}
-                          </p>
-                          <p className="text-gray-600 ">
-                            {post.user.displayName}
-                          </p>
+                        </div>
+                        <div className="flex items-center gap-x-4 text-xs ml-[70px] mt-[-20px]">
+                          <time
+                            dateTime={post.timestamp}
+                            className="text-gray-500"
+                          >
+                            <TimeStamp post={post} />
+                          </time>
+                          <a
+                            href={`https://${post.url}`}
+                            target="blank"
+                            className="relative z-10 rounded-full px-3 py-1.5 mt-1 font-medium bg-gray-300 text-grey-100 hover:bg-blue-500 hover:text-white"
+                          >
+                            {post.url}
+                          </a>
                         </div>
                       </div>
-                      <div className="flex items-center gap-x-4 text-xs ml-[70px] mt-[-20px]">
-                        <time
-                          dateTime={post.timestamp}
-                          className="text-gray-500"
-                        >
-                          <TimeStamp post={post} />
-                        </time>
-                        <a
-                          href={`https://${post.url}`}
-                          target="blank"
-                          className="relative z-10 rounded-full px-3 py-1.5 mt-1 font-medium bg-gray-300 text-grey-100 hover:bg-blue-500 hover:text-white"
-                        >
-                          {post.url}
-                        </a>
+                      <div className="group relative h-36">
+                        <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                          <span className="pl-2" />
+                          {post.title}
+                        </h3>
+                        <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 pl-1">
+                          <span className="pl-5" />
+                          {post.description}
+                        </p>
+                      </div>
+                      <div className="flex space-x-2 mt-3 pb-4 pl-2">
+                        {post.userId === user.uid ? (
+                          <>
+                            <Link
+                              to={`/recruitmentForm/${post.id}`}
+                              className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
+                            >
+                              {" "}
+                              Edit Post
+                            </Link>
+                            <ModalDetail post={post} />
+                            <Link
+                              to={`#`}
+                              className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
+                            >
+                              {" "}
+                              View Applications
+                            </Link>
+                          </>
+                        ) : (
+                          <>
+                            <Link
+                              to={`/apply-form/${post.id}`}
+                              class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
+                            >
+                              Apply Now
+                            </Link>
+                            <ModalDetail post={post} />
+                          </>
+                        )}
                       </div>
                     </div>
-                    <div className="group relative h-36">
-                      <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                        <span className="absolute inset-0" />
-                        <span className="pl-2" />
-                        {post.title}
-                      </h3>
-                      <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 pl-1">
-                        <span className="pl-5" />
-                        {post.description}
-                      </p>
-                    </div>
-                    <div className="flex space-x-2 mt-3 pb-4 pl-2">
-                      {post.userId === user.uid ? (
-                        <>
-                          <Link
-                            to={`/recruitmentForm/${post.id}`}
-                            className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
-                          >
-                            {" "}
-                            Edit Post
-                          </Link>
-                          <ModalDetail post={post} />
-                          <Link
-                            to={`#`}
-                            className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
-                          >
-                            {" "}
-                            View Applications
-                          </Link>
-                        </>
-                      ) : (
-                        <>
-                          <Link
-                            to={`/apply-form/${post.id}`}
-                            class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
-                          >
-                            Apply Now
-                          </Link>
-                          <ModalDetail post={post} />
-                        </>
-                      )}
-                    </div>
+                  ))
+                ) : (
+                  <div className="col-span-3 flex items-center justify-center">
+                    <p className="text-center text-gray-600 pb-16">
+                      No matching posts found.
+                    </p>
                   </div>
-                ))
+                )
               ) : (
                 <Loading className={"absolute left-[45%] mt-10"} />
               )}

@@ -84,6 +84,7 @@ export const getPostsWithUserInfo = async () => {
       const user = userDoc?.data() || {}; // Set to an empty object if userDoc is undefined
 
       return {
+        id: postDoc.id,
         ...postData,
         user,
       };

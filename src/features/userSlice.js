@@ -18,7 +18,11 @@ const userSlice = createSlice({
       state.user = action.payload;
     },
     logout: (state) => {
+      // Clear persisted state from local storage
+      localStorage.removeItem("reduxState");
+      // Sign out from Firebase
       signOut(auth);
+      // Reset user state to null
       state.user = null;
     },
   },

@@ -8,6 +8,14 @@ import { useRef, useState } from "react";
 import { auth, db, storage } from "../../firebase";
 import { uploadBytes, getDownloadURL, ref } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
+import { useEffect } from "react";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 
 const style = {
   position: "absolute",
@@ -31,6 +39,11 @@ export default function ModalProfile({ toggle }) {
   const fileInputRef = useRef(null);
   const [isSelectedFile, setIsSelectedFile] = useState(null);
   const user = auth.currentUser;
+  const [photo, setPhoto] = useState("");
+
+  useEffect(() => {
+    setPhoto(user.photoURL);
+  }, [user.photoURL]);
 
   const defaultPhotoURL =
     "https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg";
@@ -43,7 +56,10 @@ export default function ModalProfile({ toggle }) {
       let userImg = "";
       try {
         //add image to storage
-        const imageRef = ref(storage, `users-image/${user.uid}`);
+        const imageRef = ref(
+          storage,
+          `users-image/${user.uid}+${serverTimestamp()}`
+        );
         await uploadBytes(imageRef, selectedFile);
         userImg = await getDownloadURL(imageRef);
 
@@ -54,10 +70,22 @@ export default function ModalProfile({ toggle }) {
 
         // update on firestore too
         //query user id and then update data
-        //done
+        const userRef = doc(db, "users", user.uid);
+        await updateDoc(userRef, {
+          photoUrl: userImg,
+          updatedTimeStamp: serverTimestamp(),
+        });
+
+        //created img history
+        const profileImgHistoryRef = collection(db, "profileImageHistory");
+        await addDoc(profileImgHistoryRef, {
+          createdAt: serverTimestamp(),
+          photoUrlHistory: userImg,
+          userId: user.uid,
+        });
 
         //is success save
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error);
       }
@@ -87,7 +115,7 @@ export default function ModalProfile({ toggle }) {
       <Button onClick={handleOpen}>
         <Avatar
           sx={{ width: 60, height: 60 }}
-          src={user.photoURL}
+          src={photo}
           className="cursor-pointer hover:shadow-none"
         >
           {name[0]}

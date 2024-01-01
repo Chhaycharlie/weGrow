@@ -29,7 +29,7 @@ function Training() {
               View Inspiration Post
             </Link>
             <Link
-              to={"/recruitment#opportunity"}
+              to={"/recruitment"}
               className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 bg-transparent transition duration-150 ease-in-out hover:border-blue-600 lg:text-xl lg:font-bold  hover:text-blue-600 rounded-xl border border-blue-700  text-gray-500 px-4 sm:px-10 py-2 sm:py-4 text-sm"
             >
               find volunteer

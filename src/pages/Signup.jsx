@@ -3,13 +3,18 @@ import React, { useEffect, useState } from "react";
 import CreateAccount from "../assets/Auth/create-account.svg";
 import "../App.css";
 import { Link } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { login } from "../features/userSlice";
+import SmallSpinner from "../components/shared/SmallSpinner";
 
 const Signup = () => {
   const currYear = new Date().getFullYear();
+  const dispatch = useDispatch();
   const [forms, setForms] = useState({
     username: "",
     email: "",
@@ -20,10 +25,9 @@ const Signup = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [isChecked, setIsChecked] = useState(false);
-
-  console.log(isChecked);
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
@@ -37,21 +41,61 @@ const Signup = () => {
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
+      setLoading(true);
       createUserWithEmailAndPassword(auth, forms.email, forms.password)
         .then(() => {
-          updateProfile(auth.currentUser, {
+          // Update user profile
+          return updateProfile(auth.currentUser, {
             displayName: forms.username,
           });
-          navigate("/login");
+        })
+        .then(() => {
+          // Dispatch to Redux store
+          const userData = {
+            displayName: auth.currentUser.displayName,
+            email: auth.currentUser.email,
+            isAdmin: false,
+            organizationEmail: "",
+            organizationName: "",
+            photoUrl: "",
+            role: isChecked ? "organization" : "user",
+            location: "",
+            phoneNumber: "",
+            userId: auth.currentUser.uid,
+          };
+          dispatch(login(userData));
+
+          // Add user data to Firestore
+          const userRef = doc(db, "users", auth.currentUser.uid);
+          return setDoc(
+            userRef,
+            {
+              ...userData,
+              createdTimeStamp: serverTimestamp(),
+              updatedTimeStamp: serverTimestamp(),
+            },
+            auth.currentUser.uid
+          );
+        })
+        .then(() => {
+          // Navigation and reset form
+          setLoading(false);
+          toast.success("Created Succesfully", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          navigate("/");
+          setForms({});
+          setIsChecked(false);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
 
-          console.log(errorCode, errorMessage);
+          console.error(errorCode, errorMessage);
+          toast.error(errorMessage, {
+            position: toast.POSITION.TOP_CENTER,
+          });
         });
-
-      setForms({});
     } else if (Object.keys(formErrors).length > 0) {
       toast.error(Object.values(formErrors).join(", "), {
         position: toast.POSITION.TOP_CENTER,
@@ -240,7 +284,7 @@ const Signup = () => {
                 className="flex justify-center items-center font-extrabold text-xl text-white bg-[#42ADFC] w-full h-[50px] mt-6 rounded-lg hover:bg-[#33a6fed7]"
                 onClick={register}
               >
-                Create Account
+                {loading ? <SmallSpinner /> : "Create Account"}
               </button>
             </form>
 

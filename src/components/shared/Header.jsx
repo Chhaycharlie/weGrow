@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { Avatar } from "@mui/material";
 import { React, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import Logo from "../../assets/logos/logo6.png";
 import { useDispatch } from "react-redux";
@@ -22,18 +22,33 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const location = useLocation();
 
-  const user = auth.currentUser;
+  const currentUser = auth.currentUser;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [username, setUsername] = useState(currentUser?.displayName ?? "");
   const userInfo = useSelector((state) => state.user);
+  const [photo, setPhoto] = useState("");
+  const [isProfilePath, setIsProfilePath] = useState(false);
 
   useEffect(() => {
     if (userInfo && userInfo.user) {
       setIsAdmin(userInfo.user.isAdmin);
+      setPhoto(userInfo.user.photoUrl);
     }
   }, [userInfo]); // Only re-run the effect if userInfo changes
+
+  useEffect(() => {
+    // This code will run every time the location changes
+    const currentPath = location.pathname;
+
+    // Check if the current path starts with '/profile'
+    const startsWithProfile = currentPath.startsWith("/profile");
+
+    setIsProfilePath(startsWithProfile);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -127,23 +142,31 @@ export default function Header() {
         </Link>
         <div
           className={`flex items-center justify-between mr-4 sm:mr-6 ${
-            user
+            currentUser
               ? "border rounded-full shadow-xl hover:shadow-lg cursor-pointer"
               : ""
           }`}
         >
-          {user ? (
-            <Menu>
-              <MenuHandler>
-                <Avatar sx={{ width: 35, height: 35 }} src={user?.photoURL}>
-                  {user.displayName[0]}
-                </Avatar>
-              </MenuHandler>
-              <MenuList>
-                <MenuItem onClick={handleRoute}>My profiles</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              </MenuList>
-            </Menu>
+          {currentUser ? (
+            isProfilePath ? (
+              ""
+            ) : (
+              <Menu>
+                <MenuHandler>
+                  <Avatar
+                    key={photo}
+                    sx={{ width: 35, height: 35 }}
+                    src={photo}
+                  >
+                    {username[0]}
+                  </Avatar>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem onClick={handleRoute}>My profiles</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            )
           ) : (
             <>
               <Link
@@ -202,7 +225,7 @@ export default function Header() {
       <MobileNav open={openNav}>
         <div className="container">
           {navList}
-          {!user && (
+          {!currentUser && (
             <Button variant="gradient" size="sm" fullWidth className="mb-2">
               <Link to="/Login">Login</Link>
             </Button>

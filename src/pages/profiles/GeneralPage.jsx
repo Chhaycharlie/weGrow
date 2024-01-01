@@ -6,8 +6,8 @@ import { getCurrentUser } from "../../api/user.api";
 
 const GeneralPage = () => {
   const currentUser = auth.currentUser;
-  const [email, setEmail] = useState(currentUser.email);
-  const [username, setUsername] = useState(currentUser.displayName);
+  const [email, setEmail] = useState(currentUser.email ?? "");
+  const [username, setUsername] = useState(currentUser.displayName ?? "");
 
   const [organizationName, setOrganizationName] = useState("");
   const [organizationEmail, setOrganizationEmail] = useState("");
@@ -27,7 +27,9 @@ const GeneralPage = () => {
         console.error("Error fetching recruitment data:", error);
       }
     };
-    fetchData();
+    if (currentUser) {
+      fetchData();
+    }
   }, []);
 
   return (

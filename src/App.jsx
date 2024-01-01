@@ -124,14 +124,6 @@ function App() {
           }
         />
 
-        {/* <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProfileLayout />
-            </ProtectedRoute>
-          }
-        > */}
         <Route
           index
           path="/profile/edit-profile"

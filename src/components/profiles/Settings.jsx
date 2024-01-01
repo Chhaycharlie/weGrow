@@ -2,14 +2,14 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/userSlice";
-import { toast } from "react-toastify";
 
 const Settings = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleClick = async () => {
+  const handleClick = () => {
     dispatch(logout());
-    window.location.reload();
+    navigate("/login");
   };
 
   return (

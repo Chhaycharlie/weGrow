@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { auth, db } from "../../firebase";
-import { doc, setDoc, serverTimestamp, collection } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  serverTimestamp,
+  collection,
+  updateDoc,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 import { getRecruitmentById } from "../../api/post.api";
 import SmallSpinner from "../shared/SmallSpinner";
@@ -10,10 +16,12 @@ import AppLayout from "../Layout/AppLayout";
 const RecruitmentForm = () => {
   const { formId } = useParams();
   const [post, setPost] = useState(null);
+  const [loadingPost, setLoadingPost] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoadingPost(true);
         const data = await getRecruitmentById(formId);
         setPost(data);
       } catch (error) {
@@ -24,6 +32,7 @@ const RecruitmentForm = () => {
     // Only fetch data if formId is available
     if (formId) {
       fetchData();
+      setLoadingPost(false);
     }
   }, [formId]);
 
@@ -109,16 +118,29 @@ const RecruitmentForm = () => {
         skill: getSelectedValues(),
         userId: user.uid,
         timestamp: serverTimestamp(),
+        updatedTimeStamp: serverTimestamp(),
       };
-      // Add a new document with a generated id
-      const recruitRef = doc(collection(db, "volunteer-recruits"));
-      await setDoc(recruitRef, formData);
 
-      setLoading(false);
-      toast.success("Data added to Firestore successfully", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      console.log("Data added to Firestore successfully!");
+      if (formId) {
+        const recruitRef = doc(db, "volunteer-recruits", formId);
+        await updateDoc(recruitRef, {
+          ...formData,
+          updatedTimeStamp: serverTimestamp(),
+        });
+        setLoading(false);
+        toast.success("post updated", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } else {
+        // Add a new document with a generated id
+        const recruitRef = doc(collection(db, "volunteer-recruits"));
+        await setDoc(recruitRef, formData);
+        setLoading(false);
+        toast.success("post created", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+
       navigate("/recruitment");
     } catch (error) {
       setLoading(false);

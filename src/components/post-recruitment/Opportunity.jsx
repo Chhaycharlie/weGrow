@@ -52,6 +52,14 @@ function Opportunity({ posts, loading }) {
     );
   };
 
+  const handleDelete = (postId, event) => {
+    event.preventDefault();
+    console.log(postId);
+    // Add your delete logic here
+  };
+
+  console.log(posts);
+
   return (
     <>
       <section>
@@ -133,6 +141,34 @@ function Opportunity({ posts, loading }) {
                   >
                     <div>
                       <div className="relative flex items-center gap-x-4 m-4 cursor-pointer">
+                        {post.userId === user.uid ? (
+                          <div
+                            onClick={(event) => handleDelete(post.id, event)}
+                            className="absolute left-[333px] top-[3px]"
+                          >
+                            <svg
+                              fill="#000000"
+                              width="17px"
+                              height="17px"
+                              viewBox="0 0 32 32"
+                              xmlns="http://www.w3.org/2000/svg"
+                              stroke="#000000"
+                            >
+                              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                              <g
+                                id="SVGRepo_tracerCarrier"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              ></g>
+                              <g id="SVGRepo_iconCarrier">
+                                {" "}
+                                <path d="M18.8,16l5.5-5.5c0.8-0.8,0.8-2,0-2.8l0,0C24,7.3,23.5,7,23,7c-0.5,0-1,0.2-1.4,0.6L16,13.2l-5.5-5.5 c-0.8-0.8-2.1-0.8-2.8,0C7.3,8,7,8.5,7,9.1s0.2,1,0.6,1.4l5.5,5.5l-5.5,5.5C7.3,21.9,7,22.4,7,23c0,0.5,0.2,1,0.6,1.4 C8,24.8,8.5,25,9,25c0.5,0,1-0.2,1.4-0.6l5.5-5.5l5.5,5.5c0.8,0.8,2.1,0.8,2.8,0c0.8-0.8,0.8-2.1,0-2.8L18.8,16z"></path>{" "}
+                              </g>
+                            </svg>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                         <Avatar
                           sx={{ width: 40, height: 40 }}
                           src={post.user?.photoUrl}
@@ -217,7 +253,10 @@ function Opportunity({ posts, loading }) {
         </div>
 
         {/* pagination */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-4 px-6 md:px-24 py-10 ">
+        <div
+          id="opportunity"
+          className="flex flex-col md:flex-row justify-center items-center gap-4 px-6 md:px-24 py-10 "
+        >
           <Button
             variant="text"
             className="md:flex items-center gap-2 hidden text-[12px]"

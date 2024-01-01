@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { auth } from "../../firebase";
+import React, { useEffect, useState } from "react";
 import ModalProfile from "./modalProfile";
+import { useSelector } from "react-redux";
 
 const AvatarOption = ({ title, quote }) => {
   const [toggle, setToggle] = useState(false);
-  const currentUser = auth.currentUser;
-  const [name, setName] = useState(currentUser.displayName ?? "");
+  const user = useSelector((state) => state.user);
+  const [name, setName] = useState("");
 
-  const onClick = () => {
-    setToggle(true);
-  };
+  useEffect(() => {
+    if (user?.user) {
+      setName(user.user.displayName ?? "");
+    }
+  }, [user?.user]);
 
   return (
     <div className="w-[40%] h-auto flex flex-wrap mt-10 text-center mx-auto lg:mx-7 lg:text-left lg:justify-normal justify-center lg:space-x-10 lg:items-center lg:m-10">

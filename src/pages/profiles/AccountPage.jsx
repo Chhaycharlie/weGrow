@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import InputFields from "../../components/shared/InputFields";
 import SaveButton from "../../components/shared/SaveButton";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { login } from "../../features/userSlice";
 
 //firebaes
 import { auth, db } from "../../firebase";
@@ -12,6 +13,7 @@ import { updateProfile } from "firebase/auth";
 const AccountPage = () => {
   const userInfo = useSelector((state) => state.user);
   const currentUser = auth.currentUser;
+  const dispatch = useDispatch();
 
   const [username, setUsername] = useState(currentUser.displayName ?? "");
   const [email, setEmail] = useState(currentUser.email ?? "");
@@ -70,7 +72,6 @@ const AccountPage = () => {
       setLoading(true);
       //handle update logic
       const formData = {
-        // username,
         email,
         location,
         organizationEmail,
@@ -94,12 +95,21 @@ const AccountPage = () => {
           toast.success("Profile Updated !", {
             position: toast.POSITION.TOP_CENTER,
           }),
+          dispatch(
+            login({
+              ...formData,
+              displayName: username,
+            })
+          ),
           setIsEdit(false)
         )
       );
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      toast.error("Something went wrong !!", {
+        position: toast.POSITION.TOP_CENTER,
+      }),
+        console.log(error);
     }
   };
 
@@ -115,6 +125,7 @@ const AccountPage = () => {
       </div>
       <div className="mb-1 flex flex-col gap-6">
         <InputFields
+          type={"text"}
           placeholder={"Username"}
           label={"Username"}
           value={username}
@@ -123,6 +134,7 @@ const AccountPage = () => {
           required={true}
         />
         <InputFields
+          type={"text"}
           placeholder={"Email Address"}
           label={"Email"}
           value={email}
@@ -131,6 +143,7 @@ const AccountPage = () => {
           required={true}
         />
         <InputFields
+          type={"text"}
           placeholder={"Current Location"}
           label={"Location"}
           value={location}
@@ -139,6 +152,7 @@ const AccountPage = () => {
           required={true}
         />
         <InputFields
+          type={"text"}
           placeholder={"Organization Name"}
           label={"Organization Name"}
           value={organizationName}
@@ -147,6 +161,7 @@ const AccountPage = () => {
           required={true}
         />
         <InputFields
+          type={"text"}
           placeholder={"Oraginzation Website"}
           label={"Organization Website"}
           value={organizationEmail}
@@ -156,6 +171,7 @@ const AccountPage = () => {
         />
 
         <InputFields
+          type={"text"}
           placeholder={"Phone Number"}
           label={"Phone Number"}
           value={phoneNumber}
@@ -166,7 +182,11 @@ const AccountPage = () => {
       </div>
       <div className="w-full flex lg:justify-end mt-10 ml-12 lg:ml-auto h-10">
         {isEdit && (
-          <SaveButton name={loading ? "Please wait" : "Save Profile"} />
+          <SaveButton
+            name={
+              loading ? <SmallSpinner className={"mt-2"} /> : "Save Profile"
+            }
+          />
         )}
       </div>
     </form>

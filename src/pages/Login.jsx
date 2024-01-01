@@ -14,10 +14,11 @@ import { getCurrentUser } from "../api/user.api";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
-  const [formErrors, setFormErrors] = useState("");
+  const [formErrors, setFormErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
   const [forms, setForms] = useState({
     email: "",
     password: "",
@@ -29,45 +30,74 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      signInWithEmailAndPassword(auth, forms.email, forms.password).then(
-        (user) => {
-          getCurrentUser(user.user.uid).then((userInfo) => {
-            dispatch(
-              login({
-                displayName: userInfo.displayName,
-                email: userInfo.email,
-                isAdmin: userInfo.isAdmin,
-                organizationEmail: userInfo.organizationEmail,
-                organizationName: userInfo.organizationName,
-                photoUrl: userInfo.photoUrl,
-                role: userInfo.role,
-                location: userInfo.location,
-                phoneNumber: userInfo.phoneNumber,
-                userId: userInfo.userId,
-              })
-            );
-            setLoading(false);
-            toast.success("Login successfully !", {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-            navigate("/");
-          });
-        }
-      );
-    } catch (error) {
-      setLoading(false);
-      setFormErrors("Invalid credential !!!");
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log("An error occurred: ", errorCode, errorMessage);
-    }
+    setFormErrors(validate(forms));
+    setIsSubmit(true);
   };
 
   useEffect(() => {
-    setForms("");
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      //add login logic here
+      setLoading(true);
+      signInWithEmailAndPassword(auth, forms.email, forms.password)
+        .then((user) => {
+          getCurrentUser(user.user.uid).then((userInfo) => {
+            setLoading(false),
+              dispatch(
+                login({
+                  displayName: userInfo.displayName,
+                  email: userInfo.email,
+                  isAdmin: userInfo.isAdmin,
+                  organizationEmail: userInfo.organizationEmail,
+                  organizationName: userInfo.organizationName,
+                  photoUrl: userInfo.photoUrl,
+                  role: userInfo.role,
+                  location: userInfo.location,
+                  phoneNumber: userInfo.phoneNumber,
+                  userId: userInfo.userId,
+                })
+              );
+          });
+          navigate("/");
+          setForms({});
+        })
+        .catch((error) => {
+          if (error.code === "auth/invalid-credential") {
+            setLoading(false);
+            setForms({
+              email: "",
+              password: "",
+            });
+            toast.error("Invalid Credential");
+          } else {
+            setLoading(false);
+            setForms({
+              email: "",
+              password: "",
+            });
+          }
+        });
+    } else if (Object.keys(formErrors).length > 0) {
+      setForms({});
+      toast.error(Object.values(formErrors).join(", "), {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
   }, [formErrors]);
+
+  const validate = (values) => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "This email is invalid!!!";
+    }
+
+    if (!values.password) {
+      errors.password = "Password is required!";
+    }
+    return errors;
+  };
 
   return (
     <div>
@@ -102,7 +132,7 @@ const Login = () => {
           <div className="h-full w-5/6 mx-auto mt-10">
             <form>
               {/* input email  */}
-              <div className="flex items-center justify-center w-full h-[50px] p-[20px] bg-gray-200 rounded-lg">
+              <div className="flex items-center justify-center w-full h-[50px] mt-6 p-[20px] bg-gray-200 rounded-lg">
                 {/* icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -149,28 +179,18 @@ const Login = () => {
                 />
               </div>
 
-              {/* remember me */}
-              <div className="mt-4 mr-10 flex justify-center items-center font-bold text-gray-500">
-                <h1 className="ml-10 text-red-500 font-sans">{formErrors}</h1>
-              </div>
-
               {/* login btn */}
               <button
                 type="submit"
                 onClick={handleLogin}
-                className="flex justify-center items-center font-extrabold text-xl text-white bg-[#42ADFC] w-full h-[50px] mt-6 rounded-lg hover:bg-[#33a6fed7]"
+                disabled={loading}
+                className={`flex justify-center items-center font-extrabold text-xl text-white w-full h-[50px] mt-6 rounded-lg ${
+                  loading ? "bg-[#74c5ff]" : "hover:bg-[#33a6fed7] bg-[#42ADFC]"
+                }`}
               >
                 {loading ? <SmallSpinner /> : "Login"}
               </button>
             </form>
-
-            {/* forget password */}
-            <Link
-              to="#"
-              className="flex justify-center mt-6 text-gray-400 font-bold text-sm underline hover:text-red-400"
-            >
-              Forgot Password?
-            </Link>
           </div>
         </div>
       </div>

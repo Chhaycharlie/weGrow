@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../../firebase";
+import { useSelector } from "react-redux";
 
 function PostRecruitment() {
+  const currentUser = auth.currentUser;
+  const user = useSelector((state) => state.user);
+  const [role, setRole] = useState(user?.user?.role ?? "user");
+
+  useEffect(() => {
+    if (user && user?.user) {
+      setRole(user.user.role);
+    }
+  }, [user]);
+
+  const handleScroll = () => {
+    window.scrollTo({
+      top: 820,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       <section className="w-full lg:h-[90vh] mt-[-4px] h-auto object-cover">
@@ -17,12 +36,21 @@ function PostRecruitment() {
               </p>
             </div>
             <div className="flex justify-center items-center mt-2/3">
-              <Link
-                to="/RecruitmentForm"
-                className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-[#1400FF] transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold  rounded-full text-white px-4 sm:px-6 border border-indigo-700 py-2 sm:py-3 text-sm"
-              >
-                Post Recruitment Now +
-              </Link>
+              {role === "organization" ? (
+                <Link
+                  to="/RecruitmentForm"
+                  className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-[#1400FF] transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold  rounded-full text-white px-4 sm:px-6 border border-indigo-700 py-2 sm:py-3 text-sm"
+                >
+                  Post Recruitment Now +
+                </Link>
+              ) : (
+                <div
+                  onClick={handleScroll}
+                  className="cursor-pointer  bg-[#1400FF] transition duration-150 ease-in-out  lg:text-xl lg:font-bold  rounded-full text-white px-4 sm:px-6  py-2 sm:py-3 text-sm"
+                >
+                  Find Volunteer
+                </div>
+              )}
             </div>
           </div>
         </div>

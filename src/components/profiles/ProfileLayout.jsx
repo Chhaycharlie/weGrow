@@ -4,8 +4,9 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const ProfileLayout = ({ children }) => {
-  // const currentUser = auth.currentUser;
   const userInfo = useSelector((state) => state.user);
+
+  // find currentUrl location to add title near name
   const [title, setTitle] = useState("");
   const location = useLocation();
 

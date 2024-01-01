@@ -8,11 +8,13 @@ import WhyOrg from "../components/home/WhyOrganization";
 import Why from "../components/home/WhySection";
 import AppLayout from "../components/Layout/AppLayout";
 import { useSelector } from "react-redux";
+import { auth } from "../firebase";
 
 const Home = () => {
   const userInfo = useSelector((state) => state.user);
+  const user = auth.currentUser;
+  // console.log(user);
 
-  console.log(userInfo);
   return (
     <AppLayout>
       <Hero />

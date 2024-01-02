@@ -14,6 +14,9 @@ const VolunteerForm = () => {
   const navigate = useNavigate();
   const user = auth.currentUser;
   const currentUser = useSelector((state) => state.user);
+
+  //check whether user has submmitt form
+  const [isDisable, setIsDisable] = useState(false);
   const [inputData, setInputData] = useState({
     fullname: user.displayName ?? "",
     gender: "",
@@ -33,14 +36,19 @@ const VolunteerForm = () => {
   const [isReadTerms, setIsReadTerms] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (currentUser && currentUser.user?.phoneNumber) {
-      setInputData({
-        ...inputData,
-        phone: currentUser.user?.phoneNumber,
-      });
-    }
-  }, [currentUser]);
+  //fetch phone number
+  if (formId) {
+    useEffect(() => {
+      if (currentUser && currentUser.user?.phoneNumber) {
+        setInputData({
+          ...inputData,
+          phone: currentUser.user?.phoneNumber,
+        });
+      }
+
+      const userSubmitRef = doc(db, "");
+    }, []);
+  }
 
   const handleCheckboxChange = (event) => {
     setIsReadTerms(event.target.checked);
@@ -77,8 +85,8 @@ const VolunteerForm = () => {
             applyer: user.uid,
             formId: formId,
             cvUrl: cvFileUrl,
-            fileType: file.type,
-            fileName: file.name,
+            fileType: cvFile.type,
+            fileName: cvFile.name,
             isReadTerms: isReadTerms,
             timestamp: serverTimestamp(),
           };

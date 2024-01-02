@@ -269,12 +269,21 @@ function Opportunity({ posts, loading }) {
                           </>
                         ) : (
                           <>
-                            <Link
-                              to={`/apply-form/${post.id}`}
-                              class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
-                            >
-                              Apply Now
-                            </Link>
+                            {post.isSubmitted ? (
+                              <Link
+                                to={`#`}
+                                class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
+                              >
+                                Edit Form
+                              </Link>
+                            ) : (
+                              <Link
+                                to={`/apply-form/${post.id}`}
+                                class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
+                              >
+                                Apply Now
+                              </Link>
+                            )}
                             <ModalDetail post={post} />
                           </>
                         )}

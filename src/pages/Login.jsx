@@ -70,6 +70,7 @@ const Login = () => {
             toast.error("Invalid Credential");
           } else {
             setLoading(false);
+            console.log(error);
             setForms({
               email: "",
               password: "",

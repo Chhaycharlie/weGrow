@@ -67,11 +67,16 @@ const PasswordPage = () => {
         })
         .catch((error) => {
           setLoading(false);
-          // toast.error("Incorrect Old Password!!!", {
-          //   position: toast.POSITION.TOP_CENTER,
-          // });
-          handleClick();
-          console.log(error);
+          if (error.code === "auth/invalid-credential") {
+            setLoading(false);
+            handleClick();
+            toast.error("Old Password Incorrect!!!");
+            console.log(error);
+          } else {
+            setLoading(false);
+            handleClick();
+            console.log(error);
+          }
         });
     }
   };

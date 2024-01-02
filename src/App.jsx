@@ -23,6 +23,7 @@ import ProfileLayout from "./components/profiles/ProfileLayout";
 import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import ViewApplication from "./components/post-recruitment/ViewApplication";
 
 function App() {
   const userInfo = useSelector((state) => state.user);
@@ -60,6 +61,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Recruitment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recruitment/:formId/application"
+          element={
+            <ProtectedRoute>
+              <ViewApplication />
             </ProtectedRoute>
           }
         />

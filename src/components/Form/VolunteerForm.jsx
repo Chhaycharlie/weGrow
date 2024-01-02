@@ -1,30 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ModalTerms } from "../shared/ModalTerms";
-import Header from "../shared/Header";
-import Footer from "../shared/Footer";
+import AppLayout from "../Layout/AppLayout";
 import { useParams, useNavigate } from "react-router-dom";
 import { db, auth, storage } from "../../firebase";
 import { setDoc, doc, collection, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import Loading from "../../pages/loading";
 import { toast } from "react-toastify";
+import SmallSpinner from "../shared/SmallSpinner";
+import { useSelector } from "react-redux";
 
 const VolunteerForm = () => {
   const { formId } = useParams();
   const navigate = useNavigate();
+  const user = auth.currentUser;
+  const currentUser = useSelector((state) => state.user);
   const [inputData, setInputData] = useState({
-    fullname: "",
+    fullname: user.displayName ?? "",
     gender: "",
     dob: "",
     phone: "",
     address: "",
-    email: "",
+    email: user.email ?? "",
     position: "",
     expectation: "",
   });
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const [cvFile, setCvFile] = useState(null);
   const [isReadTerms, setIsReadTerms] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (currentUser && currentUser.user?.phoneNumber) {
+      setInputData({
+        ...inputData,
+        phone: currentUser.user?.phoneNumber,
+      });
+    }
+  }, [currentUser]);
 
   const handleCheckboxChange = (event) => {
     setIsReadTerms(event.target.checked);
@@ -40,53 +56,80 @@ const VolunteerForm = () => {
   // handle Form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const user = auth.currentUser;
-      setLoading(true);
-      // add logic to submit cv here
-      let cvFileUrl = "";
+    setIsReadTerms(false);
+    if (formId) {
+      try {
+        setLoading(true);
+        // add logic to submit cv here
+        let cvFileUrl = "";
 
-      //add image to storage
-      if (cvFile) {
-        const fileRef = ref(storage, `cv/${user.uid}+${formId}`);
-        await uploadBytes(fileRef, cvFile);
-        cvFileUrl = await getDownloadURL(fileRef);
+        //add image to storage
+        if (cvFile) {
+          const fileRef = ref(
+            storage,
+            `cv/${user.uid}+${formId}+${serverTimestamp()}`
+          );
+          await uploadBytes(fileRef, cvFile);
+          cvFileUrl = await getDownloadURL(fileRef);
 
-        const formData = {
-          ...inputData,
-          applyer: user.uid,
-          formId: formId,
-          cvUrl: cvFileUrl,
-          isReadTerms: isReadTerms,
-          timestamp: serverTimestamp(),
-        };
+          const formData = {
+            ...inputData,
+            applyer: user.uid,
+            formId: formId,
+            cvUrl: cvFileUrl,
+            fileType: file.type,
+            fileName: file.name,
+            isReadTerms: isReadTerms,
+            timestamp: serverTimestamp(),
+          };
 
-        // store data in firestore
-        const applyRef = doc(collection(db, "apply-volunteers"));
-        await setDoc(applyRef, formData);
+          // store data in firestore
+          const applyRef = doc(collection(db, "apply-volunteers"));
+          await setDoc(applyRef, formData);
 
-        toast.success("Thanks for Apply !", {
-          position: toast.POSITION.TOP_CENTER,
-        });
+          toast.success("Thanks for Apply !", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          setLoading(false);
+          navigate("/recruitment", { replace: true });
+        } else {
+          setLoading(false);
+          console.log("no cv file submit");
+        }
+      } catch (error) {
         setLoading(false);
-        navigate("/recruitment", { replace: true });
-      } else {
-        setLoading(false);
-        console.log("no cv file submit");
+        console.error("Error adding data:", error);
       }
-    } catch (error) {
-      setLoading(false);
-      console.error("Error adding data to Firestore:", error);
+    } else {
+      toast.error("can't not submitted");
+      console.log("no form id");
     }
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
-    <>
-      <Header />
+    <AppLayout>
+      {/* go back button */}
+      <button
+        type="button"
+        onClick={handleBack}
+        class="w-36 h-10 flex items-center justify-center pr-2 m-2 sm:m-8 sm:mt-4 sm:mb-1 py-2 text-sm text-black transition-colors duration-200 bg-gray-200 border rounded-lg gap-x-2 dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
+      >
+        <svg
+          class="w-5 h-5 rtl:rotate-180"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+          />
+        </svg>
+        <span>Go back</span>
+      </button>
       <div>
         <h2 className=" text-center text-3xl font-bold pt-5">
           Apply to become a potential volunteer!
@@ -95,7 +138,7 @@ const VolunteerForm = () => {
           <img src="/src/assets/image/haha.gif" alt="gif" width={300} />
         </div>
       </div>
-      <form className="px-20 pb-10">
+      <form onSubmit={handleSubmit} className="px-20 pb-10">
         <div className="grid gap-6 mb-6 md:grid-cols-2">
           <div>
             <label
@@ -127,7 +170,7 @@ const VolunteerForm = () => {
               onChange={onChange}
               placeholder="Female, Male"
               name="gender"
-              defaultValue={"Male"}
+              defaultValue={""}
               required
             >
               <option>Choose a gender</option>
@@ -254,6 +297,7 @@ const VolunteerForm = () => {
             }}
             accept=".pdf, .docx, .doc"
             type="file"
+            required
           />
           <p
             className="mt-1 text-sm text-gray-500 dark:text-gray-300"
@@ -288,17 +332,15 @@ const VolunteerForm = () => {
           </p>
         </div>
         <button
-          onClick={handleSubmit}
           disabled={!isReadTerms}
           className={`text-white bg-blue-600 ${
             isReadTerms ? "hover:bg-blue-400" : ""
-          } focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center`}
+          } focus:outline-none font-medium rounded-lg max-h-10 text-sm w-full sm:w-auto px-5 py-2.5 text-center`}
         >
-          Apply Now
+          {loading ? <SmallSpinner className={"mt-[-4px]"} /> : "Apply Now"}
         </button>
       </form>
-      <Footer />
-    </>
+    </AppLayout>
   );
 };
 

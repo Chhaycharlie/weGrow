@@ -9,39 +9,25 @@ import { db } from "../firebase";
 const Recruitment = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     try {
-  //       setLoading(true); // Set loading to true before making the API call
-  //       const data = await getPostsWithUserInfo();
-  //       setPosts(data);
-  //     } catch (error) {
-  //       console.error("Error fetching posts:", error);
-  //     } finally {
-  //       setLoading(false); // Set loading back to false after the data is fetched (or if there's an error)
-  //     }
-  //   };
 
-  //   fetchPosts();
-  // }, []);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setLoading(true);
         // Subscribe to real-time updates
         const unsubscribe = onSnapshot(
           collection(db, "volunteer-recruits"),
           async () => {
             const data = await getPostsWithUserInfo();
             setPosts(data);
+            setLoading(false);
           }
         );
-
         // Set loading back to false when the component unmounts
         return () => unsubscribe();
       } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
         setLoading(false);
+        console.error("Error fetching posts:", error);
       }
     };
 

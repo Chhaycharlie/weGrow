@@ -100,6 +100,7 @@ export default function ModalProfile({ toggle }) {
   const loadFile = (event) => {
     const input = fileInputRef.current;
     const file = input.files[0];
+    console.log(file.type);
 
     const output = document.getElementById("preview_img");
 

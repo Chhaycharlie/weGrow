@@ -154,7 +154,7 @@ function Opportunity({ posts, loading }) {
                 </div>
               </form>
             </div>
-            <div className=" border-t border-gray-400 sm:mt-10 sm:pb-6">
+            <div className=" border-t border-gray-400 sm:mt-10 sm:pb-6 mx-4">
               {/* Filter buttons */}
               <div className="flex gap-4 mt-4">
                 <Button
@@ -191,34 +191,36 @@ function Opportunity({ posts, loading }) {
                   records.map((post) => (
                     <div
                       key={post.id}
-                      className="flex max-w-xl flex-col items-start justify-evenly border rounded-md"
+                      className="flex max-w-xl mt-4 sm:mt-0 flex-col items-start mx-4 justify-evenly border rounded-md"
                     >
-                      <div>
-                        <div className="relative flex items-center gap-x-4 m-4 cursor-pointer">
+                      <div className="w-[100%]">
+                        <div className="relative flex flex-row-reverse justify-between items-center m-4 cursor-pointer">
                           {post.userId === user.uid ? (
-                            <div className="absolute left-[333px] top-[3px]">
+                            <div className="mb-4">
                               <ConfirmModal
                                 onDelete={() => handleDelete(post.id)}
                                 loading={deleteLoading}
                               />
                             </div>
                           ) : (
-                            ""
+                            <div className="mb-4 opacity-0">a</div>
                           )}
-                          <Avatar
-                            sx={{ width: 40, height: 40 }}
-                            src={post.user?.photoUrl}
-                          >
-                            {post.user.displayName[0]}
-                          </Avatar>
-                          <div className="text-sm leading-6">
-                            <p className="font-semibold text-gray-900">
-                              <span className="absolute inset-0" />
-                              {post.user.organizationName}
-                            </p>
-                            <p className="text-gray-600 ">
-                              {post.user.displayName}
-                            </p>
+                          <div className="relative flex items-center gap-x-4 cursor-pointer">
+                            <Avatar
+                              sx={{ width: 40, height: 40 }}
+                              src={post.user?.photoUrl}
+                            >
+                              {post.user.displayName[0]}
+                            </Avatar>
+                            <div className="text-sm leading-6">
+                              <p className="font-semibold text-gray-900">
+                                <span className="absolute inset-0" />
+                                {post.user.organizationName}
+                              </p>
+                              <p className="text-gray-600 ">
+                                {post.user.displayName}
+                              </p>
+                            </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-x-4 text-xs ml-[70px] mt-[-20px]">
@@ -238,8 +240,7 @@ function Opportunity({ posts, loading }) {
                         </div>
                       </div>
                       <div className="group relative h-36">
-                        <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                          <span className="pl-2" />
+                        <h3 className="px-1 mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                           {post.title}
                         </h3>
                         <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 pl-1">
@@ -247,7 +248,7 @@ function Opportunity({ posts, loading }) {
                           {post.description}
                         </p>
                       </div>
-                      <div className="flex space-x-2 mt-3 pb-4 pl-2">
+                      <div className="flex space-x-2 mt-3 pb-4 p-1">
                         {post.userId === user.uid ? (
                           <>
                             <Link
@@ -259,7 +260,7 @@ function Opportunity({ posts, loading }) {
                             </Link>
                             <ModalDetail post={post} />
                             <Link
-                              to={`#`}
+                              to={`/recruitment/${post.id}/application`}
                               className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
                             >
                               {" "}

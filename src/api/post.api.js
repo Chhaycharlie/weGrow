@@ -96,3 +96,8 @@ export const getPostsWithUserInfo = async () => {
     throw error; // Rethrow the error for error handling at a higher level if needed
   }
 };
+
+
+export const checkIsUserSubmitted = () =>{
+  
+}

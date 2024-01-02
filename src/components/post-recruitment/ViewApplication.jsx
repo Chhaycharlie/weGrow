@@ -77,7 +77,7 @@ const ViewApplication = () => {
                 </div>
 
                 {/* table body */}
-                {data ? (
+                {!data ? (
                   <div className="w-full h-[500px] flex justify-center items-center">
                     {/* avatar & username */}
                     <h1 className="text-xl pb-10">no record data</h1>

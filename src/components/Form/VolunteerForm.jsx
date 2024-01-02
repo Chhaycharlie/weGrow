@@ -3,7 +3,14 @@ import { ModalTerms } from "../shared/ModalTerms";
 import AppLayout from "../Layout/AppLayout";
 import { useParams, useNavigate } from "react-router-dom";
 import { db, auth, storage } from "../../firebase";
-import { setDoc, doc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  setDoc,
+  doc,
+  collection,
+  serverTimestamp,
+  query,
+  where,
+} from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
 import SmallSpinner from "../shared/SmallSpinner";
@@ -36,17 +43,38 @@ const VolunteerForm = () => {
   const [isReadTerms, setIsReadTerms] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  //fetch phone number
   if (formId) {
     useEffect(() => {
-      if (currentUser && currentUser.user?.phoneNumber) {
-        setInputData({
-          ...inputData,
-          phone: currentUser.user?.phoneNumber,
-        });
-      }
+      const fetchData = async () => {
+        try {
+          if (currentUser && currentUser.user?.phoneNumber) {
+            setInputData({
+              ...inputData,
+              phone: currentUser.user?.phoneNumber,
+            });
+          }
 
-      const userSubmitRef = doc(db, "");
+          // query user with formId
+          const usersSubmitQuery = query(
+            collection(db, "user-submit-form"),
+            where("userId", "==", user.uid),
+            where("formId", "==", formId)
+          );
+
+          const querySnapshot = await getDocs(usersSubmitQuery);
+
+          // Check if any documents exist
+          if (querySnapshot.size > 0) {
+            setIsDisable(true);
+          } else {
+            setIsDisable(false);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
     }, []);
   }
 
@@ -162,6 +190,7 @@ const VolunteerForm = () => {
               onChange={onChange}
               className="bg-gray-50 p-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full"
               placeholder="Your full name"
+              disabled={isDisable}
               required
             />
           </div>
@@ -179,6 +208,7 @@ const VolunteerForm = () => {
               placeholder="Female, Male"
               name="gender"
               defaultValue={""}
+              disabled={isDisable}
               required
             >
               <option>Choose a gender</option>
@@ -200,6 +230,7 @@ const VolunteerForm = () => {
               name="dob"
               onChange={onChange}
               value={inputData.dob}
+              disabled={isDisable}
               required
             />
           </div>
@@ -217,6 +248,7 @@ const VolunteerForm = () => {
               value={inputData.phone}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
               placeholder="012-345-678"
+              disabled={isDisable}
               required
             />
           </div>
@@ -235,6 +267,7 @@ const VolunteerForm = () => {
             onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Village a, pp commune, Khan sen sok, Phnom Penh"
+            disabled={isDisable}
             required
           />
         </div>
@@ -252,6 +285,7 @@ const VolunteerForm = () => {
             onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Example@gmail.com"
+            disabled={isDisable}
             required
           />
         </div>
@@ -269,6 +303,7 @@ const VolunteerForm = () => {
             onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="Logistics member"
+            disabled={isDisable}
             required
           />
         </div>
@@ -286,6 +321,7 @@ const VolunteerForm = () => {
             onChange={onChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
             placeholder="tell me what you expected from this work"
+            disabled={isDisable}
             required
           />
         </div>
@@ -313,39 +349,53 @@ const VolunteerForm = () => {
             SVG, PNG, JPG or GIF (MAX. 800x400px).
           </p>
         </div>
-        <div className="flex items-start mb-6">
-          <div className="flex items-center h-5">
-            <input
-              id="remember"
-              type="checkbox"
-              checked={isReadTerms}
-              onChange={handleCheckboxChange}
-              className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
-              required
-            />
-          </div>
-          <label
-            for="remember"
-            className="ml-2 text-sm font-medium text-gray-900 "
+
+        {isDisable ? (
+          <button
+            disabled={true}
+            className={`text-white bg-blue-300 ${
+              isReadTerms ? "hover:bg-blue-400" : ""
+            } focus:outline-none font-medium rounded-lg max-h-10 text-sm w-full sm:w-auto px-5 py-2.5 text-center`}
           >
-            I agree with the &nbsp;
-          </label>
-          <p
-            className="text-sm"
-            data-modal-target="default-modal"
-            data-modal-toggle="default-modal"
-          >
-            <ModalTerms />
-          </p>
-        </div>
-        <button
-          disabled={!isReadTerms}
-          className={`text-white bg-blue-600 ${
-            isReadTerms ? "hover:bg-blue-400" : ""
-          } focus:outline-none font-medium rounded-lg max-h-10 text-sm w-full sm:w-auto px-5 py-2.5 text-center`}
-        >
-          {loading ? <SmallSpinner className={"mt-[-4px]"} /> : "Apply Now"}
-        </button>
+            Already Submitted
+          </button>
+        ) : (
+          <>
+            <div className="flex items-start mb-6">
+              <div className="flex items-center h-5">
+                <input
+                  id="remember"
+                  type="checkbox"
+                  checked={isReadTerms}
+                  onChange={handleCheckboxChange}
+                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
+                  required
+                />
+              </div>
+              <label
+                for="remember"
+                className="ml-2 text-sm font-medium text-gray-900 "
+              >
+                I agree with the &nbsp;
+              </label>
+              <p
+                className="text-sm"
+                data-modal-target="default-modal"
+                data-modal-toggle="default-modal"
+              >
+                <ModalTerms />
+              </p>
+            </div>
+            <button
+              disabled={!isReadTerms}
+              className={`text-white bg-blue-600 ${
+                isReadTerms ? "hover:bg-blue-400" : ""
+              } focus:outline-none font-medium rounded-lg max-h-10 text-sm w-full sm:w-auto px-5 py-2.5 text-center`}
+            >
+              {loading ? <SmallSpinner className={"mt-[-4px]"} /> : "Apply Now"}
+            </button>
+          </>
+        )}
       </form>
     </AppLayout>
   );

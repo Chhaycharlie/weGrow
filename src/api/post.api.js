@@ -149,9 +149,51 @@ export const getApplyForm = async (postId, userId) => {
   }
 };
 
-export const getAllApplicationSubmission = () => {
+export const getApplicationSubmission = async (formId) => {
   try {
-    
+    // Step 1: Query posts collection
+    const ApplicationQuery = query(
+      collection(db, "apply-volunteers"),
+      where("formId", "==", formId),
+      orderBy("timestamp", "desc") // Add orderBy here
+    );
+    const applicationsSnapshot = await getDocs(ApplicationQuery);
+    // Step 2: Extract unique userIds from post documents
+    const userIdsSet = new Set(
+      applicationsSnapshot.docs.map((formDoc) => formDoc.data().applyer)
+    );
+    // Convert Set back to an array
+    const userIds = Array.from(userIdsSet);
+
+    // Step 3: Query users collection using userIds
+    const usersQuery = query(
+      collection(db, "users"),
+      where("userId", "in", userIds)
+    );
+    const usersSnapshot = await getDocs(usersQuery);
+
+    // Step 4: Combine post and user data
+    const ApplicationsWithUserInfo = applicationsSnapshot.docs.map(
+      (formDoc) => {
+        const formData = formDoc.data();
+        const userId = formData.applyer;
+
+        // Find the user document with the matching userId
+        const userDoc = usersSnapshot.docs.find(
+          (userDoc) => userDoc.data()?.userId === userId
+        );
+        // Check if the user document exists before accessing its data
+        const user = userDoc?.data() || {}; // Set to an empty object if userDoc is undefined
+
+        return {
+          id: formDoc.id,
+          ...formData,
+          user,
+        };
+      }
+    );
+
+    return ApplicationsWithUserInfo;
   } catch (error) {
     console.log(error);
   }

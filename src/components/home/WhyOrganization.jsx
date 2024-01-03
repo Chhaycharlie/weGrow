@@ -50,13 +50,13 @@ const WhyOrganization = () => {
 
             <div className="mb-12 flex">
               <div className="shrink-0">
-                <div class="rounded-md p-4">
+                <div className="rounded-md p-4">
                   <img src={AffordImg} alt="afford" />
                 </div>
               </div>
-              <div class="ml-4 grow">
-                <p class="mb-1 font-bold">Affordability</p>
-                <p class="text-neutral-500 dark:text-neutral-300">
+              <div className="ml-4 grow">
+                <p className="mb-1 font-bold">Affordability</p>
+                <p className="text-neutral-500 dark:text-neutral-300">
                   Your website is affordable for organizations to use.
                   Organizations can post volunteer opportunities for free, or
                   they can choose to pay for a premium listing.
@@ -65,9 +65,9 @@ const WhyOrganization = () => {
             </div>
           </div>
 
-          <div class="mb-12 w-full shrink-0 grow-0 basis-auto md:px-6 lg:mb-0 lg:w-5/12">
+          <div className="mb-12 w-full shrink-0 grow-0 basis-auto md:px-6 lg:mb-0 lg:w-5/12">
             <div
-              class="relative overflow-hidden rounded-lg bg-cover bg-[50%] bg-no-repeat flex justify-center"
+              className="relative overflow-hidden rounded-lg bg-cover bg-[50%] bg-no-repeat flex justify-center"
               data-te-ripple-init
               data-te-ripple-color="light"
             >

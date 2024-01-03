@@ -56,7 +56,7 @@ export function ModalDetail({ post }) {
               </div>
               <div className="space-y-1">
                 <p className="font-medium text-lg text-black">Recruit People</p>
-                <p class="text-sm text-gray-700">{post.people}</p>
+                <p className="text-sm text-gray-700">{post.people}</p>
               </div>
               <div className="space-y-1">
                 <p className="font-medium text-lg text-black">Position</p>

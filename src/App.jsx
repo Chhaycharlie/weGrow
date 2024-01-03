@@ -17,6 +17,7 @@ import InspirationDetail from "./components/inspiration/InspirationDetail";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import ScrollToTop from "./components/shared/ScrollToTop";
 import Dashboard from "./pages/admin/Dashboard";
+import UpdatedForm from "./components/Form/UpdatedForm";
 
 import { Route, Routes } from "react-router-dom";
 import ProfileLayout from "./components/profiles/ProfileLayout";
@@ -89,13 +90,23 @@ function App() {
           }
         />
         <Route
-          path="/apply-form/:formId"
+          path="/apply-forms/:formId"
           element={
             <ProtectedRoute>
               <VolunteerForm />
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/apply-form/:formId"
+          element={
+            <ProtectedRoute>
+              <UpdatedForm />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/recruitmentForm"
           element={

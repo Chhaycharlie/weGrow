@@ -5,11 +5,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { db, auth, storage } from "../../firebase";
 import {
   setDoc,
+  getDocs,
   doc,
   collection,
   serverTimestamp,
   query,
   where,
+  addDoc,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
@@ -28,9 +30,9 @@ const VolunteerForm = () => {
     fullname: user.displayName ?? "",
     gender: "",
     dob: "",
-    phone: "",
+    phone: user?.phoneNumber ?? "",
     address: "",
-    email: user.email ?? "",
+    email: "",
     position: "",
     expectation: "",
   });
@@ -43,7 +45,7 @@ const VolunteerForm = () => {
   const [isReadTerms, setIsReadTerms] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  //check user and formId and sync formId data
+  //check user and formId and sync formId
   if (formId) {
     useEffect(() => {
       const fetchData = async () => {
@@ -51,7 +53,7 @@ const VolunteerForm = () => {
           if (currentUser && currentUser.user?.phoneNumber) {
             setInputData({
               ...inputData,
-              phone: currentUser.user?.phoneNumber,
+              phone: user?.phoneNumber,
             });
           }
 
@@ -71,10 +73,10 @@ const VolunteerForm = () => {
             setIsDisable(false);
           }
         } catch (error) {
+          toast.error(error);
           console.error("Error fetching data:", error);
         }
       };
-
       fetchData();
     }, []);
   }
@@ -93,21 +95,16 @@ const VolunteerForm = () => {
   // handle Form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsReadTerms(false);
     if (formId) {
       try {
         setLoading(true);
-        // add logic to submit cv here
-        let cvFileUrl = "";
 
-        //add image to storage
+        // Check if cvFile is present
         if (cvFile) {
-          const fileRef = ref(
-            storage,
-            `cv/${user.uid}+${formId}+${serverTimestamp()}`
-          );
+          const fileRef = ref(storage, `cv/${user.uid}+${formId}`);
           await uploadBytes(fileRef, cvFile);
-          cvFileUrl = await getDownloadURL(fileRef);
+          const cvFileUrl = await getDownloadURL(fileRef);
+          console.log(inputData.phone);
 
           const formData = {
             ...inputData,
@@ -118,27 +115,41 @@ const VolunteerForm = () => {
             fileName: cvFile.name,
             isReadTerms: isReadTerms,
             timestamp: serverTimestamp(),
+            updatedTimeStamp: serverTimestamp(),
           };
+          console.log(formData.phone);
 
           // store data in firestore
-          const applyRef = doc(collection(db, "apply-volunteers"));
-          await setDoc(applyRef, formData);
+          const applyVolunteersRef = collection(db, "apply-volunteers");
+          const newDocRef = await addDoc(applyVolunteersRef, formData);
 
-          toast.success("Thanks for Apply !", {
+          // update user-submit-form document
+          const userSubmitRef = doc(db, "user-submit-form", newDocRef.id);
+          await setDoc(userSubmitRef, {
+            userId: user.uid,
+            formId: formId,
+            submittedAt: serverTimestamp(),
+          });
+
+          toast.success("Apply success!", {
             position: toast.POSITION.TOP_CENTER,
           });
+
+          setIsReadTerms(false);
           setLoading(false);
           navigate("/recruitment", { replace: true });
         } else {
           setLoading(false);
+          toast.error("No CV file submitted.");
           console.log("no cv file submit");
         }
       } catch (error) {
         setLoading(false);
+        toast.error(error.message);
         console.error("Error adding data:", error);
       }
     } else {
-      toast.error("can't not submitted");
+      toast.error("Can't submit without a form ID");
       console.log("no form id");
     }
   };
@@ -149,10 +160,10 @@ const VolunteerForm = () => {
       <button
         type="button"
         onClick={handleBack}
-        class="w-36 h-10 flex items-center justify-center pr-2 m-2 sm:m-8 sm:mt-4 sm:mb-1 py-2 text-sm text-black transition-colors duration-200 bg-gray-200 border rounded-lg gap-x-2 dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
+        className="w-36 h-10 flex items-center justify-center pr-2 m-2 sm:m-8 sm:mt-4 sm:mb-1 py-2 text-sm text-black transition-colors duration-200 bg-gray-200 border rounded-lg gap-x-2 dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
       >
         <svg
-          class="w-5 h-5 rtl:rotate-180"
+          className="w-5 h-5 rtl:rotate-180"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -162,6 +173,7 @@ const VolunteerForm = () => {
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
+            el
             d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
           />
         </svg>
@@ -208,11 +220,10 @@ const VolunteerForm = () => {
               onChange={onChange}
               placeholder="Female, Male"
               name="gender"
-              defaultValue={""}
               disabled={isDisable}
               required
             >
-              <option>Choose a gender</option>
+              <option value="">Choose a gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
@@ -374,7 +385,7 @@ const VolunteerForm = () => {
                 />
               </div>
               <label
-                for="remember"
+                htmlFor="remember"
                 className="ml-2 text-sm font-medium text-gray-900 "
               >
                 I agree with the &nbsp;

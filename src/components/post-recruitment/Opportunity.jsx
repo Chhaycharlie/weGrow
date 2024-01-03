@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ModalDetail } from "./ModalDetail";
 import { Link } from "react-router-dom";
 import { auth, db } from "../../firebase";
@@ -6,10 +6,10 @@ import TimeStamp from "../shared/TimeStamp";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button, IconButton } from "@material-tailwind/react";
 import { Avatar } from "@mui/material";
-import Loading from "../../pages/loading";
 import { ConfirmModal } from "../Form/ConfirmModal";
 import { deleteDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import Loading from "../../pages/Loading";
 
 function Opportunity({ posts, loading }) {
   const user = auth.currentUser;
@@ -114,21 +114,21 @@ function Opportunity({ posts, loading }) {
           <div className="mx-auto max-w-7xl px-4 lg:px-4">
             <div className="flex justify-between flex-wrap">
               <div className="mx-auto max-w-2xl lg:mx-0">
-                <h2 className="text-3xl text-center md:text-left font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <h2 className="text-2xl text-center md:text-left font-bold tracking-tight text-gray-900 sm:text-4xl">
                   Opportunity
                 </h2>
-                <p className="mt-3 text-lg text-center md:text-left leading-8 text-gray-600">
+                <p className="mt-3 text-md text-center md:text-left leading-8 text-gray-600">
                   Find opportunity to grow your experience and potential here.
                 </p>
               </div>
-              <form class="flex items-center my-10 mx-auto md:mx-0 md:my-0">
-                <label for="simple-search" class="sr-only">
+              <form className="flex items-center my-10 mx-auto md:mx-0 md:my-0">
+                <label htmlFor="simple-search" className="sr-only">
                   Search
                 </label>
-                <div class="relative w-full">
-                  <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <div className="relative w-full">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                     <svg
-                      class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -136,9 +136,9 @@ function Opportunity({ posts, loading }) {
                     >
                       <path
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"
                       />
                     </svg>
@@ -148,7 +148,7 @@ function Opportunity({ posts, loading }) {
                     id="simple-search"
                     onChange={handleSearch}
                     value={searchQuery}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search By Title"
                   />
                 </div>
@@ -183,7 +183,7 @@ function Opportunity({ posts, loading }) {
             </div>
             <div
               className={`mx-auto grid max-w-2xl shadow-sm min-h-[250px] ${
-                loading ? "h-[150px]" : ""
+                loading ? "h-[150px] " : ""
               } grid-cols-1 gap-x-8 gap-y-10 lg:mx-0 lg:max-w-none lg:grid-cols-3`}
             >
               {!loading ? (
@@ -271,15 +271,15 @@ function Opportunity({ posts, loading }) {
                           <>
                             {post.isSubmitted ? (
                               <Link
-                                to={`#`}
-                                class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
+                                to={`/apply-form/${post.id}`}
+                                className="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
                               >
                                 Edit Form
                               </Link>
                             ) : (
                               <Link
-                                to={`/apply-form/${post.id}`}
-                                class="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
+                                to={`/apply-forms/${post.id}`}
+                                className="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
                               >
                                 Apply Now
                               </Link>
@@ -298,7 +298,11 @@ function Opportunity({ posts, loading }) {
                   </div>
                 )
               ) : (
-                <Loading className={"absolute left-[45%] mt-10"} />
+                <div className="sm:w-screen sm:h-[40vh] flex justify-center items-center">
+                  <Loading
+                    className={"mr-10 lg:mr-0 lg:ml-[-200px] lg:mt-[-70px]"}
+                  />
+                </div>
               )}
             </div>
           </div>

@@ -16,18 +16,18 @@ const InspirationDetail = () => {
       <button
         type="button"
         onClick={handleBack}
-        class=" flex items-center justify-center m-10 px-5 py-2 text-sm text-black transition-colors duration-200 bg-gray-200 border rounded-lg gap-x-2 w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
+        className=" flex items-center justify-center m-10 px-5 py-2 text-sm text-black transition-colors duration-200 bg-gray-200 border rounded-lg gap-x-2 w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
       >
         <svg
-          class="w-5 h-5 rtl:rotate-180"
+          className="w-5 h-5 rtl:rotate-180"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          strokeWidth="1.5"
           stroke="currentColor"
         >
           <path
-            stroke-linecap="round"
+            strokeLinecap="round"
             stroke-linejoin="round"
             d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
           />
@@ -36,61 +36,61 @@ const InspirationDetail = () => {
       </button>
 
       {/* <!-- Container for demo purpose --> */}
-      <div class="container my-24 mx-auto md:px-6">
+      <div className="container my-24 mx-auto md:px-6">
         {/* <!-- Section: Design Block --> */}
-        <section class="mb-32 mx-6">
-          <div class="flex flex-wrap">
-            <div class="mb-12 w-full shrink-0 grow-0 basis-auto lg:mb-0 lg:w-5/12">
-              <div class="flex lg:py-12">
+        <section className="mb-32 mx-6">
+          <div className="flex flex-wrap">
+            <div className="mb-12 w-full shrink-0 grow-0 basis-auto lg:mb-0 lg:w-5/12">
+              <div className="flex lg:py-12">
                 <img
                   src="https://mdbcdn.b-cdn.net/img/new/standard/people/058.jpg"
-                  class="z-[10] w-full rounded-lg shadow-lg dark:shadow-black/20 lg:ml-[50px]"
+                  className="z-[10] w-full rounded-lg shadow-lg dark:shadow-black/20 lg:ml-[50px]"
                   alt="image"
                 />
               </div>
             </div>
 
-            <div class="w-full shrink-0 grow-0 basis-auto lg:w-7/12">
-              <div class="flex h-full items-center rounded-lg bg-gray-800 p-6 text-center text-white lg:pl-12 lg:text-left">
-                <div class="lg:pl-12">
-                  <h2 class="mb-8 text-3xl font-bold">Let it surprise you</h2>
-                  <p class="mb-8 pb-2 lg:pb-0">
+            <div className="w-full shrink-0 grow-0 basis-auto lg:w-7/12">
+              <div className="flex h-full items-center rounded-lg bg-gray-800 p-6 text-center text-white lg:pl-12 lg:text-left">
+                <div className="lg:pl-12">
+                  <h2 className="mb-8 text-3xl font-bold">Let it surprise you</h2>
+                  <p className="mb-8 pb-2 lg:pb-0">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                     Maxime, sint, repellat vel quo quisquam accusamus in qui at
                     ipsa enim quibusdam illo laboriosam omnis. Labore itaque
                     illum distinctio eum neque!
                   </p>
 
-                  <div class="mx-auto mb-8 flex flex-col md:flex-row md:justify-around xl:justify-start">
-                    <p class="mx-auto mb-4 flex items-center md:mx-0 md:mb-2 lg:mb-0 xl:mr-20">
+                  <div className="mx-auto mb-8 flex flex-col md:flex-row md:justify-around xl:justify-start">
+                    <p className="mx-auto mb-4 flex items-center md:mx-0 md:mb-2 lg:mb-0 xl:mr-20">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke="currentColor"
-                        class="mr-2 h-5 w-5"
+                        className="mr-2 h-5 w-5"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                       </svg>
                       Best team
                     </p>
 
-                    <p class="mx-auto mb-4 flex items-center md:mx-0 md:mb-2 lg:mb-0 xl:mr-20">
+                    <p className="mx-auto mb-4 flex items-center md:mx-0 md:mb-2 lg:mb-0 xl:mr-20">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke="currentColor"
-                        class="mr-2 h-5 w-5"
+                        className="mr-2 h-5 w-5"
                       >
                         <path
-                          stroke-linecap="round"
+                          strokeLinecap="round"
                           stroke-linejoin="round"
                           d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
@@ -98,17 +98,17 @@ const InspirationDetail = () => {
                       Best quality
                     </p>
 
-                    <p class="mx-auto mb-2 flex items-center md:mx-0 lg:mb-0">
+                    <p className="mx-auto mb-2 flex items-center md:mx-0 lg:mb-0">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke="currentColor"
-                        class="mr-2 h-5 w-5"
+                        className="mr-2 h-5 w-5"
                       >
                         <path
-                          stroke-linecap="round"
+                          strokeLinecap="round"
                           stroke-linejoin="round"
                           d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />

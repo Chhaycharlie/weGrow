@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { auth, db } from "../../firebase";
 import {
@@ -224,7 +224,7 @@ const RecruitmentForm = () => {
                           className="mt-1 p-2 focus:ring-indigo-500 border border-gray-300  focus:border-indigo-500 block w-full shadow-sm sm:text-sm  rounded-md"
                         />
                       </div>
-                      <div class="col-span-6 sm:col-span-3">
+                      <div className="col-span-6 sm:col-span-3">
                         <label
                           htmlFor="deadline"
                           className="block text-sm font-medium text-gray-700"
@@ -254,7 +254,6 @@ const RecruitmentForm = () => {
                           name="country"
                           onChange={onChange}
                           value={inputData.country}
-                          defaultValue="Phnom Penh"
                           className="mt-1 p-2 block w-full border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           required
                         >
@@ -296,7 +295,7 @@ const RecruitmentForm = () => {
                       <div className="col-span-6 sm:col-span-3">
                         <label
                           htmlFor="gender"
-                          class="block text-sm font-medium text-gray-700"
+                          className="block text-sm font-medium text-gray-700"
                         >
                           Gender
                         </label>
@@ -305,7 +304,6 @@ const RecruitmentForm = () => {
                           name="gender"
                           onChange={onChange}
                           value={inputData.gender}
-                          defaultValue="Both"
                           className="mt-1 p-2 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           required
                         >
@@ -320,7 +318,7 @@ const RecruitmentForm = () => {
                       <div className="col-span-6 sm:col-span-3">
                         <label
                           htmlFor="age"
-                          class="block text-sm font-medium text-gray-700"
+                          className="block text-sm font-medium text-gray-700"
                         >
                           Age
                         </label>
@@ -341,7 +339,7 @@ const RecruitmentForm = () => {
                         </select>
                       </div>
 
-                      <div class="col-span-6 sm:col-span-3">
+                      <div className="col-span-6 sm:col-span-3">
                         <label
                           htmlFor="people"
                           className="block text-sm font-medium text-gray-700"
@@ -367,7 +365,7 @@ const RecruitmentForm = () => {
                           <option value="more">more</option>
                         </select>
                       </div>
-                      <div class="col-span-6 sm:col-span-3">
+                      <div className="col-span-6 sm:col-span-3">
                         <label
                           htmlFor="position"
                           className="block text-sm font-medium text-gray-700"
@@ -385,10 +383,10 @@ const RecruitmentForm = () => {
                         />
                       </div>
 
-                      <div class="col-span-6 sm:col-span-3">
+                      <div className="col-span-6 sm:col-span-3">
                         <label
                           htmlFor="department"
-                          class="block text-sm font-medium text-gray-700"
+                          className="block text-sm font-medium text-gray-700"
                         >
                           Department
                         </label>
@@ -486,7 +484,7 @@ const RecruitmentForm = () => {
                         />
                       </div>
 
-                      <div class="col-span-6 sm:col-span-6">
+                      <div className="col-span-6 sm:col-span-6">
                         <label
                           htmlFor="email-address"
                           className="block text-sm font-medium text-gray-700"
@@ -649,9 +647,9 @@ const RecruitmentForm = () => {
             </div>
           </div>
 
-          <div class="hidden sm:block" aria-hidden="true">
-            <div class="py-5">
-              <div class=""></div>
+          <div className="hidden sm:block" aria-hidden="true">
+            <div className="py-5">
+              <div className=""></div>
             </div>
           </div>
         </>

@@ -13,6 +13,46 @@ const ViewApplication = () => {
   const [data, setData] = useState([]);
   const { formId } = useParams();
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dateFilter, setDateFilter] = useState("All");
+  const currentDate = new Date();
+  let filteredData;
+
+  if (dateFilter === "Recently") {
+    // Filter data for items submitted in the last 10 days
+    const tenDaysAgo = new Date(currentDate);
+    tenDaysAgo.setDate(currentDate.getDate() - 10);
+    filteredData = data
+      .filter((item) => new Date(item.timestamp.toDate()) >= tenDaysAgo)
+      .filter((item) =>
+        item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+  } else if (dateFilter === "Under 30 days") {
+    // Filter data for items submitted in the last 30 days
+    const thirtyDaysAgo = new Date(currentDate);
+    thirtyDaysAgo.setDate(currentDate.getDate() - 30);
+    filteredData = data
+      .filter((item) => new Date(item.timestamp.toDate()) >= thirtyDaysAgo)
+      .filter((item) =>
+        item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+  } else if (dateFilter === "Under 1 day") {
+    // Filter data for items submitted in the last 1 day
+    const oneDayAgo = new Date(currentDate);
+    oneDayAgo.setDate(currentDate.getDate() - 1);
+    filteredData = data
+      .filter((item) => new Date(item.timestamp.toDate()) >= oneDayAgo)
+      .filter((item) =>
+        item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+  } else {
+    // No date filter, use all data
+    filteredData = data.filter((item) =>
+      item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +78,39 @@ const ViewApplication = () => {
     navigate(-1);
   };
 
+  //pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  //   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1); // Reset to the first page when the search term changes
+  };
+
+  //   const currentItems = data
+  //     .filter((item) =>
+  //       item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+  //     )
+  //     .slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const handleDateFilterChange = (event) => {
+    const selectedDateFilter = event.target.value;
+    setDateFilter(selectedDateFilter);
+    setCurrentPage(1);
+  };
+
+  // filter select
+  const handleItemsPerPageChange = (event) => {
+    const selectedItemsPerPage = parseInt(event.target.value, 10);
+    setItemsPerPage(selectedItemsPerPage);
+    setCurrentPage(1);
+  };
+
   return (
     <AppLayout>
       {loading ? (
@@ -45,9 +118,9 @@ const ViewApplication = () => {
           <Loading />
         </div>
       ) : (
-        <div class="antialiased font-sans bg-gray-100 min-h-[90vh]">
-          <div class="container mx-auto px-4 sm:px-8">
-            <div class="pt-3">
+        <div className="antialiased font-sans bg-gray-100 min-h-[90vh]">
+          <div className="container mx-auto px-4 sm:px-8">
+            <div className="pt-3">
               <button
                 type="button"
                 onClick={handleBack}
@@ -70,21 +143,25 @@ const ViewApplication = () => {
                 <span>Go back</span>
               </button>
               <div>
-                <h2 class="text-2xl font-semibold leading-tight">
+                <h2 className="text-2xl py-4 font-semibold leading-tight">
                   Application Submission
                 </h2>
               </div>
-              <div class="my-2 flex sm:flex-row flex-col">
-                <div class="flex flex-row mb-1 sm:mb-0">
-                  <div class="relative">
-                    <select class=" h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+              <div className="my-2 flex sm:flex-row flex-col">
+                <div className="flex flex-row mb-1 sm:mb-0">
+                  <div className="relative">
+                    <select
+                      value={itemsPerPage}
+                      onChange={handleItemsPerPageChange}
+                      className=" h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    >
                       <option>5</option>
                       <option>10</option>
                       <option>20</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                       <svg
-                        class="fill-current h-4 w-4"
+                        className="fill-current h-4 w-4"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                       >
@@ -92,15 +169,21 @@ const ViewApplication = () => {
                       </svg>
                     </div>
                   </div>
-                  <div class="relative">
-                    <select class=" h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
+                  {/* filter by date submit */}
+                  <div className="relative">
+                    <select
+                      value={dateFilter}
+                      onChange={handleDateFilterChange}
+                      className=" h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                    >
                       <option>All</option>
-                      <option>Active</option>
-                      <option>Inactive</option>
+                      <option>Recently</option>
+                      <option>Under 1 day</option>
+                      <option>Under 30 days</option>
                     </select>
-                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                       <svg
-                        class="fill-current h-4 w-4"
+                        className="fill-current h-4 w-4"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                       >
@@ -109,47 +192,49 @@ const ViewApplication = () => {
                     </div>
                   </div>
                 </div>
-                <div class="block relative">
-                  <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                <div className="block relative">
+                  <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
                     <svg
                       viewBox="0 0 24 24"
-                      class="h-4 w-4 fill-current text-gray-500"
+                      className="h-4 w-4 fill-current text-gray-500"
                     >
                       <path d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z"></path>
                     </svg>
                   </span>
                   <input
                     placeholder="Search"
-                    class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
                   />
                 </div>
               </div>
-              <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div class="inline-block min-w-full shadow rounded-lg overflow-hidden h-full">
-                  <table class="min-w-full leading-normal">
+              <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div className="inline-block min-w-full shadow rounded-lg overflow-hidden h-full">
+                  <table className="min-w-full leading-normal">
                     <thead>
                       <tr>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                           Username
                         </th>
-                        <th class="hidden lg:block px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th className="hidden lg:block px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                           Email
                         </th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                           Application
                         </th>
-                        <th class="hidden sm:block px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        <th className="hidden sm:block px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                           Submitted At
                         </th>
                       </tr>
                     </thead>
                     <tbody>
                       {data.length > 0 ? (
-                        data.map((application) => (
+                        currentItems.map((application) => (
                           <tr key={application.id}>
-                            <td class="px-5 border-b border-gray-200 bg-white text-sm">
-                              <div class="flex items-center">
-                                <div class="flex-shrink-0 w-10 h-10">
+                            <td className="px-5 border-b border-gray-200 bg-white text-sm">
+                              <div className="flex items-center">
+                                <div className="flex-shrink-0 w-10 h-10">
                                   <Avatar
                                     sx={{ width: 40, height: 40 }}
                                     src={application?.user?.photoUrl}
@@ -158,19 +243,19 @@ const ViewApplication = () => {
                                     {application?.user?.displayName[0]}
                                   </Avatar>
                                 </div>
-                                <div class="flex-shrink-0 ml-3">
-                                  <p class="text-gray-900">
+                                <div className="flex-shrink-0 ml-3">
+                                  <p className="text-gray-900">
                                     {application?.user?.displayName}
                                   </p>
                                 </div>
                               </div>
                             </td>
-                            <td class="hidden lg:block px-5 py-6 border-b border-gray-200 bg-white text-sm">
-                              <p class="text-gray-900 whitespace-no-wrap">
+                            <td className="hidden lg:block px-5 py-6 border-b border-gray-200 bg-white text-sm">
+                              <p className="text-gray-900 whitespace-no-wrap">
                                 {application?.user?.email}
                               </p>
                             </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                               {/* file */}
                               <div className="flex-1">
                                 <div>
@@ -188,9 +273,9 @@ const ViewApplication = () => {
                                 </div>
                               </div>
                             </td>
-                            <td class="hidden sm:block px-5 py-6 border-b border-gray-200 bg-white text-sm">
-                              <span class="relative inline-block px-3 font-semibold text-green-900 leading-tight">
-                                <span class="relative">
+                            <td className="hidden sm:block px-5 py-6 border-b border-gray-200 bg-white text-sm">
+                              <span className="relative inline-block px-3 font-semibold text-green-900 leading-tight">
+                                <span className="relative">
                                   <TimeStamp post={application} />
                                 </span>
                               </span>
@@ -211,15 +296,32 @@ const ViewApplication = () => {
                       )}
                     </tbody>
                   </table>
-                  <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                    <span class="text-xs xs:text-sm text-gray-900">
-                      Showing 1 to 4 of 50 Entries
+                  <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+                    <span className="text-xs xs:text-sm text-gray-900">
+                      Showing {indexOfFirstItem + 1} to {indexOfLastItem} of{" "}
+                      {data.length} Entries
                     </span>
-                    <div class="inline-flex mt-2 xs:mt-0">
-                      <button class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                    <div className="inline-flex mt-2 xs:mt-0">
+                      <button
+                        className={`text-sm bg-gray-200  text-gray-800 font-semibold py-2 px-4 rounded-l ${
+                          currentPage === 1
+                            ? ""
+                            : "cursor-pointer hover:bg-gray-400"
+                        } `}
+                        onClick={() => paginate(currentPage - 1)}
+                        disabled={currentPage === 1}
+                      >
                         Prev
                       </button>
-                      <button class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                      <button
+                        onClick={() => paginate(currentPage + 1)}
+                        disabled={indexOfLastItem >= data.length}
+                        className={`text-sm bg-gray-200  text-gray-800 font-semibold py-2 px-4 rounded-r ${
+                          indexOfLastItem >= data.length
+                            ? ""
+                            : "cursor-pointer hover:bg-gray-400"
+                        } `}
+                      >
                         Next
                       </button>
                     </div>

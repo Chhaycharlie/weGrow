@@ -16,15 +16,15 @@ import UserDetial from "./pages/profiles/UserDetails";
 import InspirationDetail from "./components/inspiration/InspirationDetail";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import ScrollToTop from "./components/shared/ScrollToTop";
-import Dashboard from "./pages/admin/Dashboard";
+import Dashboard from "./pages/admin/Home";
 import UpdatedForm from "./components/Form/UpdatedForm";
+import ViewApplication from "./components/post-recruitment/ViewApplication";
 
 import { Route, Routes } from "react-router-dom";
 import ProfileLayout from "./components/profiles/ProfileLayout";
 import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import ViewApplication from "./components/post-recruitment/ViewApplication";
 
 function App() {
   const userInfo = useSelector((state) => state.user);

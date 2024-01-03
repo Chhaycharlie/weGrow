@@ -27,6 +27,7 @@
     padding: 5px;
 }
 
+
 .bg-img{
     background-image: url('./assets/home/hero-banner.jpg');
     object-fit: cover;

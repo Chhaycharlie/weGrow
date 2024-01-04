@@ -92,6 +92,7 @@ const UserDetails = () => {
         <div className="w-full flex justify-center">
           <AvatarOption
             name={username}
+            title={"My Profile Photo"}
             quote={"Set up your weGrow present and hiring needs"}
           />
         </div>

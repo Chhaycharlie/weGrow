@@ -119,7 +119,7 @@ export default function Header() {
           className="p-1 text-sm font-bold menufont"
         >
           <Link to="/dashboard" className="flex items-center">
-            Dashboard
+            site adminstration
           </Link>
         </Typography>
       ) : (
@@ -177,7 +177,7 @@ export default function Header() {
               </Link>
               <Button
                 size="lg"
-                className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-indigo-600 bg-[#1400FF] duration-200"
+                className="hidden lg:ml-5 lg:inline-block rounded-2xl hover:bg-blue-400 bg-blue-600 duration-200"
               >
                 <Link to="/Signup">Sign up</Link>
               </Button>

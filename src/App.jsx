@@ -17,6 +17,11 @@ import InspirationDetail from "./components/inspiration/InspirationDetail";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import ScrollToTop from "./components/shared/ScrollToTop";
 import Dashboard from "./pages/admin/Home";
+import User from "./pages/admin/User";
+import AdminContact from "./pages/admin/Contact";
+import Post from "./pages/admin/Post";
+import Approvement from "./pages/admin/Approvement";
+import AdminInspiration from "./pages/admin/Inspiration";
 import UpdatedForm from "./components/Form/UpdatedForm";
 import ViewApplication from "./components/post-recruitment/ViewApplication";
 
@@ -133,7 +138,19 @@ function App() {
           }
         />
 
-        {isAdmin && <Route path="/dashboard" element={<Dashboard />} />}
+        {isAdmin && (
+          <>
+            <Route path="/dashboards" element={<Dashboard />} />
+            <Route path="/dashboard/users" element={<User />} />
+            <Route path="/dashboard/posts" element={<Post />} />
+            <Route path="/dashboard/approvement" element={<Approvement />} />
+            <Route
+              path="/dashboard/inspirations"
+              element={<AdminInspiration />}
+            />
+            <Route path="/dashboard/contact" element={<AdminContact />} />
+          </>
+        )}
 
         <Route
           path="/inspiration/:formId"

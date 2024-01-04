@@ -1,21 +1,27 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import Wegrow from "../../assets/logos/logo6.png";
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = ({ children, title }) => {
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const currYear = new Date().getFullYear();
 
   return (
-    <div className="md:flex flex-col md:flex-row md:min-h-screen w-full">
-      <div className="flex flex-col w-full md:w-64 text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800 flex-shrink-0">
-        <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-          <NavLink
-            to={"#"}
-            className="text-2xl font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+    <div
+      id="dashboard"
+      className="md:flex flex-col md:flex-row md:min-h-screen w-full"
+    >
+      <div className="flex flex-col w-full md:w-64 text-gray-700 bg-white flex-shrink-0">
+        {/* logo */}
+        <div className="flex-shrink-0 px-8 py-2 pb-3 flex flex-row items-center justify-between">
+          <Link
+            to={"/dashboards"}
+            className="flex items-center text-xl font-openSans font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
           >
-            WeGrow
-          </NavLink>
+            <span>WeGrow</span>
+            <img src={Wegrow} alt="logo" className="w-12 h-12" />
+          </Link>
           <button
             className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
             onClick={() => setOpen(!open)}
@@ -36,14 +42,17 @@ const DashboardLayout = ({ children }) => {
             </svg>
           </button>
         </div>
+        {/* end logo  */}
+
+        {/* sidebar menu  */}
         <nav
           className={`${
             open ? "block space-y-4" : "hidden"
           } flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto`}
         >
           <NavLink
-            className="flex justify-between items-center px-4 py-2 mt-2 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            to={"#1"}
+            className="flex justify-between items-center px-4 py-2 mt-2 text-lg text-gray-900 font-semibold hover:text-white bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-blue-600 dark-mode:focus:bg-blue-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-white focus:text-white hover:bg-[#66CCFF] focus:bg-[#66CCFF] focus:outline-none focus:shadow-outline"
+            to={"/dashboards"}
           >
             Dashboard
             {/* dashboard icons */}
@@ -72,8 +81,8 @@ const DashboardLayout = ({ children }) => {
             </svg>
           </NavLink>
           <NavLink
-            className="flex justify-between items-center nav-link px-4 py-2 mt-2 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 hover:bg-gray-200 "
-            to={"#2"}
+            className="flex justify-between items-center px-4 py-2 mt-2 text-lg text-gray-900 font-semibold hover:text-white bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-blue-600 dark-mode:focus:bg-blue-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-white focus:text-white hover:bg-[#66CCFF] focus:bg-[#66CCFF] focus:outline-none focus:shadow-outline"
+            to={"/dashboard/users"}
           >
             User
             {/* user icon */}
@@ -102,9 +111,11 @@ const DashboardLayout = ({ children }) => {
               </g>
             </svg>
           </NavLink>
+
+          {/* approvement menu  */}
           <NavLink
-            className="flex justify-between items-center px-4 py-2 mt-2 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            to={"#3"}
+            className="flex justify-between items-center px-4 py-2 mt-2 text-lg text-gray-900 font-semibold hover:text-white bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-blue-600 dark-mode:focus:bg-blue-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-white focus:text-white hover:bg-[#66CCFF] focus:bg-[#66CCFF] focus:outline-none focus:shadow-outline"
+            to={"/dashboard/approvement"}
           >
             Approvement
             <svg
@@ -145,10 +156,12 @@ const DashboardLayout = ({ children }) => {
               </g>
             </svg>
           </NavLink>
+
+          {/* management dropdown menu  */}
           <div onClick={() => setDropdown(!dropdown)} className="relative">
             <button
               onClick={() => setDropdown(!dropdown)}
-              className="flex items-center justify-between w-full px-4 py-2 mt-2 text-lg font-semibold text-left text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+              className="flex justify-between items-center px-4 py-2 mt-2 text-lg text-gray-900 font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-blue-600 dark-mode:focus:bg-blue-600  dark-mode:text-white hover:text-white hover:bg-[#66CCFF]  focus:outline-none focus:shadow-outline"
             >
               <span>Management</span>
               <svg
@@ -173,31 +186,33 @@ const DashboardLayout = ({ children }) => {
             >
               <div className="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
                 <NavLink
-                  className="block px-4 py-2 mt-2 text-lg font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  to={"#"}
+                  className="block px-4 py-2 mt-2 text-lg font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white hover:text-white dark-mode:text-gray-200 md:mt-0  focus:text-gray-900 hover:bg-[#66CCFF] focus:bg-[#66CCFF] focus:outline-none focus:shadow-outline"
+                  to={"/dashboard/posts"}
                 >
                   Post
                 </NavLink>
                 <NavLink
-                  className="block px-4 py-2 mt-2 text-lg font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  to={"#"}
+                  className="block px-4 py-2 mt-2 text-lg font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white  dark-mode:text-gray-200 md:mt-0 hover:text-white focus:text-gray-900 hover:bg-[#66CCFF] focus:bg-[#66CCFF] focus:outline-none focus:shadow-outline"
+                  to={"/dashboard/contact"}
                 >
                   Contact
                 </NavLink>
                 <NavLink
-                  className="block px-4 py-2 mt-2 text-lg font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-                  to={"#"}
+                  className="block px-4 py-2 mt-2 text-lg font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white  dark-mode:text-gray-200 md:mt-0 hover:text-white focus:text-gray-900 hover:bg-[#66CCFF] focus:bg-[#66CCFF] focus:outline-none focus:shadow-outline"
+                  to={"/dashboard/inspiration"}
                 >
                   Inspiration
                 </NavLink>
               </div>
             </div>
           </div>
+
+          {/* back to home page menu  */}
           <NavLink
-            className="flex justify-between items-center px-4 py-2 mt-2 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+            className="flex justify-between items-center px-4 py-2 mt-2 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 hover:text-white hover:bg-[#66CCFF] focus:bg-[#66CCFF]  focus:outline-none focus:shadow-outline"
             to={"/"}
           >
-            Back HomePage
+            Back Homepage
             <svg
               width="20px"
               height="20px"
@@ -223,13 +238,83 @@ const DashboardLayout = ({ children }) => {
               </g>
             </svg>
           </NavLink>
+
+          {/* no show when small screen size  */}
+          {/* sign out btn menu  */}
+          <div
+            className={` ${
+              !open ? "block space-y-4" : "hidden"
+            } flex justify-between items-center px-4 py-2 mt-2 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200  hover:bg-[#66CCFF] focus:bg-[#66CCFF] hover:text-white focus:outline-none focus:shadow-outline`}
+          >
+            Sign out
+            <svg
+              width="20px"
+              height="20px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                {" "}
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6 3C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H17C17.5523 21 18 20.5523 18 20C18 19.4477 17.5523 19 17 19H6C5.44772 19 5 18.5523 5 18V6C5 5.44772 5.44772 5 6 5H17C17.5523 5 18 4.55228 18 4C18 3.44772 17.5523 3 17 3H6ZM15.7071 7.29289C15.3166 6.90237 14.6834 6.90237 14.2929 7.29289C13.9024 7.68342 13.9024 8.31658 14.2929 8.70711L16.5858 11H8C7.44772 11 7 11.4477 7 12C7 12.5523 7.44772 13 8 13H16.5858L14.2929 15.2929C13.9024 15.6834 13.9024 16.3166 14.2929 16.7071C14.6834 17.0976 15.3166 17.0976 15.7071 16.7071L19.7071 12.7071C20.0976 12.3166 20.0976 11.6834 19.7071 11.2929L15.7071 7.29289Z"
+                  fill="#000000"
+                ></path>{" "}
+              </g>
+            </svg>
+          </div>
         </nav>
+
+        {/* sign out menu  */}
+        {/* show when small screen  */}
+        <NavLink
+          className={` ${
+            open ? "block" : "hidden"
+          } flex justify-between items-center px-4 py-2 mt-2 mb-1 mx-4 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline`}
+          to={"#3"}
+        >
+          Sign out
+          <svg
+            width="20px"
+            height="20px"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              {" "}
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M6 3C4.34315 3 3 4.34315 3 6V18C3 19.6569 4.34315 21 6 21H17C17.5523 21 18 20.5523 18 20C18 19.4477 17.5523 19 17 19H6C5.44772 19 5 18.5523 5 18V6C5 5.44772 5.44772 5 6 5H17C17.5523 5 18 4.55228 18 4C18 3.44772 17.5523 3 17 3H6ZM15.7071 7.29289C15.3166 6.90237 14.6834 6.90237 14.2929 7.29289C13.9024 7.68342 13.9024 8.31658 14.2929 8.70711L16.5858 11H8C7.44772 11 7 11.4477 7 12C7 12.5523 7.44772 13 8 13H16.5858L14.2929 15.2929C13.9024 15.6834 13.9024 16.3166 14.2929 16.7071C14.6834 17.0976 15.3166 17.0976 15.7071 16.7071L19.7071 12.7071C20.0976 12.3166 20.0976 11.6834 19.7071 11.2929L15.7071 7.29289Z"
+                fill="#000000"
+              ></path>{" "}
+            </g>
+          </svg>
+        </NavLink>
       </div>
       <div className="flex flex-col w-full">
         {/* navbar header  */}
         <div className="md:h-14 w-full"></div>
         {/* dashboard body */}
-        <div className="min-h-[90vh] w-full bg-gray-200">{children}</div>
+        <div className="min-h-[90vh] w-full bg-gray-200">
+          <h1 className="p-10 text-2xl">{title}</h1>
+          {children}
+        </div>
         <footer className="h-[5vh] w-full font-semibold text-sm flex items-center justify-center md:justify-start md:px-2">
           &#169;Copyright weGrow {currYear}
         </footer>

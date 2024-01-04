@@ -309,10 +309,10 @@ const DashboardLayout = ({ children, title }) => {
       </div>
       <div className="flex flex-col w-full">
         {/* navbar header  */}
-        <div className="md:h-14 w-full"></div>
+        <div className="md:h-10 w-full"></div>
         {/* dashboard body */}
-        <div className="min-h-[90vh] w-full bg-gray-200">
-          <h1 className="p-10 text-2xl">{title}</h1>
+        <div className="min-h-[90vh] p-[1px] w-full bg-gray-200">
+          {title && <h1 className="p-10 text-2xl">{title}</h1>}
           {children}
         </div>
         <footer className="h-[5vh] w-full font-semibold text-sm flex items-center justify-center md:justify-start md:px-2">

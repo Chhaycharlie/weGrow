@@ -30,6 +30,7 @@ import ProfileLayout from "./components/profiles/ProfileLayout";
 import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import EditUser from "./pages/admin/EditUser";
 
 function App() {
   const userInfo = useSelector((state) => state.user);
@@ -149,6 +150,7 @@ function App() {
               element={<AdminInspiration />}
             />
             <Route path="/dashboard/contact" element={<AdminContact />} />
+            <Route path="/test" element={<EditUser />} />
           </>
         )}
 

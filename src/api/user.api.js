@@ -13,7 +13,7 @@ export const getCurrentUser = async (userId) => {
   }
 };
 
-export const allUser = async () => {
+export const getAllUser = async () => {
   try {
     const docRef = collection(db, "users");
     const docSnap = await getDocs(docRef);

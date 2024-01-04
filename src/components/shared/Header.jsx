@@ -118,7 +118,7 @@ export default function Header() {
           color="blue-gray"
           className="p-1 text-sm font-bold menufont"
         >
-          <Link to="/dashboard" className="flex items-center">
+          <Link to="/dashboards" className="flex items-center">
             site adminstration
           </Link>
         </Typography>

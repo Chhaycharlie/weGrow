@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 
-const Inspiration = () => {
+const Apply = () => {
   return (
     <DashboardLayout>
       {/* head of page  */}
@@ -10,7 +10,7 @@ const Inspiration = () => {
         <div className="w-full mb-1">
           <div className="mb-4">
             <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl ">
-              All Inspiration Post
+              All Applies Volunteer
             </h1>
           </div>
           <div className="sm:flex">
@@ -228,4 +228,4 @@ const Inspiration = () => {
   );
 };
 
-export default Inspiration;
+export default Apply;

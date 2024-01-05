@@ -34,8 +34,6 @@ const Recruitment = () => {
     fetchPosts();
   }, []);
 
-  console.log(posts);
-
   return (
     <AppLayout>
       <PostRecruitment />

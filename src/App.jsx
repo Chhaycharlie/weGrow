@@ -20,17 +20,18 @@ import Dashboard from "./pages/admin/Home";
 import User from "./pages/admin/User";
 import AdminContact from "./pages/admin/Contact";
 import Post from "./pages/admin/Post";
-import Approvement from "./pages/admin/Approvement";
+import Apply from "./pages/admin/Apply";
 import AdminInspiration from "./pages/admin/Inspiration";
 import UpdatedForm from "./components/Form/UpdatedForm";
 import ViewApplication from "./components/post-recruitment/ViewApplication";
+import EditUsers from "./pages/admin/EditUsers";
 
 import { Route, Routes } from "react-router-dom";
 import ProfileLayout from "./components/profiles/ProfileLayout";
 import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import EditUser from "./pages/admin/EditUser";
+import ViewUserDetial from "./pages/admin/view/UserDetial";
 
 function App() {
   const userInfo = useSelector((state) => state.user);
@@ -139,18 +140,23 @@ function App() {
           }
         />
 
+        <Route path="/test" element={<EditUsers />} />
+
         {isAdmin && (
           <>
             <Route path="/dashboards" element={<Dashboard />} />
             <Route path="/dashboard/users" element={<User />} />
             <Route path="/dashboard/posts" element={<Post />} />
-            <Route path="/dashboard/approvement" element={<Approvement />} />
             <Route
               path="/dashboard/inspirations"
               element={<AdminInspiration />}
             />
-            <Route path="/dashboard/contact" element={<AdminContact />} />
-            <Route path="/test" element={<EditUser />} />
+            <Route path="/dashboard/contacts" element={<AdminContact />} />
+            <Route
+              path="/dashboard/users/view-details/:userId"
+              element={<ViewUserDetial />}
+            />
+            <Route path="/dashboard/applies" element={<Apply />} />
           </>
         )}
 

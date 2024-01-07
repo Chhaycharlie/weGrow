@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ModalPost from "../course/ModalPost";
-import Header from "../shared/Header";
-import Footer from "../shared/Footer";
 import { Link } from "react-router-dom";
+import ModalPost from "../course/ModalPost";
+import Footer from "../shared/Footer";
+import Header from "../shared/Header";
 
 const data = [
   {
@@ -151,10 +151,14 @@ const Post = () => {
   return (
     <>
       <Header />
-      <div className="max-w-[1980px] m-auto px-4 py-12">
-        <h1 className="text-blue-600 font-bold text-4xl text-center">
+    <div>
+        <h1 className="pt-10 font-bold text-4xl text-center">
           Post Inspiration to All Volunteer
         </h1>
+        <img
+        src="https://hspinc.org/wp-content/uploads/2018/06/AdobeStock_83134431-1-1024x263.jpeg"
+        alt="image 3"
+        className="h-full w-full object-cover px-2 "/> 
         {/* Filter Row */}
         <div className="flex flex-col lg:flex-row justify-between pt-10">
           {/* Fliter Type */}

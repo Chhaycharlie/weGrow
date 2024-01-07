@@ -74,14 +74,21 @@ const ViewApplication = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      const fetchApplication = await getApplicationSubmission(formId);
-      setData(fetchApplication);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const fetchApplication = await getApplicationSubmission(formId);
+        setData(fetchApplication);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
     };
 
     fetchData();
   }, []);
+
+  console.log(data);
 
   const type_of_file = {
     "image/svg+xml": <Doc />,

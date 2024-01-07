@@ -12,7 +12,7 @@ const Hero = () => {
               Volunteer&nbsp;now, Reap the&nbsp;
             </h1>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-[#fff] font-black leading-7 md:leading-10">
-              <span className="text-[#1400FF]">rewards&nbsp;</span>
+              <span className="text-blue-500">rewards&nbsp;</span>
               tomorrow.
             </h1>
             <p className="mt-5 sm:mt-10 lg:w-10/12 text-[#fff]  font-bold text-center text-sm sm:text-lg">
@@ -26,7 +26,7 @@ const Hero = () => {
           </div>
           <div className="flex justify-center items-center">
             <Link to={"/recruitment"}>
-              <button className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 bg-[#1400FF] transition duration-150 ease-in-out hover:bg-indigo-600 lg:text-xl lg:font-bold  rounded text-white px-4 sm:px-10 border border-indigo-700 py-2 sm:py-4 text-sm">
+              <button className=" bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-600 lg:text-xl lg:font-bold  rounded text-white px-4 sm:px-10 py-2 sm:py-4 text-sm">
                 Get Started
               </button>
             </Link>

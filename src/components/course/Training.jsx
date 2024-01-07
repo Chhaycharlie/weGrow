@@ -25,18 +25,18 @@ function Training() {
           <div className="flex justify-center items-center">
             <Link
               to={"/inspirations"}
-              className=" bg-blue-700 transition duration-150 ease-in-out hover:bg-blue-600 lg:text-xl lg:font-bold  rounded-xl text-white px-4 sm:px-10 border border-blue-700 py-2 sm:py-4 text-sm"
+              className=" bg-blue-500 transition duration-150 ease-in-out hover:bg-blue-600 lg:text-xl lg:font-bold  rounded-xl text-white px-4 sm:px-10 border  py-2 sm:py-4 text-sm"
             >
               View Inspiration Post
             </Link>
             <Link
               to={"/recruitment"}
-              className="ml-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 bg-transparent transition duration-150 ease-in-out hover:border-blue-600 lg:text-xl lg:font-bold  hover:text-blue-600 rounded-xl border border-blue-700  text-gray-500 px-4 sm:px-10 py-2 sm:py-4 text-sm"
+              className="ml-4 bg-transparent transition duration-150 ease-in-out hover:border-blue-600 lg:text-xl lg:font-bold  hover:text-blue-600 rounded-xl border border-blue-700  text-gray-500 px-4 sm:px-10 py-2 sm:py-4 text-sm"
             >
               find volunteer
             </Link>
           </div>
-          <div className="flex items-center justify-center font-md uppercase text-gray-700 pt-24">
+          <div className="flex items-center justify-center font-md uppercase text-gray-700 pt-16 pb-6">
             Featured In
           </div>
           <div className="bg-white py-8">
@@ -241,7 +241,7 @@ function Training() {
             <div className="pt-6 mt-6 space-y-4 border-t border-gray-200 ">
               <div>
                 <Link
-                  to={"/inspiration"}
+                  to={"/inspirations"}
                   className="inline-flex items-center text-base font-medium text-blue-600 hover:text-blue-800 "
                 >
                   Inspiration of People who use WeGrow

@@ -223,10 +223,6 @@ export const getApplicationSubmission = async (formId) => {
 
     const applicationsSnapshot = await getDocs(ApplicationQuery);
 
-    if (!applicationsSnapshot.exists()) {
-      return {};
-    }
-
     // Step 2: Extract unique userIds from post documents
     const userIdsSet = new Set(
       applicationsSnapshot.docs.map((formDoc) => formDoc.data().applyer)

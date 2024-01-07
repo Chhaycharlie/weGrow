@@ -50,7 +50,7 @@ const Footer = () => {
                 color="blue-gray"
                 className="font-normal transition-colors text-gray-200 hover:text-blue-500 focus:text-blue-500"
               >
-                <Link to="/Inspiration">Inspiration</Link>
+                <Link to="/inspirations">Inspiration</Link>
               </Typography>
             </li>
             <li>

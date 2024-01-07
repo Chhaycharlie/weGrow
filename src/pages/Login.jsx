@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import LoginImg from "../assets/Auth/login-img.svg";
+import Img from "../assets/auth/login-img.svg";
 import Logo from "../assets/logos/logo6.png";
 import "../App.css";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import { toast } from "react-toastify";
 import SmallSpinner from "../components/shared/SmallSpinner";
 import { getCurrentUser } from "../api/user.api";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 const Login = () => {
   const currYear = new Date().getFullYear();
@@ -32,6 +33,12 @@ const Login = () => {
     e.preventDefault();
     setFormErrors(validate(forms));
     setIsSubmit(true);
+    if (FormErrors.length > 0) {
+      setForms({
+        email: "",
+        password: "",
+      });
+    }
   };
 
   useEffect(() => {
@@ -54,6 +61,9 @@ const Login = () => {
                   location: userInfo.location,
                   phoneNumber: userInfo.phoneNumber,
                   userId: userInfo.userId,
+                }),
+                updateDoc(doc(db, "users", userInfo.userId), {
+                  lastLogin: serverTimestamp(),
                 })
               );
           });
@@ -111,7 +121,7 @@ const Login = () => {
       <div className="flex items-center justify-around w-full h-[84vh] bg-gray-50">
         {/* left pic */}
         <div className="hidden lg:flex">
-          <img src={LoginImg} alt="login_image" width={450} />
+          <img src={Img} alt="login_image" width={450} />
         </div>
 
         {/* right form */}

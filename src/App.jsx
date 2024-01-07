@@ -25,17 +25,23 @@ import AdminInspiration from "./pages/admin/Inspiration";
 import UpdatedForm from "./components/Form/UpdatedForm";
 import ViewApplication from "./components/post-recruitment/ViewApplication";
 import EditUsers from "./pages/admin/EditUsers";
-
-import { Route, Routes } from "react-router-dom";
+import ViewPostDetial from "./pages/admin/view/PostDetial";
+import AddPost from "./pages/admin/view/AddPost";
+import ContactDetial from "./pages/admin/view/ContactDetial";
+import ViewUserDetial from "./pages/admin/view/UserDetial";
 import ProfileLayout from "./components/profiles/ProfileLayout";
 import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
+
+import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import ViewUserDetial from "./pages/admin/view/UserDetial";
+import { getRole } from "./api/user.api";
+import { auth } from "./firebase";
 
 function App() {
   const userInfo = useSelector((state) => state.user);
   const [isAdmin, setIsAdmin] = useState(false);
+  const user = auth.currentUser;
 
   useEffect(() => {
     if (userInfo && userInfo.user) {
@@ -153,9 +159,18 @@ function App() {
             />
             <Route path="/dashboard/contacts" element={<AdminContact />} />
             <Route
+              path="/dashboard/contacts/view-detial/:feedbackId"
+              element={<ContactDetial />}
+            />
+            <Route
               path="/dashboard/users/view-details/:userId"
               element={<ViewUserDetial />}
             />
+            <Route
+              path="/dashboard/posts/view-details/:postId"
+              element={<ViewPostDetial />}
+            />
+            <Route path="/dashboard/posts/add-post" element={<AddPost />} />
             <Route path="/dashboard/applies" element={<Apply />} />
           </>
         )}

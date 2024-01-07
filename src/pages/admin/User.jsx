@@ -133,37 +133,37 @@ const User = () => {
                     <th scope="col" className="p-4"></th>
                     <th
                       scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
+                      className="p-4 text-xs font-medium text-left text-gray-900 uppercase "
                     >
                       Username
                     </th>
                     <th
                       scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
+                      className="p-4 text-xs font-medium text-left text-gray-900 uppercase "
                     >
                       Email
                     </th>
                     <th
                       scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
+                      className="p-4 text-xs font-medium text-left text-gray-900 uppercase "
                     >
                       Role
                     </th>
                     <th
                       scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
+                      className="p-4 text-xs font-medium text-left text-gray-900 uppercase "
                     >
                       Location
                     </th>
                     <th
                       scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
+                      className="p-4 text-xs font-medium text-left text-gray-900 uppercase "
                     >
                       Phone
                     </th>
                     <th
                       scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
+                      className="p-4 text-xs font-medium text-left text-gray-900 uppercase "
                     >
                       Actions
                     </th>
@@ -173,7 +173,9 @@ const User = () => {
                   {users
                     ? filteredUsers.map((user, index) => (
                         <tr key={user.id} className="hover:bg-gray-100 ">
-                          <td className="w-4 p-4">{index + 1}</td>
+                          <td className="w-4 p-4">
+                            {indexOfFirstUser + index + 1}
+                          </td>
                           <td className="flex items-center p-4 pl-2 whitespace-nowrap">
                             <Avatar
                               sx={{ width: 30, height: 30 }}

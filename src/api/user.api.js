@@ -20,6 +20,18 @@ export const getCurrentUser = async (userId) => {
   }
 };
 
+export const getRole = async (userId) => {
+  try {
+    const docRef = doc(db, "users", userId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap?.data()?.role;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getAllUser = async () => {
   try {
     const docRef = collection(db, "users");

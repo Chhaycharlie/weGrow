@@ -24,7 +24,7 @@ function Training() {
           <div className="flex justify-center items-center">
             <Link
               to="/Inspiration"
-              className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 bg-blue-700 transition duration-150 ease-in-out hover:bg-blue-600 lg:text-xl lg:font-bold  rounded-xl text-white px-4 sm:px-10 border border-blue-700 py-2 sm:py-4 text-sm"
+              className=" bg-blue-700 transition duration-150 ease-in-out hover:bg-blue-600 lg:text-xl lg:font-bold  rounded-xl text-white px-4 sm:px-10 border border-blue-700 py-2 sm:py-4 text-sm"
             >
               View Inspiration Post
             </Link>

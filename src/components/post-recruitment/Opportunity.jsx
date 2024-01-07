@@ -228,7 +228,7 @@ function Opportunity({ posts, loading }) {
                             dateTime={post.timestamp}
                             className="text-gray-500"
                           >
-                            <TimeStamp post={post} />
+                            <TimeStamp timestamp={post?.timestamp} />
                           </time>
                           <a
                             href={`https://${post.url}`}
@@ -240,7 +240,7 @@ function Opportunity({ posts, loading }) {
                         </div>
                       </div>
                       <div className="group relative h-36">
-                        <h3 className="px-1 mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                        <h3 className="px-1 mt-3 text-lg font-semibold leading-6 text-gray-900">
                           {post.title}
                         </h3>
                         <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 pl-1">

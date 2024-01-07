@@ -34,7 +34,7 @@ const Modal = ({ onDelete }) => {
         </svg>
       </button>
       {isOpen && (
-        <div className=" fixed w-full h-full inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center">
+        <div className="z-50 fixed w-full h-full inset-0 bg-black bg-opacity-10 backdrop-blur-sm flex items-center justify-center">
           <div className="bg-white p-2 rounded w-[500px] h-[300px]">
             <div
               className=" w-full h-full p-4 bg-white flex flex-col justify-between"

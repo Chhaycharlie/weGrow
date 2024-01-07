@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { getRecruitmentById } from "../../api/post.api";
 import SmallSpinner from "../shared/SmallSpinner";
 import AppLayout from "../Layout/AppLayout";
-import Loading from "../../pages/loading";
+import Loading from "../../pages/Loading";
 
 const RecruitmentForm = () => {
   const { formId } = useParams();
@@ -130,7 +130,7 @@ const RecruitmentForm = () => {
           updatedTimeStamp: serverTimestamp(),
         });
         setLoading(false);
-        toast.success("post updated", {
+        toast.success("updated", {
           position: toast.POSITION.TOP_RIGHT,
         });
       } else {
@@ -154,7 +154,7 @@ const RecruitmentForm = () => {
     <AppLayout>
       {loadingPost ? (
         <div className="w-full h-[80vh] flex items-center justify-center">
-          <Loading />
+          <Loading className={""} />
         </div>
       ) : (
         <>

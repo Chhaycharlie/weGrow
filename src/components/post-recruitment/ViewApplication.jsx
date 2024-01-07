@@ -20,38 +20,56 @@ const ViewApplication = () => {
   const currentDate = new Date();
   let filteredData;
 
-  if (dateFilter === "Recently") {
-    // Filter data for items submitted in the last 10 days
-    const tenDaysAgo = new Date(currentDate);
-    tenDaysAgo.setDate(currentDate.getDate() - 10);
-    filteredData = data
-      .filter((item) => new Date(item.timestamp.toDate()) >= tenDaysAgo)
-      .filter((item) =>
-        item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+  if (data) {
+    if (dateFilter === "Recently") {
+      // Filter data for items submitted in the last 10 days
+      const tenDaysAgo = new Date(currentDate);
+      tenDaysAgo.setDate(currentDate.getDate() - 10);
+      filteredData = data
+        .filter((item) => new Date(item.timestamp.toDate()) >= tenDaysAgo)
+        .filter(
+          (item) =>
+            item.user.displayName
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()) ||
+            item.user.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    } else if (dateFilter === "Under 30 days") {
+      // Filter data for items submitted in the last 30 days
+      const thirtyDaysAgo = new Date(currentDate);
+      thirtyDaysAgo.setDate(currentDate.getDate() - 30);
+      filteredData = data
+        .filter((item) => new Date(item?.timestamp.toDate()) >= thirtyDaysAgo)
+        .filter(
+          (item) =>
+            item?.user?.displayName
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()) ||
+            item?.user?.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    } else if (dateFilter === "Under 1 day") {
+      // Filter data for items submitted in the last 1 day
+      const oneDayAgo = new Date(currentDate);
+      oneDayAgo.setDate(currentDate.getDate() - 1);
+      filteredData = data
+        .filter((item) => new Date(item?.timestamp.toDate()) >= oneDayAgo)
+        .filter(
+          (item) =>
+            item?.user?.displayName
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase()) ||
+            item?.user?.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    } else {
+      // No date filter, use all data
+      filteredData = data.filter(
+        (item) =>
+          item?.user?.displayName
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          item?.user?.email.toLowerCase().includes(searchTerm.toLowerCase())
       );
-  } else if (dateFilter === "Under 30 days") {
-    // Filter data for items submitted in the last 30 days
-    const thirtyDaysAgo = new Date(currentDate);
-    thirtyDaysAgo.setDate(currentDate.getDate() - 30);
-    filteredData = data
-      .filter((item) => new Date(item.timestamp.toDate()) >= thirtyDaysAgo)
-      .filter((item) =>
-        item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-  } else if (dateFilter === "Under 1 day") {
-    // Filter data for items submitted in the last 1 day
-    const oneDayAgo = new Date(currentDate);
-    oneDayAgo.setDate(currentDate.getDate() - 1);
-    filteredData = data
-      .filter((item) => new Date(item.timestamp.toDate()) >= oneDayAgo)
-      .filter((item) =>
-        item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-  } else {
-    // No date filter, use all data
-    filteredData = data.filter((item) =>
-      item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    }
   }
 
   useEffect(() => {
@@ -81,7 +99,6 @@ const ViewApplication = () => {
   //pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  //   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -92,12 +109,7 @@ const ViewApplication = () => {
     setCurrentPage(1); // Reset to the first page when the search term changes
   };
 
-  //   const currentItems = data
-  //     .filter((item) =>
-  //       item.user.displayName.toLowerCase().includes(searchTerm.toLowerCase())
-  //     )
-  //     .slice(indexOfFirstItem, indexOfLastItem);
-  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredData?.slice(indexOfFirstItem, indexOfLastItem);
   const handleDateFilterChange = (event) => {
     const selectedDateFilter = event.target.value;
     setDateFilter(selectedDateFilter);
@@ -229,7 +241,7 @@ const ViewApplication = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.length > 0 ? (
+                      {data?.length > 0 ? (
                         currentItems.map((application) => (
                           <tr key={application.id}>
                             <td className="px-5 border-b border-gray-200 bg-white text-sm">
@@ -276,7 +288,9 @@ const ViewApplication = () => {
                             <td className="hidden sm:block px-5 py-6 border-b border-gray-200 bg-white text-sm">
                               <span className="relative inline-block px-3 font-semibold text-green-900 leading-tight">
                                 <span className="relative">
-                                  <TimeStamp post={application} />
+                                  <TimeStamp
+                                    timestamp={application?.timestamp}
+                                  />
                                 </span>
                               </span>
                             </td>
@@ -299,7 +313,7 @@ const ViewApplication = () => {
                   <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                     <span className="text-xs xs:text-sm text-gray-900">
                       Showing {indexOfFirstItem + 1} to {indexOfLastItem} of{" "}
-                      {data.length} Entries
+                      {data?.length} Entries
                     </span>
                     <div className="inline-flex mt-2 xs:mt-0">
                       <button
@@ -315,9 +329,9 @@ const ViewApplication = () => {
                       </button>
                       <button
                         onClick={() => paginate(currentPage + 1)}
-                        disabled={indexOfLastItem >= data.length}
+                        disabled={indexOfLastItem >= data?.length}
                         className={`text-sm bg-gray-200  text-gray-800 font-semibold py-2 px-4 rounded-r ${
-                          indexOfLastItem >= data.length
+                          indexOfLastItem >= data?.length
                             ? ""
                             : "cursor-pointer hover:bg-gray-400"
                         } `}

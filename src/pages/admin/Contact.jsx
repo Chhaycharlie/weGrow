@@ -2,15 +2,19 @@ import { Link } from "react-router-dom";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 import { useEffect, useState } from "react";
 import TimeStamp from "../../components/shared/TimeStamp";
-import { onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, doc, collection, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { getFeedBack } from "../../api/user.api";
+import Modal from "../../components/shared/Modal";
+import { toast } from "react-toastify";
 
 const Contact = () => {
   const [feeds, setFeeds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(7);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dateFilter, setDateFilter] = useState("All");
 
   useEffect(() => {
     const fetchFeed = async () => {
@@ -36,15 +40,54 @@ const Contact = () => {
     fetchFeed();
   }, []);
 
+  // Handle search input
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
+  // Handle date filter change
+  const handleDateFilterChange = (e) => {
+    setDateFilter(e.target.value);
+    setCurrentPage(1); // Reset to first page when changing date filter
+  };
+
+  const filteredFeeds = feeds.filter(
+    (feed) =>
+      feed.data.email.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (dateFilter === "All" ||
+        (dateFilter === "Recently" &&
+          Date.now() - feed.data.timestamp.toMillis() <= 24 * 60 * 60 * 1000) ||
+        (dateFilter === "Under 1 day" &&
+          Date.now() - feed.data.timestamp.toMillis() <= 24 * 60 * 60 * 1000) ||
+        (dateFilter === "Under 30 days" &&
+          Date.now() - feed.data.timestamp.toMillis() <=
+            30 * 24 * 60 * 60 * 1000))
+  );
+
   // Pagination logic
   const indexOfLastFeed = currentPage * itemsPerPage;
   const indexOfFirstFeed = indexOfLastFeed - itemsPerPage;
-  const currentFeeds = feeds.slice(indexOfFirstFeed, indexOfLastFeed);
-  const totalPages = Math.ceil(feeds.length / itemsPerPage);
+  const currentFeeds = filteredFeeds.slice(indexOfFirstFeed, indexOfLastFeed);
+  const totalPages = Math.ceil(filteredFeeds.length / itemsPerPage);
 
   const paginate = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
+    }
+  };
+
+  const handleDelete = (postId) => {
+    try {
+      const contactRef = doc(db, "contactus", postId);
+      deleteDoc(contactRef).then(() => {
+        toast.success("deleted !", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        console.log("deleted");
+      });
+    } catch (error) {
+      toast.error(error);
     }
   };
 
@@ -61,7 +104,7 @@ const Contact = () => {
           </div>
           <div className="sm:flex">
             <div className="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 ">
-              <form className="lg:pr-3" action="#" method="GET">
+              <form className="lg:pr-3 flex items-center space-x-2">
                 <label htmlFor="users-search" className="sr-only">
                   Search
                 </label>
@@ -69,11 +112,33 @@ const Contact = () => {
                   <input
                     type="text"
                     name="search"
-                    // value={searchInput}
-                    // onChange={handleSearch}
+                    value={searchQuery}
+                    onChange={handleSearch}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5"
                     placeholder="Search for users"
                   />
+                </div>
+                {/* filter by date submit */}
+                <div className="relative">
+                  <select
+                    value={dateFilter}
+                    onChange={handleDateFilterChange}
+                    className=" h-full rounded-sm border border-gray-400 block appearance-none w-full bg-white text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none  focus:bg-white focus:border-gray-600"
+                  >
+                    <option>All</option>
+                    <option>Recently</option>
+                    <option>Under 1 day</option>
+                    <option>Under 30 days</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
                 </div>
               </form>
             </div>
@@ -119,6 +184,12 @@ const Contact = () => {
                     </th>
                     <th
                       scope="col"
+                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
+                    >
+                      name
+                    </th>
+                    <th
+                      scope="col"
                       className="p-4 text-xs font-medium text-left text-gray-500 uppercase truncate"
                     >
                       feedback
@@ -127,14 +198,13 @@ const Contact = () => {
                       scope="col"
                       className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
                     >
-                      name
-                    </th>
-
-                    <th
-                      scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
-                    >
                       Sent
+                    </th>
+                    <th
+                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
+                      scope="col"
+                    >
+                      actions
                     </th>
                   </tr>
                 </thead>
@@ -142,25 +212,70 @@ const Contact = () => {
                   {currentFeeds.map((feed, index) => (
                     <tr key={feed.id} className="hover:bg-gray-100 ">
                       {/* index  */}
-                      <td className="w-4 p-4">{index + 1}</td>
+                      <td className="w-4 p-4">
+                        {indexOfFirstFeed + index + 1}
+                      </td>
 
                       {/* email  */}
                       <td className="max-w-[200px] p-4 overflow-hidden text-sm font-normal text-gray-900 truncate">
                         {feed?.data?.email}
                       </td>
 
-                      {/* message  */}
-                      <td className="max-w-[250px] p-4 overflow-hidden text-sm font-normal text-gray-900 truncate">
-                        {feed?.data?.message} hello
-                      </td>
-                      {/* position  */}
+                      {/* name  */}
                       <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap ">
                         {feed?.data?.name}
                       </td>
 
-                      {/* deadline */}
+                      {/* message  */}
+                      <td className="max-w-[250px] p-4 overflow-hidden text-sm font-normal text-gray-900 truncate">
+                        {feed?.data?.message}
+                      </td>
+
+                      {/* sent */}
                       <td className="p-4 text-base font-normal text-gray-900 whitespace-nowrap ">
-                        <TimeStamp post={feed?.data} />
+                        <TimeStamp timestamp={feed?.data?.timestamp} />
+                      </td>
+
+                      <td className="p-4 space-x-2 whitespace-nowrap">
+                        <Link to={`/dashboard/contacts/view-detial/${feed.id}`}>
+                          <button
+                            type="button"
+                            data-modal-target="delete-user-modal"
+                            data-modal-toggle="delete-user-modal"
+                            className="inline-flex justify-center items-center p-2 text-sm font-medium text-center text-white bg-[#66CCFF] rounded-lg hover:bg-blue-400 "
+                          >
+                            <svg
+                              width="16px"
+                              height="16px"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              stroke="#ffffff"
+                              strokeWidth="1.608"
+                            >
+                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                              <g
+                                id="SVGRepo_tracerCarrier"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              ></g>
+                              <g id="SVGRepo_iconCarrier">
+                                {" "}
+                                <circle
+                                  cx="12"
+                                  cy="12"
+                                  r="3.5"
+                                  stroke="#fff"
+                                ></circle>{" "}
+                                <path
+                                  d="M20.188 10.9343C20.5762 11.4056 20.7703 11.6412 20.7703 12C20.7703 12.3588 20.5762 12.5944 20.188 13.0657C18.7679 14.7899 15.6357 18 12 18C8.36427 18 5.23206 14.7899 3.81197 13.0657C3.42381 12.5944 3.22973 12.3588 3.22973 12C3.22973 11.6412 3.42381 11.4056 3.81197 10.9343C5.23206 9.21014 8.36427 6 12 6C15.6357 6 18.7679 9.21014 20.188 10.9343Z"
+                                  stroke="#fff"
+                                ></path>{" "}
+                              </g>
+                            </svg>
+                          </button>
+                        </Link>
+                        <Modal onDelete={() => handleDelete(feed.id)} />
                       </td>
                     </tr>
                   ))}

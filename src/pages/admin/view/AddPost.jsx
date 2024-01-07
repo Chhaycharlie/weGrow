@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../../../components/Layout/DashboardLayout";
-import { useParams } from "react-router-dom";
-import { getPostWithUserInfoById } from "../../../api/post.api";
-import { db } from "../../../firebase";
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
+import { db, auth } from "../../../firebase";
+import { doc, serverTimestamp, collection, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import SmallSpinner from "../../../components/shared/SmallSpinner";
 
 const PostDetial = () => {
   const { postId } = useParams();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
-  const [isCancel, setIsCancel] = useState(false);
+  const navigate = useNavigate();
   const [inputData, setInputData] = useState({
     username: "",
     title: "",
@@ -29,7 +29,6 @@ const PostDetial = () => {
     startDate: "",
     deadline: "",
   });
-  const [isEdit, setIsEdit] = useState(false);
 
   const onChange = (e) => {
     const trimmedValue = e.target.value.startsWith("https://")
@@ -41,51 +40,6 @@ const PostDetial = () => {
       [e.target.name]: trimmedValue,
     });
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const post = await getPostWithUserInfoById(postId);
-        setData(post);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [postId]);
-
-  useEffect(() => {
-    setInputData({
-      username: data?.user?.displayName ?? "",
-      title: data?.title ?? "",
-      description: data?.description ?? "",
-      country: data?.country ?? "",
-      gender: data?.gender ?? "",
-      age: data?.age ?? "",
-      people: data?.people ?? "",
-      position: data?.position ?? "",
-      department: data?.department ?? "",
-      academic: data?.academic ?? "",
-      url: data?.url ?? "",
-      experience: data?.experience ?? "",
-      email: data?.email ?? "",
-      result: data?.result ?? "",
-      startDate: data?.startDate ?? "",
-      deadline: data?.deadline ?? "",
-    });
-    // Update checkboxValues based on skills from post.skill
-    if (data && data?.skill) {
-      const updatedCheckboxValues = { ...checkboxValues };
-
-      Object.keys(updatedCheckboxValues).forEach((key) => {
-        updatedCheckboxValues[key] = data.skill.includes(key);
-      });
-
-      setCheckboxValues(updatedCheckboxValues);
-    }
-  }, [data, isCancel]);
 
   const [checkboxValues, setCheckboxValues] = useState({
     projectManagement: false,
@@ -108,8 +62,9 @@ const PostDetial = () => {
     return Object.keys(checkboxValues).filter((key) => checkboxValues[key]);
   };
 
-  const handleSave = async () => {
+  const handleCreate = async () => {
     try {
+      setLoading(true);
       const formData = {
         title: inputData.title,
         description: inputData.description,
@@ -127,26 +82,22 @@ const PostDetial = () => {
         skill: getSelectedValues(),
         startDate: inputData.startDate,
         deadline: inputData.deadline,
+        userId: auth?.currentUser?.uid,
+        timestamp: serverTimestamp(),
+        updatedTimeStamp: serverTimestamp(),
       };
 
-      const recruitRef = doc(db, "volunteer-recruits", postId);
-      await updateDoc(recruitRef, {
-        ...formData,
-        updatedTimeStamp: serverTimestamp(),
-      });
+      const recruitRef = doc(collection(db, "volunteer-recruits"));
+      await setDoc(recruitRef, formData);
       setLoading(false);
-      setIsEdit(false);
-      toast.success("post updated", {
+      toast.success("posted", {
         position: toast.POSITION.TOP_RIGHT,
       });
+      navigate(-1);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
-  };
-
-  const handleCancel = () => {
-    setIsCancel(true);
-    setIsEdit(false);
   };
 
   console.log(data);
@@ -157,9 +108,7 @@ const PostDetial = () => {
         <div className="relative w-full h-full md:h-auto">
           <div className="relative bg-white rounded-lg shadow">
             <div className="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700">
-              <h3 className="text-xl font-semibold ">
-                Recruitment / View Post Detail
-              </h3>
+              <h3 className="text-xl font-semibold ">Recruitment / Add Post</h3>
             </div>
 
             <div className="p-6 space-y-6">
@@ -167,19 +116,19 @@ const PostDetial = () => {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      htmlFor="user"
+                      htmlFor="result"
                       className="block mb-2 text-sm font-medium text-gray-900 "
                     >
-                      User
+                      post title
                     </label>
                     <input
                       type="text"
-                      name="username"
-                      value={inputData.username}
+                      name="title"
+                      value={inputData.title}
                       onChange={onChange}
-                      className="shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 bg-gray-200"
-                      placeholder="Username"
-                      disabled
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                      placeholder="write your post title here"
+                      required
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3"></div>
@@ -195,34 +144,11 @@ const PostDetial = () => {
                       name="email"
                       onChange={onChange}
                       value={inputData.email}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
-                      placeholder="Email"
-                      disabled={!isEdit}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                      placeholder="your organization email"
                     />
                   </div>
-                  <div className="col-span-6 sm:col-span-3"></div>
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="result"
-                      className="block mb-2 text-sm font-medium text-gray-900 "
-                    >
-                      post title
-                    </label>
-                    <input
-                      type="text"
-                      name="title"
-                      value={inputData.title}
-                      onChange={onChange}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
-                      placeholder=""
-                      required
-                      disabled={!isEdit}
-                    />
-                  </div>
+
                   <div className="col-span-4">
                     <label
                       htmlFor="description"
@@ -235,11 +161,8 @@ const PostDetial = () => {
                       rows="10"
                       value={inputData.description}
                       onChange={onChange}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg ${
-                        isEdit ? "" : "bg-gray-200"
-                      } block w-full p-2.5   `}
-                      placeholder=""
-                      disabled={!isEdit}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                      placeholder="write detail about your recruiting"
                     ></textarea>
                   </div>
 
@@ -254,12 +177,9 @@ const PostDetial = () => {
                       name="country"
                       onChange={onChange}
                       value={inputData.country}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg ${
-                        isEdit ? "" : "bg-gray-200"
-                      } block w-full p-2.5   `}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                       placeholder="example@company.com"
                       required
-                      disabled={!isEdit}
                     >
                       <option disabled={true} value="">
                         please select city
@@ -303,11 +223,8 @@ const PostDetial = () => {
                       name="gender"
                       onChange={onChange}
                       value={inputData.gender}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 ${
-                        isEdit ? "" : "bg-gray-200 "
-                      }  `}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                       required
-                      disabled={!isEdit}
                     >
                       <option disabled={true} value="">
                         please select gender
@@ -329,11 +246,8 @@ const PostDetial = () => {
                       name="department"
                       value={inputData.department}
                       onChange={onChange}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lgblock w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
-                      placeholder=""
-                      disabled={!isEdit}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                      placeholder="this recruiting under department"
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -348,11 +262,8 @@ const PostDetial = () => {
                       name="position"
                       value={inputData.position}
                       onChange={onChange}
-                      className={`${
-                        isEdit ? "" : "bg-gray-200"
-                      } shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5   `}
-                      placeholder=""
-                      disabled={!isEdit}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                      placeholder="voluteer position"
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -367,11 +278,8 @@ const PostDetial = () => {
                       name="experience"
                       onChange={onChange}
                       value={inputData.experience}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
-                      placeholder=""
-                      disabled={!isEdit}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                      placeholder="eg. soft skill, hard skill ..."
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -385,12 +293,8 @@ const PostDetial = () => {
                       name="age"
                       onChange={onChange}
                       value={inputData.age}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                       required
-                      placeholder=""
-                      disabled={!isEdit}
                     >
                       <option disabled={true} value="">
                         please select age
@@ -412,12 +316,8 @@ const PostDetial = () => {
                       name="people"
                       onChange={onChange}
                       value={inputData.people}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                       required
-                      placeholder=""
-                      disabled={!isEdit}
                     >
                       <option disabled={true} value="">
                         please select how many candidates
@@ -442,11 +342,8 @@ const PostDetial = () => {
                       name="url"
                       value={inputData.url}
                       onChange={onChange}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                       placeholder="www.example.com"
-                      disabled={!isEdit}
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -460,12 +357,8 @@ const PostDetial = () => {
                       name="academic"
                       onChange={onChange}
                       value={inputData.academic}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                       required
-                      placeholder=""
-                      disabled={!isEdit}
                     >
                       <option disabled={true} value="">
                         please select qualification
@@ -491,11 +384,8 @@ const PostDetial = () => {
                       name="startDate"
                       value={inputData.startDate}
                       onChange={onChange}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
-                      placeholder=""
-                      disabled={!isEdit}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                      placeholder="DD/MM/YY"
                     />
                   </div>
                   <div className="col-span-6 sm:col-span-3">
@@ -510,11 +400,8 @@ const PostDetial = () => {
                       name="deadline"
                       value={inputData.deadline}
                       onChange={onChange}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
-                      placeholder=""
-                      disabled={!isEdit}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                      placeholder="DD/MM/YY"
                     />
                   </div>
 
@@ -530,12 +417,8 @@ const PostDetial = () => {
                       name="result"
                       onChange={onChange}
                       value={inputData.result}
-                      className={`shadow-sm border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  ${
-                        isEdit ? "" : "bg-gray-200"
-                      }  `}
+                      className="shadow-sm border border-gray-500 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                       required
-                      placeholder=""
-                      disabled={!isEdit}
                     >
                       <option disabled value="">
                         please select result anouncement duration
@@ -545,40 +428,6 @@ const PostDetial = () => {
                       <option value="After 3 Week">After 3 Week</option>
                       <option value="After 1 month">After 1 month</option>
                     </select>
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="created"
-                      className="block mb-2 text-sm font-medium text-gray-900 "
-                    >
-                      created at
-                    </label>
-                    <input
-                      type="text"
-                      name="created"
-                      value={data?.updatedTimeStamp?.toDate()}
-                      className="shadow-sm bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5   "
-                      placeholder=""
-                      disabled
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="created"
-                      className="block mb-2 text-sm font-medium text-gray-900 "
-                    >
-                      updated at
-                    </label>
-                    <input
-                      type="text"
-                      name="created"
-                      value={data?.timestamp?.toDate()}
-                      className="shadow-sm bg-gray-200 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5   "
-                      placeholder=""
-                      disabled
-                    />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3 pl-4">
@@ -593,10 +442,8 @@ const PostDetial = () => {
                             name="teamwork"
                             type="checkbox"
                             checked={checkboxValues.teamwork}
-                            onChange={() => handleCheckboxChange("teamwork")}
-                            className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                            className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-500 rounded"
                             required
-                            disabled={!isEdit}
                           />
                         </div>
                         <div className="ml-3 text-sm">
@@ -618,8 +465,7 @@ const PostDetial = () => {
                             onChange={() =>
                               handleCheckboxChange("projectManagement")
                             }
-                            disabled={!isEdit}
-                            className="focus:ring-indigo-500 p-2 h-4 w-4 border text-indigo-600 border-gray-300 rounded"
+                            className="focus:ring-indigo-500 p-2 h-4 w-4 border text-indigo-600 border-gray-500 rounded"
                           />
                         </div>
                         <div className="ml-3 text-sm">
@@ -637,10 +483,9 @@ const PostDetial = () => {
                             id="research"
                             name="research"
                             type="checkbox"
-                            disabled={!isEdit}
                             checked={checkboxValues.research}
                             onChange={() => handleCheckboxChange("research")}
-                            className="focus:ring-indigo-500 p-2 h-4 w-4 border text-indigo-600 border-gray-300 rounded"
+                            className="focus:ring-indigo-500 p-2 h-4 w-4 border text-indigo-600 border-gray-500 rounded"
                           />
                         </div>
                         <div className="ml-3 text-sm">
@@ -662,8 +507,7 @@ const PostDetial = () => {
                             onChange={() =>
                               handleCheckboxChange("communication")
                             }
-                            disabled={!isEdit}
-                            className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                            className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-500 rounded"
                           />
                         </div>
                         <div className="ml-3 text-sm">
@@ -685,8 +529,7 @@ const PostDetial = () => {
                             onChange={() =>
                               handleCheckboxChange("timeManagement")
                             }
-                            disabled={!isEdit}
-                            className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                            className="focus:ring-indigo-500 p-2 h-4 w-4 text-indigo-600 border-gray-500 rounded"
                           />
                         </div>
                         <div className="ml-3 text-sm">
@@ -704,31 +547,16 @@ const PostDetial = () => {
               </form>
 
               <div className="items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-700">
-                {isEdit ? (
-                  <>
-                    <button
-                      onClick={handleSave}
-                      className="text-white bg-[#66CCFF] hover:bg-blue-400 duration-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center  "
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={handleCancel}
-                      className="text-white bg-gray-400 hover:bg-gray-300 hover:text-gray-900 duration-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center  "
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    onClick={() => {
-                      setIsEdit(true);
-                    }}
-                    className="text-white bg-[#66CCFF] hover:bg-blue-400 duration-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center  "
-                  >
-                    Edit
-                  </button>
-                )}
+                <button
+                  onClick={handleCreate}
+                  className="text-white bg-blue-700 hover:bg-blue-400 duration-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center  "
+                >
+                  {loading ? (
+                    <SmallSpinner className={"w-8 h-5 flex items-center"} />
+                  ) : (
+                    "create"
+                  )}
+                </button>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import CreateAccount from "../assets/Auth/create-account.svg";
+import Account from "../assets/auth/create-account.svg";
 import "../App.css";
 import { Link } from "react-router-dom";
 import { auth, db } from "../firebase";
@@ -71,6 +71,7 @@ const Signup = () => {
             userRef,
             {
               ...userData,
+              lastLogin: serverTimestamp(),
               createdTimeStamp: serverTimestamp(),
               updatedTimeStamp: serverTimestamp(),
             },
@@ -148,7 +149,7 @@ const Signup = () => {
       <div className="flex items-center justify-around w-full h-[84vh] bg-gray-50">
         {/* left pic */}
         <div className="hidden lg:flex">
-          <img src={CreateAccount} alt="login_image" width={400} className="" />
+          <img src={Account} alt="login_image" width={400} className="" />
         </div>
 
         {/* right form */}

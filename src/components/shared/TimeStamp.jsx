@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-const TimeStamp = ({ post }) => {
+const TimeStamp = ({ timestamp }) => {
   const [timeText, setTimeText] = useState("");
 
   useEffect(() => {
     const calculateTimeDifference = () => {
-      if (post?.timestamp) {
+      if (timestamp) {
         const timestampDate = new Date(
-          post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1e6
+          timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6
         ); // Convert seconds to milliseconds
         const now = new Date();
         const diffInSeconds = Math.floor((now - timestampDate) / 1000);
@@ -41,7 +41,7 @@ const TimeStamp = ({ post }) => {
     };
 
     calculateTimeDifference();
-  }, [post]);
+  }, [timestamp]);
 
   return <>{timeText}</>;
 };

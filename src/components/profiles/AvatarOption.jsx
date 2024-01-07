@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ModalProfile from "./modalProfile";
+import ModalProfile from "./ModalProfile";
 import { useSelector } from "react-redux";
 
 const AvatarOption = ({ title, quote }) => {

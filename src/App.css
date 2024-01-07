@@ -41,6 +41,10 @@
     background-position: center;
 }
 
+.opportunity-img{
+  background-image: url('https://wallpaperaccess.com/full/1668918.jpg');
+}
+
 .lds-dual-ring {
     display: inline-block;
     width: 30px;

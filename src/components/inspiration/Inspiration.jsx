@@ -1,237 +1,173 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import AppLayout from "../Layout/AppLayout";
 import ModalPost from "../course/ModalPost";
-import Header from "../shared/Header";
-import Footer from "../shared/Footer";
+import { Avatar } from "@mui/material";
+import { getAllInspirationByInfo } from "../../api/post.api";
 import { Link } from "react-router-dom";
+import TimeStamp from "../shared/TimeStamp";
+import { Button, IconButton } from "@material-tailwind/react";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { auth } from "../../firebase";
 
-const data = [
-  {
-    id: 1,
-    author: "src/assets/icons/people.png",
-    title: "Charity at KompongCham Province on 28 May 2020",
-    name: "meow meow",
-    category: "popular",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 2,
-    author: "src/assets/icons/people.png",
-    title: "Charity at KompongCham Province on 28 May 2020",
-    name: "meow meow",
-    category: "popular",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 3,
-    author: "src/assets/icons/people.png",
-    title: "Charity at KompongCham Province",
-    name: "meow meow",
-    category: "popular",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 4,
-    author: "src/assets/icons/people.png",
-    title: "Charity at KompongCham Province",
-    name: "meow meow",
-    category: "popular",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 5,
-    author: "src/assets/icons/people.png",
-    title: "Charity at KompongCham Province",
-    name: "meow meow",
-    category: "all",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 6,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "all",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 7,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "all",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 8,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "all",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 9,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "most_visited",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 10,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "most_visited",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 11,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "most_visited",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 12,
-    author: "src/assets/icons/people.png",
-    title: "Charity at KompongCham Province",
-    name: "meow meow",
-    category: "most_visited",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 13,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    imageUrl: "src/assets/icons/people.png",
-    title: "Charity at KompongCham Province",
-    category: "popular",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 14,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "popular",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 15,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "popular",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-  {
-    id: 16,
-    author: "src/assets/icons/people.png",
-    name: "meow meow",
-    title: "Charity at KompongCham Province",
-    category: "popular",
-    image: "https://mdbcdn.b-cdn.net/img/new/standard/city/041.jpg",
-  },
-];
+const Inspiration = () => {
+  const [posts, setPosts] = useState(null);
+  const [active, setActive] = useState(1);
+  const recordsPerPage = 9;
+  const [filter, setFilter] = useState("all"); // "all" or "myPost"
 
-const Post = () => {
-  const [posts, setPosts] = useState(data);
+  useEffect(() => {
+    const fetchData = async () => {
+      const postData = await getAllInspirationByInfo();
+      setPosts(postData);
+    };
+    fetchData();
+  }, []);
 
-  //   Filter Type
-  const filterType = (category) => {
-    setPosts(
-      data.filter((item) => {
-        return item.category === category;
-      })
-    );
+  const filteredPosts = posts?.filter((post) => {
+    if (filter === "my_post") {
+      return post?.user?.userId === auth.currentUser.uid;
+    }
+    return true;
+  });
+
+  const lastIndex = active * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const npage = Math.ceil((filteredPosts?.length || 0) / recordsPerPage);
+  const displayPosts = filteredPosts?.slice(firstIndex, lastIndex);
+
+  const next = () => {
+    if (active === npage) return;
+    setActive(active + 1);
   };
 
+  const prev = () => {
+    if (active === 1) return;
+    setActive(active - 1);
+  };
+
+  const getItemProps = (index) => ({
+    variant: active === index ? "filled" : "text",
+    color: "blue",
+    onClick: () => setActive(index),
+  });
+
   return (
-    <>
-      <Header />
-      <div className="max-w-[1980px] m-auto px-4 py-12">
-        <h1 className="text-blue-600 font-bold text-4xl text-center">
+    <AppLayout>
+      {/* hero */}
+      <div className="w-full bg-blue-400 h-[70vh] flex items-center justify-center">
+        <h1 className="text-white font-bold text-4xl text-center">
           Post Inspiration to All Volunteer
         </h1>
-        {/* Filter Row */}
-        <div className="flex flex-col lg:flex-row justify-between pt-10">
-          {/* Fliter Type */}
-          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
-            <ul className="flex flex-wrap -mb-px">
-              <li className="me-2" onClick={() => setPosts(data)}>
-                <a
-                  href="#"
-                  className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active "
-                  aria-current="page"
-                >
-                  All
-                </a>
-              </li>
-              <li className="me-2" onClick={() => filterType("popular")}>
-                <a
-                  href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 "
-                  aria-current="page"
-                >
-                  Popular
-                </a>
-              </li>
-              <li className="me-2" onClick={() => filterType("most_visited")}>
-                <a
-                  href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300  "
-                  aria-current="page"
-                >
-                  Most Visited
-                </a>
-              </li>
-            </ul>
-          </div>
+      </div>
 
-          {/* New post */}
-          <div>
+      {/* posting side  */}
+      <div className="flex justify-start flex-wrap bg-gray-100">
+        <div className="md:w-1/5 w-full border-r border-gray-300">
+          <div className="flex justify-center space-x-6 md:space-x-0 md:flex-col items-center mt-4 font-medium text-sm">
+            <label
+              htmlFor="post"
+              className="md:text-xl pb-6 md:pb-2 font-openSans text-center pt-2 text-black"
+            >
+              Filter by Post
+            </label>
+            <select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="p-3 mb-4 border md:mb-0 md:w-2/3 md:pr-5 md:py-3 hover:text-gray-600 rounded-lg border-gray-300 outline-none"
+            >
+              <option value="all">All</option>
+              <option value="my_post">My Post</option>
+            </select>
+          </div>
+        </div>
+        <div className="md:w-4/5 w-full h-auto">
+          {/* btn add */}
+          <div className="w-full h-14 flex items-center justify-center md:justify-end pr-10 mt-2 pb-2 border-b border-gray-400">
             <ModalPost />
           </div>
-        </div>
 
-        {/* Display Posts */}
-        <div className=" pt-4 grid gap-6 lg:grid-cols-4">
-          {posts.map((item) => (
-            <Link to={`/inspiration/${item.id}`}>
-              <div
-                key={item.id}
-                className="border shadow-lg rounded-lg hover:scale-105 duration-300"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full object-cover rounded-t-lg"
-                />
-                <div className="flex justify-between px-2 py-4 items-center">
-                  <div className="flex space-x-3 justify-center items-center">
-                    <img
-                      src={item.author}
-                      alt=""
-                      className="h-10 w-10 rounded-full bg-gray-50"
-                    />
-                    <div className="flex flex-col">
-                      <p className="font-bold">{item.name}</p>
-                      <p className="font-md line-clamp-1 text-sm leading-6 ">
-                        {item.title}
-                      </p>
+          {/* card  */}
+          <div className="grid grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-3 p-2 md:m-4 text-white">
+            {displayPosts?.length > 0 ? (
+              displayPosts?.map((post) => (
+                <Link key={post?.id} to={`/inspirations/${post?.id}`}>
+                  <div class="block max-w-[19rem] rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                    <div class="relative overflow-hidden bg-contain bg-no-repeat">
+                      <img
+                        className="rounded-t-lg h-[250px] w-[600px] bg-center"
+                        src={post?.inspirationUrl}
+                        alt=""
+                      />
+                    </div>
+                    <div class="px-2 py-4 flex flex-col space-x-2">
+                      <div className="flex items-center space-x-3">
+                        <Avatar
+                          sx={{ width: 35, height: 35 }}
+                          src={post?.user?.photoUrl}
+                        >
+                          {post?.user?.displayName[0]}
+                        </Avatar>
+                        <div className="text-black ">
+                          <h1>{post?.title}</h1>
+                          <p className="text-sm text-gray-600">
+                            <TimeStamp timestamp={post?.timestamp} />
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-start font-md line-clamp-2 text-sm leading-7 text-black">
+                        <p className="pl-2 pt-2">{post?.description}</p>
+                      </div>
                     </div>
                   </div>
+                </Link>
+              ))
+            ) : (
+              <>
+                <div class="max-w-[19rem]  min-h-[50vh] flex justify-center items-center text-black rounded-lg "></div>
+                <div class="max-w-[19rem]  min-h-[50vh] flex justify-center items-center text-black rounded-lg ">
+                  <h1>No Your Post</h1>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </>
+            )}
+          </div>
+
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 px-6 md:px-24 py-10">
+            <Button
+              variant="text"
+              className="md:flex items-center gap-2 hidden text-[12px]"
+              color="blue"
+              onClick={prev}
+              disabled={active === 1}
+            >
+              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4 rounded-full" />{" "}
+              Previous
+            </Button>
+            <div className="flex items-center gap-2 mt-4 md:mt-0">
+              {Array.from({ length: npage }).map((_, index) => (
+                <IconButton
+                  key={index + 1}
+                  size="sm"
+                  {...getItemProps(index + 1)}
+                >
+                  {index + 1}
+                </IconButton>
+              ))}
+            </div>
+            <Button
+              variant="text"
+              className="md:flex items-center gap-2 hidden text-[12px]"
+              color="blue"
+              onClick={next}
+              disabled={active === npage}
+            >
+              Next
+              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
-      <Footer />
-    </>
+    </AppLayout>
   );
 };
 
-export default Post;
+export default Inspiration;

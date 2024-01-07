@@ -1,6 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import Subscription from "../course/Subscription";
+import Soft from "../../assets/image/softskill.jpg";
+import Hard from "../../assets/image/hardskill.jpg";
 
 function Training() {
   return (
@@ -23,7 +24,7 @@ function Training() {
           </div>
           <div className="flex justify-center items-center">
             <Link
-              to="/Inspiration"
+              to={"/inspirations"}
               className=" bg-blue-700 transition duration-150 ease-in-out hover:bg-blue-600 lg:text-xl lg:font-bold  rounded-xl text-white px-4 sm:px-10 border border-blue-700 py-2 sm:py-4 text-sm"
             >
               View Inspiration Post
@@ -224,7 +225,7 @@ function Training() {
           </div>
         </div>
       </section>
-      <section className="bg-gray-50">
+      <section className="bg-gray-100">
         <div className="items-center max-w-screen-xl px-4 py-8 mx-auto lg:grid lg:grid-cols-4 lg:gap-16 xl:gap-24 lg:py-24 lg:px-6">
           <div className="col-span-2 mb-8">
             <p className="text-lg font-medium text-blue-600 ">
@@ -405,14 +406,14 @@ function Training() {
             </div>
             <img
               className="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex"
-              src="src/assets/image/hardskill.jpg"
+              src={Hard}
               alt="dashboard feature image"
             />
           </div>
           <div className="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
             <img
               className="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex"
-              src="src/assets/image/softskill.jpg"
+              src={Soft}
               alt="dashboard feature image"
             />
             <div className="text-gray-500 sm:text-lg ">
@@ -528,7 +529,7 @@ function Training() {
           </div>
         </div>
       </section>
-      <section className="bg-gray-50">
+      <section className="bg-gray-100">
         <div className="max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6">
           <div className="max-w-screen-sm mx-auto text-center">
             <h2 className="mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900 ">

@@ -26,14 +26,14 @@ const Whoarewe = () => {
               loving to volunteer. We are here to support you on your journey!
             </p>
           </div>
-          <div className="col-span-9 w-[100%] ml-8 lg:w-full rounded-lg sm:mx-0 sm:col-span-4 lg:ml-0 sm:ml-0">
+          <div className="col-span-9 w-[100%] ml-8 lg:w-full overflow-hidden rounded-t-lg sm:mx-0 sm:col-span-4 lg:ml-0 sm:ml-0">
             <img src={TeamworkImg} alt="volunteer teamwork" />
           </div>
 
-          <div className="col-span-12 rounded-lg  sm:col-span-6 object-cover">
+          <div className="col-span-12 rounded-t-lg overflow-hidden  sm:col-span-6 object-cover">
             <img src={VolunteerImg} alt="volunteer work" />
           </div>
-          <div className="col-span-12 rounded-lg sm:col-span-6">
+          <div className="col-span-12 rounded-r-lg overflow-hidden sm:col-span-6">
             <img src={RecruitImg} alt="recruit" />
           </div>
         </div>

@@ -38,14 +38,76 @@ export const getRecruitmentById = async (formId) => {
     console.log(error);
   }
 };
-export const getAllInspiration = async () => {};
+export const getAllInspirationByInfo = async () => {
+  try {
+    const inspiRef = collection(db, "inspirations");
+    const inspiSnap = await getDocs(inspiRef);
+
+    // Step 2: Extract unique userIds from post documents
+    const userIdsSet = new Set(
+      inspiSnap.docs.map((postDoc) => postDoc.data().publisher)
+    );
+
+    const userIds = Array.from(userIdsSet);
+    // Step 3: Query users collection using userIds
+    const usersQuery = query(
+      collection(db, "users"),
+      where("userId", "in", userIds)
+    );
+    const usersSnapshot = await getDocs(usersQuery);
+
+    // Step 4: Combine post and user data
+    const InspiWithUserInfo = inspiSnap.docs.map((inspDoc) => {
+      const inspiData = inspDoc.data();
+      const userId = inspiData.publisher;
+
+      // Find the user document with the matching userId
+      const userDoc = usersSnapshot.docs.find(
+        (userDoc) => userDoc.data()?.userId === userId
+      );
+      // Check if the user document exists before accessing its data
+      const user = userDoc?.data() || {}; // Set to an empty object if userDoc is undefined
+
+      return {
+        id: inspDoc.id,
+        ...inspiData,
+        user,
+      };
+    });
+    return InspiWithUserInfo;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getInspirationById = async (formId) => {
   try {
-    const docRef = doc(db, "inspirations", formId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data();
+    // Step 1: Query a single post by ID
+    const postDocRef = doc(db, "inspirations", formId);
+    const postDoc = await getDoc(postDocRef);
+
+    if (!postDoc.exists()) {
+      // Handle the case where the post with the given ID doesn't exist
+      return null;
     }
+    const postData = postDoc.data();
+    // Step 2: Query the users collection using the userId
+    const userQuery = query(
+      collection(db, "users"),
+      where("userId", "==", postData?.publisher)
+    );
+    const userSnapshot = await getDocs(userQuery);
+    if (userSnapshot.empty) {
+      // Handle the case where the user with the given userId doesn't exist
+      return null;
+    }
+    const userDoc = userSnapshot.docs[0];
+    const user = userDoc.data();
+    return {
+      id: postDoc.id,
+      ...postData,
+      user,
+    };
   } catch (error) {
     console.log(error);
   }

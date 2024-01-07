@@ -1,21 +1,14 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import ModalPost from "../course/ModalPost";
-import Footer from "../shared/Footer";
-import Header from "../shared/Header";
-=======
+
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Button, IconButton } from "@material-tailwind/react";
+import { Avatar } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { getAllInspirationByInfo } from "../../api/post.api";
+import { auth } from "../../firebase";
 import AppLayout from "../Layout/AppLayout";
 import ModalPost from "../course/ModalPost";
-import { Avatar } from "@mui/material";
-import { getAllInspirationByInfo } from "../../api/post.api";
-import { Link } from "react-router-dom";
 import TimeStamp from "../shared/TimeStamp";
-import { Button, IconButton } from "@material-tailwind/react";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { auth } from "../../firebase";
->>>>>>> e772233c831949cf93c70bd42a4c661c6e7b4312
 
 const Inspiration = () => {
   const [posts, setPosts] = useState(null);
@@ -59,11 +52,10 @@ const Inspiration = () => {
     onClick: () => setActive(index),
   });
 
-  return (
-<<<<<<< HEAD
-    <>
-      <Header />
-    <div>
+  return ( 
+  <>
+      {/* <Header /> */}
+    <AppLayout>
         <h1 className="pt-10 font-bold text-4xl text-center">
           Post Inspiration to All Volunteer
         </h1>
@@ -71,9 +63,9 @@ const Inspiration = () => {
         src="https://hspinc.org/wp-content/uploads/2018/06/AdobeStock_83134431-1-1024x263.jpeg"
         alt="image 3"
         className="h-full w-full object-cover px-2 "/> 
-        {/* Filter Row */}
-        <div className="flex flex-col lg:flex-row justify-between pt-10">
-          {/* Fliter Type */}
+       
+        {/* <div className="flex flex-col lg:flex-row justify-between pt-10">
+          
           <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 ">
             <ul className="flex flex-wrap -mb-px">
               <li className="me-2" onClick={() => setPosts(data)}>
@@ -104,16 +96,7 @@ const Inspiration = () => {
                 </a>
               </li>
             </ul>
-          </div>
-=======
-    <AppLayout>
-      {/* hero */}
-      <div className="w-full bg-blue-400 h-[70vh] flex items-center justify-center">
-        <h1 className="text-white font-bold text-4xl text-center">
-          Post Inspiration to All Volunteer
-        </h1>
-      </div>
->>>>>>> e772233c831949cf93c70bd42a4c661c6e7b4312
+          </div> */}
 
       {/* posting side  */}
       <div className="flex justify-start flex-wrap bg-gray-100">
@@ -221,7 +204,9 @@ const Inspiration = () => {
           </div>
         </div>
       </div>
+    
     </AppLayout>
+    </>
   );
 };
 

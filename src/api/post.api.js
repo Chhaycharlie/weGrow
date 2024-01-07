@@ -41,7 +41,8 @@ export const getRecruitmentById = async (formId) => {
 export const getAllInspirationByInfo = async () => {
   try {
     const inspiRef = collection(db, "inspirations");
-    const inspiSnap = await getDocs(inspiRef);
+    const q = query(inspiRef, orderBy("timestamp", "desc"));
+    const inspiSnap = await getDocs(q);
 
     // Step 2: Extract unique userIds from post documents
     const userIdsSet = new Set(

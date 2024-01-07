@@ -130,9 +130,9 @@ const Inspiration = () => {
               displayPosts?.map((post) => (
                 <Link key={post?.id} to={`/inspirations/${post?.id}`}>
                   <div class="block max-w-[19rem] rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                    <div class="relative overflow-hidden bg-contain bg-no-repeat">
+                    <div class="relative h-[250px] overflow-hidden bg-contain bg-no-repeat">
                       <img
-                        className="rounded-t-lg h-[250px] w-[600px] bg-center"
+                        className="rounded-t-lg h-full w-[520px] bg-center"
                         src={post?.inspirationUrl}
                         alt=""
                       />
@@ -145,14 +145,14 @@ const Inspiration = () => {
                         >
                           {post?.user?.displayName[0]}
                         </Avatar>
-                        <div className="text-black ">
-                          <h1>{post?.title}</h1>
+                        <div className="text-black line-clamp-2">
+                          <h1 className="truncate">{post?.title}</h1>
                           <p className="text-sm text-gray-600">
                             <TimeStamp timestamp={post?.timestamp} />
                           </p>
                         </div>
                       </div>
-                      <div className="flex flex-col items-start font-md line-clamp-2 text-sm leading-7 text-black">
+                      <div className="flex flex-col truncate items-start font-md line-clamp-2 text-sm leading-7 text-black">
                         <p className="pl-2 pt-2">{post?.description}</p>
                       </div>
                     </div>

@@ -5,12 +5,17 @@ import { getInspirationById } from "../../api/post.api";
 import TimeStamp from "../shared/TimeStamp";
 import { Avatar } from "@mui/material";
 import Loading from "../../pages/Loading";
+import { auth, db } from "../../firebase";
+import { toast } from "react-toastify";
+import SmallSpinner from "../shared/SmallSpinner";
+import { doc, deleteDoc } from "firebase/firestore";
 
 const InspirationDetail = () => {
   const { formId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +35,24 @@ const InspirationDetail = () => {
 
   const handleBack = () => {
     navigate(-1);
+  };
+
+  //handle delete post
+  const handleDelete = () => {
+    try {
+      setDeleteLoading(true);
+      const postRef = doc(db, "inspirations", formId);
+      deleteDoc(postRef).then(() => {
+        toast.success("post deleted !", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      });
+      setDeleteLoading(false);
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+      toast.error("Invalid Delete This Post Right Now");
+    }
   };
 
   return (
@@ -64,7 +87,7 @@ const InspirationDetail = () => {
           </button>
 
           {/* <!-- Container for demo purpose --> */}
-          <div className="container my-10 mx-auto md:px-6 min-h-[80vh] h-auto">
+          <div className="container mt-10 mb-4 mx-auto md:px-6 min-h-[80vh] h-auto">
             {/* <!-- Section: Design Block --> */}
             <section className="mb-32 mx-6">
               <div className="flex flex-wrap">
@@ -79,7 +102,7 @@ const InspirationDetail = () => {
                 </div>
 
                 <div className="w-full shrink-0 grow-0 basis-auto lg:w-7/12 min-h-[500px] overflow-auto">
-                  <div className="flex h-full items-center rounded-lg bg-blue-800 p-6 text-center text-white lg:pl-12 lg:text-left">
+                  <div className="flex h-full items-center rounded-lg bg-blue-400 p-6 text-center text-white lg:pl-12 lg:text-left">
                     <div className="lg:pl-12">
                       <h2 className="mb-8 text-3xl font-bold">{data?.title}</h2>
                       <div className="flex flex-col">
@@ -94,7 +117,7 @@ const InspirationDetail = () => {
                             {data?.user?.displayName}
                           </h1>
                         </div>
-                        <p className="mb-8 mr-16 md:mr-0 md:ml-10 mt-[-15px]">
+                        <p className="mb-8 mr-52 md:mr-0 md:ml-10 mt-[-15px]">
                           <TimeStamp timestamp={data?.timestamp} />
                         </p>
                       </div>
@@ -143,6 +166,22 @@ const InspirationDetail = () => {
                 </div>
               </div>
             </section>
+            {data?.user?.userId === auth.currentUser.uid ? (
+              <div className="w-full flex justify-center">
+                <button
+                  onClick={handleDelete}
+                  className="bg-red-500 mb-10 w-32 h-10 text-white rounded-lg hover:"
+                >
+                  {deleteLoading ? (
+                    <SmallSpinner className={"mt-2"} />
+                  ) : (
+                    "Delete Post"
+                  )}
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </>
       )}

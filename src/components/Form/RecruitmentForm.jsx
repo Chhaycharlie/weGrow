@@ -189,17 +189,19 @@ const RecruitmentForm = () => {
                           className="mt-1 p-2 focus:ring-indigo-500 border focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                         />
                       </div>
-                      <div className="col-span-6 sm:col-span-3">
+                      <div className="col-span-6 sm:col-span-3"></div>
+                      <div className="col-span-6 sm:col-span-4">
                         <label
                           htmlFor="description"
                           className="block text-sm font-medium text-gray-700"
                         >
                           Recruiment Description
                         </label>
-                        <input
+                        <textarea
                           type="text"
                           value={inputData.description}
                           onChange={onChange}
+                          rows="10"
                           name="description"
                           placeholder="Write Description of Organization here"
                           required

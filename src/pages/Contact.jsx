@@ -3,16 +3,17 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import AppLayout from "../components/Layout/AppLayout";
 import { db } from "../firebase";
+import SmallSpinner from "../components/shared/SmallSpinner";
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const [loader, setLoader] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoader(true);
+    setLoading(true);
 
     try {
       const docRef = await addDoc(collection(db, "contactus"), {
@@ -25,8 +26,8 @@ const Contact = () => {
       toast.success("Thanks for Contact us !", {
         position: toast.POSITION.TOP_RIGHT,
       });
+      setLoading(false);
 
-      setLoader(false);
       setName("");
       setEmail("");
       setMessage("");
@@ -37,7 +38,7 @@ const Contact = () => {
       console.error("Error adding document: ", error.message);
       // Optionally, log the entire error object for debugging purposes
       console.error(error);
-      setLoader(false);
+      setLoading(false);
     }
   };
 
@@ -111,7 +112,9 @@ const Contact = () => {
                       <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900 ">
                         Contact Us
                       </h3>
-                      <p className="text-gray-600 ">Mobile: +855(123) 456-789</p>
+                      <p className="text-gray-600 ">
+                        Mobile: +855(123) 456-789
+                      </p>
                     </div>
                   </li>
                   <li className="flex justify-center sm:justify-start pl-3 sm:pl-0">
@@ -136,7 +139,9 @@ const Contact = () => {
                       <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900 ">
                         Email Us
                       </h3>
-                      <p className="text-gray-600 ">Mail: example99@gmail.com</p>
+                      <p className="text-gray-600 ">
+                        Mail: example99@gmail.com
+                      </p>
                     </div>
                   </li>
                 </ul>
@@ -202,7 +207,15 @@ const Contact = () => {
                       onClick={handleSubmit}
                       className="w-full bg-blue-500 text-white px-6 py-3 font-xl rounded-md sm:mb-0"
                     >
-                      Send Message
+                      {loading ? (
+                        <SmallSpinner
+                          className={
+                            "w-full h-6 flex justify-center items-center"
+                          }
+                        />
+                      ) : (
+                        "Send Message"
+                      )}
                     </button>
                   </div>
                 </form>

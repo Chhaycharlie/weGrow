@@ -138,7 +138,7 @@ function App() {
           }
         />
         <Route
-          path="/inspiration"
+          path="/inspirations"
           element={
             <ProtectedRoute>
               <Inspiration />
@@ -176,7 +176,7 @@ function App() {
         )}
 
         <Route
-          path="/inspiration/:formId"
+          path="/inspirations/:formId"
           element={
             <ProtectedRoute>
               <InspirationDetail />

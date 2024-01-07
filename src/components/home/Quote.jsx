@@ -1,4 +1,5 @@
 import React from "react";
+import PeopleImg from "../../assets/icons/people.png";
 
 function Quote() {
   return (
@@ -30,7 +31,7 @@ function Quote() {
             <figcaption className="flex items-center justify-center mt-6 space-x-3">
               <img
                 className="w-8 h-8 rounded-full"
-                src="src/assets/icons/people.png"
+                src={PeopleImg}
                 alt="profile picture"
               />
               <div className="flex items-center divide-x-2 divide-gray-500 ">

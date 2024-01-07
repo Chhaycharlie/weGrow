@@ -24,10 +24,10 @@ function Opportunity({ posts, loading }) {
   const [filter, setFilter] = useState("all");
 
   const filteredPosts = posts.filter((post) => {
-    const titleMatchesSearch = post.title
+    const titleMatchesSearch = post?.title
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const isMyPost = post.userId === user.uid;
+    const isMyPost = post?.userId === user?.uid;
 
     // Combine search and filter conditions
     return (
@@ -37,7 +37,7 @@ function Opportunity({ posts, loading }) {
   });
 
   //number of page
-  const npage = Math.ceil(filteredPosts.length / recordsPerPage);
+  const npage = Math.ceil(filteredPosts?.length / recordsPerPage);
   //array of pageIndex
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
@@ -261,7 +261,7 @@ function Opportunity({ posts, loading }) {
                             <ModalDetail post={post} />
                             <Link
                               to={`/recruitment/${post.id}/application`}
-                              className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-4 py-2 hover:text-gray-900 focus:z-10 "
+                              className="text-white bg-blue-600 hover:bg-blue-400 rounded-lg border border-gray-200 text-sm font-medium px-3 py-2 hover:text-gray-900 focus:z-10 "
                             >
                               {" "}
                               View Applications
@@ -269,7 +269,7 @@ function Opportunity({ posts, loading }) {
                           </>
                         ) : (
                           <>
-                            {post.isSubmitted ? (
+                            {post?.isSubmitted ? (
                               <Link
                                 to={`/apply-form/${post.id}`}
                                 className="text-white bg-blue-600 hover:bg-blue-400  font-medium rounded-lg text-sm px-4 py-2 text-center"
@@ -324,9 +324,13 @@ function Opportunity({ posts, loading }) {
             Previous
           </Button>
           <div className="flex items-center gap-2 mt-4 md:mt-0">
-            {numbers.map((index) => (
-              <IconButton key={index} size="sm" {...getItemProps(index)}>
-                {index}
+            {Array.from({ length: npage }, (_, index) => (
+              <IconButton
+                key={index + 1}
+                size="sm"
+                {...getItemProps(index + 1)}
+              >
+                {index + 1}
               </IconButton>
             ))}
           </div>

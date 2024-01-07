@@ -1,5 +1,5 @@
 # First stage build 
-FROM node:18-alpine as BUILD_IMAGE
+FROM node:19.5.0-alpine as BUILD_IMAGE
 WORKDIR /app/react-app
 
 COPY package.json .
@@ -12,7 +12,7 @@ RUN npm run build
 
 
 # second stage build 
-FROM node:18-alpine as PRODUCTION_IMAGE
+FROM node:19.5.0-alpine as PRODUCTION_IMAGE
 WORKDIR /app/react-app 
 
 COPY --from=BUILD_IMAGE /app/react-app/dist/ /app/react-app/dist/

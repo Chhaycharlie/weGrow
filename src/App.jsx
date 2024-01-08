@@ -12,7 +12,6 @@ import NotFound from "./pages/NotFound";
 import AccountPage from "./pages/profiles/AccountPage";
 import GeneralPage from "./pages/profiles/GeneralPage";
 import PasswordPage from "./pages/profiles/PasswordPage";
-import UserDetial from "./pages/profiles/UserDetails";
 import InspirationDetail from "./components/inspiration/InspirationDetail";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import ScrollToTop from "./components/shared/ScrollToTop";
@@ -212,15 +211,6 @@ function App() {
               <ProfileLayout>
                 <PasswordPage />
               </ProfileLayout>
-            </ProtectedRoute>
-          }
-        />
-        {/* </Route> */}
-        <Route
-          path="/profile/user-detail"
-          element={
-            <ProtectedRoute>
-              <UserDetial />
             </ProtectedRoute>
           }
         />

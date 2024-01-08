@@ -16,6 +16,7 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
+import SmallSpinner from "../shared/SmallSpinner";
 
 const style = {
   position: "absolute",
@@ -32,6 +33,7 @@ export default function ModalProfile({ toggle }) {
   const currentUser = auth.currentUser;
   const handleOpen = () => setOpen(true);
   const [name, setName] = useState(currentUser.displayName ?? "");
+  const [loading, setLoading] = useState(false);
   const handleClose = () => {
     setOpen(false);
     setIsSelectedFile(null);
@@ -50,6 +52,7 @@ export default function ModalProfile({ toggle }) {
 
   const handleSubmit = async () => {
     const selectedFile = fileInputRef.current.files[0];
+    setLoading(true);
     if (selectedFile) {
       // Check if the selected file is an image
       // Handle the selected image file
@@ -84,14 +87,15 @@ export default function ModalProfile({ toggle }) {
           userId: user.uid,
         });
 
-        //is success save
-        // window.location.reload();
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
       handleClose();
       // do sth here
     } else {
+      setLoading(false);
       console.log("no file select");
     }
   };
@@ -180,12 +184,16 @@ export default function ModalProfile({ toggle }) {
           </button>
           <button
             className={`mt-6 w-32 h-12 font-lg text-white 
-                rounded-full ${isSelectedFile ? "hover:bg-blue-400" : ""} 
-                bg-[#007EEA] duration-200 absolute bottom-8 right-8 `}
+                rounded-full ${
+                  isSelectedFile
+                    ? "bg-[#007EEA] hover:bg-blue-400"
+                    : " bg-blue-400"
+                } 
+                 duration-200 absolute bottom-8 right-8 `}
             onClick={handleSubmit}
             disabled={!isSelectedFile}
           >
-            Save
+            {loading ? <SmallSpinner className={"mt-1"} /> : "Save"}
           </button>
         </Box>
       </Modal>

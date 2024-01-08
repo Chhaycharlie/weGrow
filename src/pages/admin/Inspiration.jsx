@@ -1,7 +1,28 @@
 import { Link } from "react-router-dom";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
+import { useEffect, useState } from "react";
+import { getAllInspirationByInfo } from "../../api/post.api";
 
 const Inspiration = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const InspiData = await getAllInspirationByInfo();
+        setData(InspiData);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  console.log(data);
+
   return (
     <DashboardLayout>
       {/* head of page  */}
@@ -15,7 +36,7 @@ const Inspiration = () => {
           </div>
           <div className="sm:flex">
             <div className="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 ">
-              <form className="lg:pr-3" action="#" method="GET">
+              <form className="lg:pr-3">
                 <label htmlFor="users-search" className="sr-only">
                   Search
                 </label>
@@ -65,17 +86,13 @@ const Inspiration = () => {
                 <thead className="bg-gray-100 ">
                   <tr>
                     <th scope="col" className="pl-4 pr-2 py-4">
-                      <div className="flex items-center">
-                        <input
-                          id="checkbox-all"
-                          aria-describedby="checkbox-1"
-                          type="checkbox"
-                          className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                        />
-                        <label for="checkbox-all" className="sr-only">
-                          checkbox
-                        </label>
-                      </div>
+                      <div className="flex items-center"></div>
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase truncate"
+                    >
+                      Image
                     </th>
                     <th
                       scope="col"
@@ -85,7 +102,7 @@ const Inspiration = () => {
                     </th>
                     <th
                       scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase truncate"
+                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
                     >
                       description
                     </th>
@@ -93,25 +110,14 @@ const Inspiration = () => {
                       scope="col"
                       className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
                     >
-                      position
+                      post by
                     </th>
+
                     <th
                       scope="col"
                       className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
                     >
-                      location
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
-                    >
-                      start date
-                    </th>
-                    <th
-                      scope="col"
-                      className="p-4 text-xs font-medium text-left text-gray-500 uppercase "
-                    >
-                      deadline
+                      post date
                     </th>
                     <th
                       scope="col"
@@ -124,18 +130,14 @@ const Inspiration = () => {
                 <tbody className="bg-white divide-y py-10 divide-gray-200  ">
                   <tr className="hover:bg-gray-100 ">
                     {/* all check box  */}
-                    <td className="w-4 p-4">
-                      <div className="flex items-center">
-                        <input
-                          id="checkbox-{{ .id }}"
-                          aria-describedby="checkbox-1"
-                          type="checkbox"
-                          className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-green-300 dark:focus:ring-green-600 dark:ring-offset-gray-800  "
-                        />
-                        <label htmlFor="checkbox-{{ .id }}" className="sr-only">
-                          checkbox
-                        </label>
-                      </div>
+                    <td className="w-4 p-4">1</td>
+
+                    <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap ">
+                      <img
+                        src={data[0].inspirationUrl}
+                        className="w-15 h-10"
+                        alt=""
+                      />
                     </td>
 
                     {/* title  */}
@@ -156,17 +158,9 @@ const Inspiration = () => {
                     </td>
                     {/* position  */}
                     <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap ">
-                      Media
+                      
                     </td>
 
-                    {/* location  */}
-                    <td className="p-4 text-sm font-normal text-gray-900 whitespace-nowrap ">
-                      Phnom Penh
-                    </td>
-                    {/* start date */}
-                    <td className="p-4 text-base font-medium text-gray-900 whitespace-nowrap ">
-                      2023-12-15
-                    </td>
                     {/* deadline */}
                     <td className="p-4 text-base font-normal text-gray-900 whitespace-nowrap ">
                       2023-12-18

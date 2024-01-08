@@ -8,12 +8,12 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
+import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useRef, useState } from "react";
-import { auth, storage, db } from "../../firebase";
-import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
-import { setDoc, doc, serverTimestamp, collection } from "firebase/firestore";
-import SmallSpinner from "../shared/SmallSpinner";
 import { toast } from "react-toastify";
+import { auth, db, storage } from "../../firebase";
+import SmallSpinner from "../shared/SmallSpinner";
 
 export function ModalPost() {
   const [open, setOpen] = React.useState(false);
@@ -97,7 +97,7 @@ export function ModalPost() {
 
   return (
     <>
-      <Button onClick={handleOpen}>New +</Button>
+      <Button className="bg-blue-500" onClick={handleOpen}>New Post +</Button>
       <Dialog open={open} size="sm" handler={handleOpen}>
         <div className="flex items-center justify-between">
           <DialogHeader className="flex flex-col items-start">

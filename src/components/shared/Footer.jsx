@@ -93,8 +93,13 @@ const Footer = () => {
             © 2023 Wegrow™. All Rights Reserved.
           </span>
           <ul className="flex justify-center mt-5 pb-5 space-x-5">
+            {/* fb */}
             <li>
-              <a href="#" className="text-gray-500 hover:text-[#3D5081]">
+              <a
+                href="https://www.facebook.com/som.sodana"
+                target="blank"
+                className="text-gray-500 hover:text-[#3D5081]"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -110,8 +115,14 @@ const Footer = () => {
                 </svg>
               </a>
             </li>
+
+            {/* insta  */}
             <li>
-              <a href="#" className="text-gray-500 hover:text-pink-600">
+              <a
+                href="https://www.instagram.com/asdfghjkl_ssn/"
+                target="blank"
+                className="text-gray-500 hover:text-pink-600"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -127,8 +138,14 @@ const Footer = () => {
                 </svg>
               </a>
             </li>
+
+            {/* twitter */}
             <li>
-              <a href="#" className="text-gray-500 hover:text-[#96dcfc]">
+              <a
+                href="https://twitter.com/SoDaNa_SoM"
+                target="blank"
+                className="text-gray-500 hover:text-[#96dcfc]"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -140,8 +157,14 @@ const Footer = () => {
                 </svg>
               </a>
             </li>
+
+            {/* telegram */}
             <li>
-              <a href="#" className="text-gray-500 hover:text-[#2D64BC]">
+              <a
+                href="https://t.me/Som_Sodana"
+                target="blank"
+                className="text-gray-500 hover:text-[#2D64BC]"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -153,8 +176,14 @@ const Footer = () => {
                 </svg>
               </a>
             </li>
+
+            {/* linkedin */}
             <li>
-              <a href="#" className="text-gray-500 hover:text-[#2D64BC]">
+              <a
+                href="https://www.linkedin.com/in/sodana-som-201a9b250/"
+                target="blank"
+                className="text-gray-500 hover:text-[#2D64BC]"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"

@@ -337,10 +337,10 @@ const Contact = () => {
           <span className="text-sm font-normal text-gray-500">
             Showing{" "}
             <span className="font-semibold text-gray-900">
-              {indexOfFirstFeed + 1}-{Math.min(indexOfLastFeed, feeds.length)}
+              {indexOfFirstFeed + 1}-{Math.min(indexOfLastFeed, feeds?.length)}
             </span>{" "}
             of{" "}
-            <span className="font-semibold text-gray-900">{feeds.length}</span>
+            <span className="font-semibold text-gray-900">{feeds?.length}</span>
           </span>
         </div>
         <div className="flex items-center mx-6 space-x-3">

@@ -14,11 +14,11 @@ import { countAll, getAllRecruitment } from "../../api/post.api";
 import { calculatePostsByMonth } from "../../utils/Helper";
 
 const Dashboard = () => {
-  const [countPostByMonth, setCountPostByMonth] = useState(null);
-  const [totalPost, setTotalPost] = useState(null);
-  const [totalApply, setTotalApply] = useState(null);
-  const [totalUsers, setTotalUsers] = useState(null);
-  const [totalInspiration, setTotalInspiration] = useState(null);
+  const [countPostByMonth, setCountPostByMonth] = useState(0);
+  const [totalPost, setTotalPost] = useState(0);
+  const [totalApply, setTotalApply] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalInspiration, setTotalInspiration] = useState(0);
 
   ChartJS.register(
     CategoryScale,
@@ -45,7 +45,7 @@ const Dashboard = () => {
 
   const labels = [
     "December",
-    "Jebruary",
+    "January",
     "February",
     "March",
     "April",
@@ -71,7 +71,7 @@ const Dashboard = () => {
         const countData = await countAll();
         const countsByMonth = calculatePostsByMonth(data);
         setTotalPost(countData?.totalPost ?? 0);
-        setTotalApply(countData?.totalAppy ?? 0);
+        setTotalApply(countData?.totalApply ?? 0);
         setTotalInspiration(countData?.totalInspiration ?? 0);
         setTotalUsers(countData?.totalUser ?? 0);
         setCountPostByMonth(countsByMonth);

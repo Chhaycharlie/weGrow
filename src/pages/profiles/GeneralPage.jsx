@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import InputFields from "../../components/shared/InputFields";
 import { auth } from "../../firebase";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../api/user.api";
 
 const GeneralPage = () => {
   const currentUser = auth.currentUser;
-  const [email, setEmail] = useState(currentUser.email ?? "");
-  const [username, setUsername] = useState(currentUser.displayName ?? "");
+  const [email, setEmail] = useState(currentUser?.email ?? "");
+  const [username, setUsername] = useState(currentUser?.displayName ?? "");
+  const [role, setRole] = useState("");
 
   const [organizationName, setOrganizationName] = useState("");
   const [organizationEmail, setOrganizationEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
-  // const userInfo = useSelector((state) => state.user);
+  const userInfo = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getCurrentUser(currentUser.uid);
-        setOrganizationEmail(data.organizationEmail);
-        setOrganizationName(data.organizationName);
-        setPhoneNumber(data.phoneNumber);
-        setLocation(data.location);
+        setOrganizationEmail(data?.organizationEmail);
+        setOrganizationName(data?.organizationName);
+        setPhoneNumber(data?.phoneNumber);
+        setLocation(data?.location);
+        setRole(userInfo?.user?.role || data?.role);
       } catch (error) {
         console.error("Error fetching recruitment data:", error);
       }
@@ -43,7 +45,7 @@ const GeneralPage = () => {
         />
         <InputFields
           placeholder={"Email Address"}
-          label={"Email"}
+          label={"Email Address"}
           value={email}
           disable={true}
         />
@@ -54,18 +56,24 @@ const GeneralPage = () => {
           disable={true}
         />
 
-        <InputFields
-          placeholder={"Organization Name"}
-          label={"Organization Name"}
-          value={organizationName}
-          disable={true}
-        />
-        <InputFields
-          placeholder={"Oraginzation Website"}
-          label={"Organization Website"}
-          value={organizationEmail}
-          disable={true}
-        />
+        {role !== "user" ? (
+          <>
+            <InputFields
+              placeholder={"Organization Name"}
+              label={"Organization Name"}
+              value={organizationName}
+              disable={true}
+            />
+            <InputFields
+              placeholder={"Oraginzation Website"}
+              label={"Organization Website"}
+              value={organizationEmail}
+              disable={true}
+            />
+          </>
+        ) : (
+          ""
+        )}
 
         <InputFields
           placeholder={"Phone Number"}

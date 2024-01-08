@@ -115,7 +115,7 @@ const Contact = () => {
                     value={searchQuery}
                     onChange={handleSearch}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5"
-                    placeholder="Search for users"
+                    placeholder="Search for Contact"
                   />
                 </div>
                 {/* filter by date submit */}

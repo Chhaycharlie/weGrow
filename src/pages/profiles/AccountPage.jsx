@@ -15,17 +15,18 @@ const AccountPage = () => {
   const currentUser = auth.currentUser;
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState(currentUser.displayName ?? "");
-  const [email, setEmail] = useState(currentUser.email ?? "");
-  const [location, setLocation] = useState(userInfo?.user.location ?? "");
+  const [role, setRole] = useState(userInfo?.user?.role ?? "user");
+  const [username, setUsername] = useState(currentUser?.displayName ?? "");
+  const [email, setEmail] = useState(currentUser?.email ?? "");
+  const [location, setLocation] = useState(userInfo?.user?.location ?? "");
   const [organizationName, setOrganizationName] = useState(
-    userInfo?.user.organizationName ?? ""
+    userInfo?.user?.organizationName ?? ""
   );
   const [phoneNumber, setPhoneNumber] = useState(
-    userInfo?.user.phoneNumber ?? ""
+    userInfo?.user?.phoneNumber ?? ""
   );
   const [organizationEmail, setOrganizationEmail] = useState(
-    userInfo?.user.organizationEmail ?? ""
+    userInfo?.user?.organizationEmail ?? ""
   );
 
   // isEdit profile
@@ -34,12 +35,12 @@ const AccountPage = () => {
 
   const handleClick = () => {
     setIsEdit((prev) => !prev);
-    setUsername(currentUser.displayName ?? "");
-    setEmail(currentUser.email ?? "");
-    setLocation(userInfo?.user.location ?? "");
-    setPhoneNumber(userInfo?.user.phoneNumber ?? "");
-    setOrganizationName(userInfo?.user.organizationName ?? "");
-    setOrganizationEmail(userInfo?.user.organizationEmail ?? "");
+    setUsername(currentUser?.displayName ?? "");
+    setEmail(currentUser?.email ?? "");
+    setLocation(userInfo?.user?.location ?? "");
+    setPhoneNumber(userInfo?.user?.phoneNumber ?? "");
+    setOrganizationName(userInfo?.user?.organizationName ?? "");
+    setOrganizationEmail(userInfo?.user?.organizationEmail ?? "");
   };
 
   const onUsernameChange = (e) => {
@@ -136,7 +137,7 @@ const AccountPage = () => {
         <InputFields
           type={"text"}
           placeholder={"Email Address"}
-          label={"Email"}
+          label={"Email Address"}
           value={email}
           onChange={onEmailChange}
           disable={!isEdit}
@@ -151,24 +152,31 @@ const AccountPage = () => {
           disable={!isEdit}
           required={true}
         />
-        <InputFields
-          type={"text"}
-          placeholder={"Organization Name"}
-          label={"Organization Name"}
-          value={organizationName}
-          onChange={onOrganizationName}
-          disable={!isEdit}
-          required={true}
-        />
-        <InputFields
-          type={"text"}
-          placeholder={"Oraginzation Website"}
-          label={"Organization Website"}
-          value={organizationEmail}
-          onChange={onOrganizationEmail}
-          disable={!isEdit}
-          required={true}
-        />
+
+        {role === "user" ? (
+          ""
+        ) : (
+          <>
+            <InputFields
+              type={"text"}
+              placeholder={"Organization Name"}
+              label={"Organization Name"}
+              value={organizationName}
+              onChange={onOrganizationName}
+              disable={!isEdit}
+              required={true}
+            />
+            <InputFields
+              type={"text"}
+              placeholder={"Oraginzation Website"}
+              label={"Organization Website"}
+              value={organizationEmail}
+              onChange={onOrganizationEmail}
+              disable={!isEdit}
+              required={true}
+            />
+          </>
+        )}
 
         <InputFields
           type={"text"}

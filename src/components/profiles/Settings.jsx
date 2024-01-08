@@ -24,9 +24,6 @@ const Settings = () => {
         <li>
           <Link to={"/profile/password"}>Password</Link>
         </li>
-        <li className="pb-6">
-          <Link to={"/profile/user-detail"}>My Profile History</Link>
-        </li>
         <hr className="w-56 h-[2px] bg-gray-300" />
         <li
           onClick={handleClick}

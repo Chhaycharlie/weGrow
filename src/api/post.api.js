@@ -27,6 +27,7 @@ export const getAllRecruitment = async () => {
     console.log(error);
   }
 };
+
 export const getRecruitmentById = async (formId) => {
   try {
     const docRef = doc(db, "volunteer-recruits", formId);
@@ -378,6 +379,32 @@ export const FeedBackDetial = async (formId) => {
     if (feedbackSnap.exists()) {
       return feedbackSnap.data();
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//count data in database collection
+export const countAll = async () => {
+  try {
+    const recruitRef = collection(db, "volunteer-recruits");
+    const recruitSnaps = await getDocs(recruitRef);
+
+    const userRef = collection(db, "users");
+    const userSnaps = await getDocs(userRef);
+
+    const applyRef = collection(db, "apply-volunteers");
+    const applySnaps = await getDocs(applyRef);
+
+    const InspiRef = collection(db, "inspirations");
+    const InspiSnaps = await getDocs(InspiRef);
+
+    return {
+      totalPost: recruitSnaps.size ?? 0,
+      totalApply: applySnaps.size ?? 0,
+      totalUser: userSnaps.size ?? 0,
+      totalInspiration: InspiSnaps.size ?? 0,
+    };
   } catch (error) {
     console.log(error);
   }

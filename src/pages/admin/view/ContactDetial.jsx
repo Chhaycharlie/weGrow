@@ -37,8 +37,6 @@ const ContactDetial = () => {
     });
   }, [data]);
 
-  console.log(data);
-
   return (
     <DashboardLayout>
       <div className="items-center justify-center overflow-x-hidden overflow-y-auto md:inset-0 sm:h-full">

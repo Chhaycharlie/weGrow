@@ -10,6 +10,7 @@ import Modal from "../../components/shared/Modal";
 import { toast } from "react-toastify";
 import { db } from "../../firebase";
 import { deleteDoc, doc, collection, onSnapshot } from "firebase/firestore";
+import * as XLSX from "xlsx";
 
 const Apply = () => {
   const [data, setData] = useState([]);
@@ -97,6 +98,25 @@ const Apply = () => {
     }
   };
 
+  const exportToExcel = () => {
+    const dataToExport = data?.map((post) => ({
+      applyer: post?.user?.displayName,
+      title_post: post?.form?.title,
+      gender: post?.application?.gender,
+      dob: post?.application?.dob,
+      phone: post?.application?.phone,
+      address: post?.application?.address,
+      email: post?.application?.email,
+      position: post?.application?.position,
+      expectation: post?.application?.expectation,
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Apply");
+    XLSX.writeFile(wb, "Apply_Recruitments.xlsx");
+  };
+
   return (
     <DashboardLayout>
       {/* head of page  */}
@@ -110,7 +130,7 @@ const Apply = () => {
           </div>
           <div className="sm:flex">
             <div className="items-center hidden mb-3 sm:flex sm:divide-x sm:divide-gray-100 sm:mb-0 ">
-              <form className="lg:pr-3" action="#" method="GET">
+              <form className="lg:pr-3">
                 <label htmlFor="users-search" className="sr-only">
                   Search
                 </label>
@@ -128,7 +148,7 @@ const Apply = () => {
             </div>
             <div className="flex items-center ml-auto space-x-2 sm:space-x-3">
               <button
-                // onClick={exportToExcel}
+                onClick={exportToExcel}
                 className="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 sm:w-auto "
               >
                 <svg

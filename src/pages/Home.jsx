@@ -13,7 +13,6 @@ import { auth } from "../firebase";
 const Home = () => {
   const userInfo = useSelector((state) => state.user);
   const user = auth.currentUser;
-  // console.log(user);
 
   return (
     <AppLayout>

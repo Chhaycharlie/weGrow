@@ -83,8 +83,6 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  console.log(countPostByMonth);
-
   return (
     <DashboardLayout>
       <div className="w-full h-full mb-10 bg-white">

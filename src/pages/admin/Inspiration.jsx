@@ -8,6 +8,7 @@ import Modal from "../../components/shared/Modal";
 import { db } from "../../firebase";
 import { doc, deleteDoc, onSnapshot, collection } from "firebase/firestore";
 import { toast } from "react-toastify";
+import * as XLSX from "xlsx";
 
 const Inspiration = () => {
   const [data, setData] = useState([]);
@@ -78,6 +79,20 @@ const Inspiration = () => {
     }
   };
 
+  const exportToExcel = () => {
+    const dataToExport = data?.map((post) => ({
+      post_user: post?.user?.displayName,
+      Email: post?.user?.email,
+      title: post?.title,
+      description: post?.description,
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Inspirations");
+    XLSX.writeFile(wb, "Inspirations_Posts.xlsx");
+  };
+
   return (
     <DashboardLayout>
       {/* head of page  */}
@@ -110,7 +125,7 @@ const Inspiration = () => {
             </div>
             <div className="flex items-center ml-auto space-x-2 sm:space-x-3">
               <button
-                // onClick={exportToExcel}
+                onClick={exportToExcel}
                 className="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 sm:w-auto "
               >
                 <svg

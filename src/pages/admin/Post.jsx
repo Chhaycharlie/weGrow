@@ -6,6 +6,7 @@ import Modal from "../../components/shared/Modal";
 import { deleteDoc, doc, onSnapshot, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import { toast } from "react-toastify";
+import * as XLSX from "xlsx";
 
 const Post = () => {
   const [posts, setPosts] = useState([]);
@@ -76,6 +77,34 @@ const Post = () => {
     }
   };
 
+  console.log(posts);
+
+  const exportToExcel = () => {
+    const dataToExport = posts?.map((post) => ({
+      username: post?.data?.user?.displayName ?? "",
+      title: post?.data?.title ?? "",
+      description: post?.data?.description ?? "",
+      country: post?.data?.country ?? "",
+      gender: post?.data?.gender ?? "",
+      age: post?.data?.age ?? "",
+      people: post?.data?.people ?? "",
+      position: post?.data?.position ?? "",
+      department: post?.data?.department ?? "",
+      academic: post?.data?.academic ?? "",
+      url: post?.data?.url ?? "",
+      experience: post?.data?.experience ?? "",
+      email: post?.data?.email ?? "",
+      result: post?.data?.result ?? "",
+      startDate: post?.data?.startDate ?? "",
+      deadline: post?.data?.deadline ?? "",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Recruitment");
+    XLSX.writeFile(wb, "Recruitment.xlsx");
+  };
+
   return (
     <DashboardLayout>
       {/* head of page  */}
@@ -129,7 +158,7 @@ const Post = () => {
                 </button>
               </Link>
               <button
-                // onClick={exportToExcel}
+                onClick={exportToExcel}
                 className="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 sm:w-auto "
               >
                 <svg

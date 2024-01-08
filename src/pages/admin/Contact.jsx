@@ -7,6 +7,7 @@ import { db } from "../../firebase";
 import { getFeedBack } from "../../api/user.api";
 import Modal from "../../components/shared/Modal";
 import { toast } from "react-toastify";
+import * as XLSX from "xlsx";
 
 const Contact = () => {
   const [feeds, setFeeds] = useState([]);
@@ -91,6 +92,20 @@ const Contact = () => {
     }
   };
 
+  const exportToExcel = () => {
+    const dataToExport = feeds?.map((post) => ({
+      Username: post?.data?.name,
+      Email: post?.data?.email,
+      feedback_title: post?.data?.title,
+      message: post?.data?.message?.location,
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Feedback");
+    XLSX.writeFile(wb, "Feedbacks.xlsx");
+  };
+
   return (
     <DashboardLayout>
       {/* head of page  */}
@@ -144,7 +159,7 @@ const Contact = () => {
             </div>
             <div className="flex items-center ml-auto space-x-2 sm:space-x-3">
               <button
-                // onClick={exportToExcel}
+                onClick={exportToExcel}
                 className="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 sm:w-auto "
               >
                 <svg

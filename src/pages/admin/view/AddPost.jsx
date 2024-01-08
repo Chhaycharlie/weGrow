@@ -100,8 +100,6 @@ const PostDetial = () => {
     }
   };
 
-  console.log(data);
-
   return (
     <DashboardLayout>
       <div className="py-1 items-center justify-center overflow-x-hidden overflow-y-auto md:inset-0 h-modal sm:h-full">

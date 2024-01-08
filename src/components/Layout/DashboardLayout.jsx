@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import Wegrow from "../../assets/logos/logo6.png";
+import { logout } from "../../features/userSlice";
+import { useDispatch } from "react-redux";
 
 const DashboardLayout = ({ children, title }) => {
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const currYear = new Date().getFullYear();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
 
   return (
     <div className="flex">
@@ -223,10 +232,11 @@ const DashboardLayout = ({ children, title }) => {
 
             {/* no show when small screen size  */}
             {/* sign out btn menu  */}
-            <div
+            <button
+              onClick={handleLogout}
               className={` ${
                 !open ? "block space-y-4" : "hidden"
-              } flex justify-between items-center px-4 py-2 mt-2 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200  hover:bg-[#66CCFF] focus:bg-[#66CCFF] hover:text-white focus:outline-none focus:shadow-outline`}
+              } flex justify-between cursor-pointer w-full items-center px-4 py-2 mt-2 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200  hover:bg-[#66CCFF] focus:bg-[#66CCFF] hover:text-white focus:outline-none focus:shadow-outline`}
             >
               Sign out
               <svg
@@ -252,16 +262,16 @@ const DashboardLayout = ({ children, title }) => {
                   ></path>{" "}
                 </g>
               </svg>
-            </div>
+            </button>
           </nav>
 
           {/* sign out menu  */}
           {/* show when small screen  */}
-          <NavLink
+          <button
+            onClick={handleLogout}
             className={` ${
               open ? "block" : "hidden"
-            } flex justify-between items-center px-4 py-2 mt-2 mb-1 mx-4 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline`}
-            to={"/"}
+            } flex justify-between w-full cursor-pointer items-center px-4 py-2 mt-2 mb-1 mx-4 text-lg font-semibold text-gray-900 bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline`}
           >
             Sign out
             <svg
@@ -287,7 +297,7 @@ const DashboardLayout = ({ children, title }) => {
                 ></path>{" "}
               </g>
             </svg>
-          </NavLink>
+          </button>
         </div>
       </div>
 

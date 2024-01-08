@@ -23,7 +23,6 @@ import Apply from "./pages/admin/Apply";
 import AdminInspiration from "./pages/admin/Inspiration";
 import UpdatedForm from "./components/Form/UpdatedForm";
 import ViewApplication from "./components/post-recruitment/ViewApplication";
-import EditUsers from "./pages/admin/EditUsers";
 import ViewPostDetial from "./pages/admin/view/PostDetial";
 import AddPost from "./pages/admin/view/AddPost";
 import ContactDetial from "./pages/admin/view/ContactDetial";
@@ -34,7 +33,6 @@ import ProtectLoginRoute from "./components/routes/ProtectLoginRoute";
 import { Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { getRole } from "./api/user.api";
 import { auth } from "./firebase";
 
 function App() {
@@ -144,8 +142,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route path="/test" element={<EditUsers />} />
 
         {isAdmin && (
           <>
